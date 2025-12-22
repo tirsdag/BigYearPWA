@@ -36,8 +36,10 @@ export async function getProbableSpeciesThisWeek({ listId, speciesClass }) {
   })
 
   matched.sort((a, b) => {
+    const obsDiff = (b.obsCount ?? 0) - (a.obsCount ?? 0)
+    if (obsDiff !== 0) return obsDiff
     if (b.rScore !== a.rScore) return b.rScore - a.rScore
-    return (b.obsCount ?? 0) - (a.obsCount ?? 0)
+    return String(a.speciesId).localeCompare(String(b.speciesId))
   })
 
   return { week, items: matched }
@@ -57,8 +59,10 @@ export async function getProbableSpeciesThisWeekForClass({ speciesClass, limit }
       danishName: s.DanishName ?? '',
     }))
     .sort((a, b) => {
+      const obsDiff = (b.obsCount ?? 0) - (a.obsCount ?? 0)
+      if (obsDiff !== 0) return obsDiff
       if (b.rScore !== a.rScore) return b.rScore - a.rScore
-      return (b.obsCount ?? 0) - (a.obsCount ?? 0)
+      return String(a.speciesId).localeCompare(String(b.speciesId))
     })
 
   const limited = typeof limit === 'number' ? itemsRaw.slice(0, Math.max(0, limit)) : itemsRaw
@@ -114,8 +118,10 @@ export async function getTopProbableUnseenEntriesThisWeek({ listId, limit = 50 }
   }
 
   matchedStats.sort((a, b) => {
+    const obsDiff = (b.obsCount ?? 0) - (a.obsCount ?? 0)
+    if (obsDiff !== 0) return obsDiff
     if (b.rScore !== a.rScore) return b.rScore - a.rScore
-    return (b.obsCount ?? 0) - (a.obsCount ?? 0)
+    return String(a.speciesId).localeCompare(String(b.speciesId))
   })
 
   const top = matchedStats.slice(0, limit)
