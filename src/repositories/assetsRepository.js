@@ -1,7 +1,7 @@
 async function fetchJson(url) {
   const res = await fetch(url)
   if (!res.ok) {
-    throw new Error(`Failed to fetch ${url}: ${res.status} ${res.statusText}`)
+    throw new Error(`Kunne ikke hente ${url}: ${res.status} ${res.statusText}`)
   }
 
   // Some bundled assets (notably WeekStat files) are UTF-16LE encoded.
@@ -10,14 +10,14 @@ async function fetchJson(url) {
   const bytes = new Uint8Array(buf)
   const text = sanitizeJsonText(decodeTextWithBom(bytes))
   if (!text) {
-    throw new Error(`Empty JSON from ${url}`)
+    throw new Error(`Tom JSON fra ${url}`)
   }
 
   try {
     return JSON.parse(text)
   } catch (err) {
     const preview = text.slice(0, 50)
-    throw new Error(`Invalid JSON from ${url}: ${preview}`)
+    throw new Error(`Ugyldig JSON fra ${url}: ${preview}`)
   }
 }
 
@@ -48,7 +48,7 @@ export function fetchSpeciesFile(speciesClass) {
     // Legacy files were arrays; corrected files are shaped as { species: [...] }
     if (Array.isArray(data)) return data
     if (data && Array.isArray(data.species)) return data.species
-    throw new Error(`Unexpected species payload for ${speciesClass}`)
+    throw new Error(`Uventet artsdata-format for ${speciesClass}`)
   })
 }
 
@@ -62,7 +62,7 @@ export async function fetchWeekStat(speciesClass, weekNumber) {
     return await fetchJson(url)
   } catch (err) {
     // Some WeekStat files may be intentionally empty for certain classes/weeks.
-    if (String(err?.message || '').startsWith('Empty JSON from')) {
+    if (String(err?.message || '').startsWith('Tom JSON fra')) {
       return { species: [] }
     }
     throw err

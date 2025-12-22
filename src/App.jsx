@@ -39,7 +39,7 @@ export default function App() {
       <AppStateContext.Provider value={ctx}>
         <div className="app">
           <main className="main">
-            <div className="card">Loading…</div>
+            <div className="card">Indlæser…</div>
           </main>
         </div>
       </AppStateContext.Provider>
@@ -52,7 +52,7 @@ export default function App() {
         <main className="main">
           {bootstrapError ? (
             <div className="card">
-              <div>Reference data load failed.</div>
+              <div>Indlæsning af referencedata mislykkedes.</div>
               <div className="small">{String(bootstrapError?.message || bootstrapError)}</div>
             </div>
           ) : null}
@@ -68,11 +68,11 @@ export default function App() {
 
         <nav className="nav">
           <NavLink to="/" end>
-            Lists
+            Lister
           </NavLink>
-          <NavLink to="/species">All species</NavLink>
-          <NavLink to="/dimensions">Dimensions</NavLink>
-          <NavLink to="/probable">Probable</NavLink>
+          <NavLink to="/species">Alle arter</NavLink>
+          <NavLink to="/dimensions">Dimensioner</NavLink>
+          <NavLink to="/probable">Sandsynlige</NavLink>
         </nav>
       </div>
     </AppStateContext.Provider>

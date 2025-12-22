@@ -15,9 +15,9 @@ export default function AllSpeciesPage() {
       <div className="card">
         <div className="row">
           <label>
-            Class{' '}
+            Klasse{' '}
             <select value={speciesClass} onChange={(e) => setSpeciesClass(e.target.value)}>
-              <option value="">All</option>
+              <option value="">Alle</option>
               {SPECIES_CLASSES.map((c) => (
                 <option key={c} value={c}>
                   {c}
@@ -25,13 +25,13 @@ export default function AllSpeciesPage() {
               ))}
             </select>
           </label>
-          <div className="small">{species.length} species</div>
+          <div className="small">{species.length} arter</div>
         </div>
       </div>
 
       <div className="card">
         {species.length === 0 ? (
-          <div className="small">No species.</div>
+          <div className="small">Ingen arter.</div>
         ) : (
           <ul className="list">
             {species.map((s) => (

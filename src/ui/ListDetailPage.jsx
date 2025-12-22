@@ -77,37 +77,37 @@ export default function ListDetailPage() {
     setProbableItems((prev) => prev.filter((p) => p.entryId !== updated.EntryId))
   }
 
-  if (!listId) return <div className="card">Missing listId.</div>
+  if (!listId) return <div className="card">Mangler liste-id.</div>
 
   return (
     <div style={{ display: 'grid', gap: 12 }}>
       <div className="card">
-        <div style={{ fontWeight: 600 }}>{list?.Name || 'List'}</div>
+        <div style={{ fontWeight: 600 }}>{list?.Name || 'Liste'}</div>
         <div className="small">{listId}</div>
       </div>
 
       <div className="card">
-        <div style={{ fontWeight: 600, marginBottom: 8 }}>Probable species (this week)</div>
+        <div style={{ fontWeight: 600, marginBottom: 8 }}>Sandsynlige arter (denne uge)</div>
         <div className="small" style={{ marginBottom: 8 }}>
-          {probableWeek ? `Week ${probableWeek}` : 'Week ?'} · Top 50 · Unseen only
+          {probableWeek ? `Uge ${probableWeek}` : 'Uge ?'} · Top 50 · Kun ikke sete
         </div>
 
         {probableLoading ? (
-          <div className="small">Loading…</div>
+          <div className="small">Indlæser…</div>
         ) : probableError ? (
           <div className="small">{probableError}</div>
         ) : probableItems.length === 0 ? (
-          <div className="small">No probable unseen entries this week.</div>
+          <div className="small">Ingen sandsynlige ikke-sete arter i denne uge.</div>
         ) : (
           <ul className="list">
             {probableItems.map((item) => (
               <li key={item.entryId} style={{ marginBottom: 8 }}>
                 <div className="row">
-                  <button onClick={() => markProbableSeen(item)}>Mark seen</button>
+                  <button onClick={() => markProbableSeen(item)}>Markér som set</button>
                   <div style={{ flex: 1 }}>
                     <div>{item.danishName || item.speciesId}</div>
                     <div className="small">{item.latinName || ''}</div>
-                    <div className="small">rScore: {item.rScore} · obs: {item.obsCount}</div>
+                    <div className="small">Score: {item.rScore} · Obs.: {item.obsCount}</div>
                   </div>
                 </div>
               </li>
@@ -117,9 +117,9 @@ export default function ListDetailPage() {
       </div>
 
       <div className="card">
-        <div style={{ fontWeight: 600, marginBottom: 8 }}>Entries</div>
+        <div style={{ fontWeight: 600, marginBottom: 8 }}>Arter</div>
         {sorted.length === 0 ? (
-          <div className="small">No entries.</div>
+          <div className="small">Ingen arter.</div>
         ) : (
           <ul className="list">
             {sorted.map((entry) => {
@@ -127,7 +127,7 @@ export default function ListDetailPage() {
               return (
                 <li key={entry.EntryId} style={{ marginBottom: 8 }}>
                   <div className="row">
-                    <button onClick={() => onToggle(entry)}>{entry.Seen ? 'Seen' : 'Unseen'}</button>
+                    <button onClick={() => onToggle(entry)}>{entry.Seen ? 'Set' : 'Ikke set'}</button>
                     <div>
                       <div>{species?.danishName || entry.SpeciesId}</div>
                       <div className="small">{species?.latinName || ''}</div>

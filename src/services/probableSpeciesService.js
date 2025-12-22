@@ -6,8 +6,8 @@ import { getISOWeek } from '../utils/isoWeek.js'
 const SPECIES_CLASSES = ['Amphibia', 'Aves', 'Insecta', 'Mammalia', 'Reptilia']
 
 export async function getProbableSpeciesThisWeek({ listId, speciesClass }) {
-  if (!listId) throw new Error('Active list required')
-  if (!speciesClass) throw new Error('SpeciesClass required')
+  if (!listId) throw new Error('Der kræves en aktiv liste')
+  if (!speciesClass) throw new Error('Artsklasse er påkrævet')
 
   const { week } = getISOWeek(new Date())
 
@@ -46,7 +46,7 @@ export async function getProbableSpeciesThisWeek({ listId, speciesClass }) {
 }
 
 export async function getProbableSpeciesThisWeekForClass({ speciesClass, limit }) {
-  if (!speciesClass) throw new Error('SpeciesClass required')
+  if (!speciesClass) throw new Error('Artsklasse er påkrævet')
 
   const { week } = getISOWeek(new Date())
   const stats = await fetchWeekStat(speciesClass, week)
@@ -84,7 +84,7 @@ export async function getProbableSpeciesThisWeekForClass({ speciesClass, limit }
 }
 
 export async function getTopProbableUnseenEntriesThisWeek({ listId, limit = 50 }) {
-  if (!listId) throw new Error('Active list required')
+  if (!listId) throw new Error('Der kræves en aktiv liste')
 
   const { week } = getISOWeek(new Date())
   const entries = await getEntriesForList(listId)

@@ -26,13 +26,13 @@ export async function getListEntries(listId) {
 }
 
 export async function createList({ name, dimensionId, speciesClasses }) {
-  if (!dimensionId) throw new Error('DimensionId is required')
-  if (!speciesClasses || speciesClasses.length === 0) throw new Error('Select 1+ species classes')
+  if (!dimensionId) throw new Error('Dimension er påkrævet')
+  if (!speciesClasses || speciesClasses.length === 0) throw new Error('Vælg 1+ artsklasser')
 
   const ListId = newId()
   const list = {
     ListId,
-    Name: name || `List-${new Date().getFullYear()}`,
+    Name: name || `Liste-${new Date().getFullYear()}`,
     CreatedAt: new Date().toISOString(),
     DimensionId: dimensionId,
     Entries: [],

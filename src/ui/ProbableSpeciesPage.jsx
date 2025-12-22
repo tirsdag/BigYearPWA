@@ -24,7 +24,7 @@ export default function ProbableSpeciesPage() {
       <div className="card">
         <div className="row">
           <label>
-            Class{' '}
+            Klasse{' '}
             <select value={speciesClass} onChange={(e) => setSpeciesClass(e.target.value)}>
               {SPECIES_CLASSES.map((c) => (
                 <option key={c} value={c}>
@@ -33,20 +33,20 @@ export default function ProbableSpeciesPage() {
               ))}
             </select>
           </label>
-          <div className="small">Week {result.week ?? '—'}</div>
+          <div className="small">Uge {result.week ?? '—'}</div>
         </div>
         {error ? <div className="small">{String(error?.message || error)}</div> : null}
       </div>
 
       <div className="card">
         {result.items.length === 0 ? (
-          <div className="small">No matches.</div>
+          <div className="small">Ingen træffere.</div>
         ) : (
           <ul className="list">
             {result.items.map((x) => (
               <li key={x.speciesId} style={{ marginBottom: 10 }}>
                 <div className="row">
-                  <div style={{ minWidth: 60, fontWeight: 600 }}>r={x.rScore}</div>
+                  <div style={{ minWidth: 80, fontWeight: 600 }}>score={x.rScore}</div>
                   <div style={{ minWidth: 90 }} className="small">
                     obs={x.obsCount}
                   </div>

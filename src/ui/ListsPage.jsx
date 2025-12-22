@@ -38,7 +38,7 @@ export default function ListsPage() {
   }
 
   async function onDelete(listId) {
-    if (!confirm('Delete list?')) return
+    if (!confirm('Slet liste?')) return
     await removeList(listId)
     if (activeListId === listId) setActiveListId('')
     await refresh()
@@ -56,17 +56,17 @@ export default function ListsPage() {
   return (
     <div style={{ display: 'grid', gap: 12 }}>
       <div className="card">
-        <div style={{ fontWeight: 600, marginBottom: 8 }}>Create list</div>
+        <div style={{ fontWeight: 600, marginBottom: 8 }}>Opret liste</div>
         <div className="row" style={{ marginBottom: 8 }}>
           <label>
-            Name{' '}
-            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="List name" />
+            Navn{' '}
+            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Listenavn" />
           </label>
 
           <label>
             Dimension{' '}
             <select value={dimensionId} onChange={(e) => setDimensionId(e.target.value)}>
-              <option value="">Select…</option>
+              <option value="">Vælg…</option>
               {dimensions.map((d) => (
                 <option key={d.DimensionId} value={d.DimensionId}>
                   {d.DimensionId}
@@ -78,7 +78,7 @@ export default function ListsPage() {
 
         <div style={{ marginBottom: 8 }}>
           <div className="small" style={{ marginBottom: 6 }}>
-            Species classes (select 1+)
+            Artsklasser (vælg 1+)
           </div>
           <div className="row">
             {SPECIES_CLASSES.map((cls) => (
@@ -95,14 +95,14 @@ export default function ListsPage() {
         </div>
 
         <button onClick={onCreate} disabled={!dimensionId || classArray.length === 0}>
-          Create
+          Opret
         </button>
       </div>
 
       <div className="card">
-        <div style={{ fontWeight: 600, marginBottom: 8 }}>Lists</div>
+        <div style={{ fontWeight: 600, marginBottom: 8 }}>Lister</div>
         {lists.length === 0 ? (
-          <div className="small">No lists yet.</div>
+          <div className="small">Ingen lister endnu.</div>
         ) : (
           <ul className="list">
             {lists.map((l) => (
@@ -111,9 +111,9 @@ export default function ListsPage() {
                   <Link to={`/lists/${l.ListId}`} onClick={() => setActiveListId(l.ListId)}>
                     {l.Name}
                   </Link>
-                  {activeListId === l.ListId ? <span className="small">(active)</span> : null}
-                  <button onClick={() => setActiveListId(l.ListId)}>Set active</button>
-                  <button onClick={() => onDelete(l.ListId)}>Delete</button>
+                  {activeListId === l.ListId ? <span className="small">(aktiv)</span> : null}
+                  <button onClick={() => setActiveListId(l.ListId)}>Sæt aktiv</button>
+                  <button onClick={() => onDelete(l.ListId)}>Slet</button>
                 </div>
                 <div className="small">{l.ListId}</div>
               </li>
