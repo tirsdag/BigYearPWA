@@ -46,10 +46,11 @@ export async function getProbableSpeciesThisWeek({ listId, speciesClass }) {
   return { week, items: matched }
 }
 
-export async function getProbableSpeciesThisWeekForClass({ speciesClass, limit }) {
+export async function getProbableSpeciesThisWeekForClass({ speciesClass, weekNumber, limit }) {
   if (!speciesClass) throw new Error('Artsklasse er påkrævet')
 
-  const { week } = getISOWeek(new Date())
+  const { week: currentWeek } = getISOWeek(new Date())
+  const week = typeof weekNumber === 'number' ? weekNumber : currentWeek
   const stats = await fetchWeekStat(speciesClass, week)
 
   const itemsRaw = (stats?.species || [])
