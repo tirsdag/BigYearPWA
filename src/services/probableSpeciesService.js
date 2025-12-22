@@ -32,6 +32,7 @@ export async function getProbableSpeciesThisWeek({ listId, speciesClass }) {
       danishName: ref?.danishName ?? s.DanishName ?? '',
       englishName: ref?.englishName ?? '',
       latinName: ref?.latinName ?? '',
+      speciesStatus: ref?.speciesStatus ?? '',
     }
   })
 
@@ -77,6 +78,7 @@ export async function getProbableSpeciesThisWeekForClass({ speciesClass, limit }
       danishName: ref?.danishName ?? x.danishName ?? '',
       englishName: ref?.englishName ?? '',
       latinName: ref?.latinName ?? '',
+      speciesStatus: ref?.speciesStatus ?? '',
     }
   })
 
@@ -137,6 +139,7 @@ export async function getTopProbableUnseenEntriesThisWeek({ listId, limit = 50 }
       danishName: ref?.danishName ?? '',
       englishName: ref?.englishName ?? '',
       latinName: ref?.latinName ?? '',
+      speciesStatus: ref?.speciesStatus ?? '',
     }
   })
 

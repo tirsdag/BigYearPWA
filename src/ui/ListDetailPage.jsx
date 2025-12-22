@@ -4,6 +4,7 @@ import { useAppState } from './appState.js'
 import { getList, getListEntries, toggleEntrySeen } from '../services/listService.js'
 import { getSpeciesById } from '../repositories/speciesRepository.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
+import SpeciesName from './SpeciesName.jsx'
 
 export default function ListDetailPage() {
   const { listId } = useParams()
@@ -80,7 +81,7 @@ export default function ListDetailPage() {
   if (!listId) return <div className="card">Mangler liste-id.</div>
 
   return (
-    <div style={{ display: 'grid', gap: 12 }}>
+    <div style={{ display: 'grid', gap: 16 }}>
       <div className="card">
         <div style={{ fontWeight: 600 }}>{list?.Name || 'Liste'}</div>
         <div className="small">{listId}</div>
@@ -101,11 +102,17 @@ export default function ListDetailPage() {
         ) : (
           <ul className="list">
             {probableItems.map((item) => (
-              <li key={item.entryId} style={{ marginBottom: 8 }}>
+              <li key={item.entryId} style={{ marginBottom: 12 }}>
                 <div className="row">
                   <button onClick={() => markProbableSeen(item)}>Markér som set</button>
                   <div style={{ flex: 1 }}>
-                    <div>{item.danishName || item.speciesId}</div>
+                    <div>
+                      <SpeciesName
+                        danishName={item.danishName}
+                        speciesId={item.speciesId}
+                        speciesStatus={item.speciesStatus}
+                      />
+                    </div>
                     <div className="small">{item.latinName || ''}</div>
                     <div className="small">Score: {item.rScore} · Observationer: {item.obsCount}</div>
                   </div>
@@ -125,11 +132,21 @@ export default function ListDetailPage() {
             {sorted.map((entry) => {
               const species = speciesById.get(entry.SpeciesId)
               return (
-                <li key={entry.EntryId} style={{ marginBottom: 8 }}>
+                <li key={entry.EntryId} style={{ marginBottom: 12 }}>
                   <div className="row">
                     <button onClick={() => onToggle(entry)}>{entry.Seen ? 'Set' : 'Ikke set'}</button>
                     <div>
-                      <div>{species?.danishName || entry.SpeciesId}</div>
+                      <div>
+                        {species ? (
+                          <SpeciesName
+                            danishName={species.danishName}
+                            speciesId={species.speciesId}
+                            speciesStatus={species.speciesStatus}
+                          />
+                        ) : (
+                          entry.SpeciesId
+                        )}
+                      </div>
                       <div className="small">{species?.latinName || ''}</div>
                     </div>
                   </div>

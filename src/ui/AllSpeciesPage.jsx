@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { listSpecies } from '../services/speciesService.js'
 import { SPECIES_CLASSES } from '../services/listService.js'
+import SpeciesName from './SpeciesName.jsx'
 
 export default function AllSpeciesPage() {
   const [speciesClass, setSpeciesClass] = useState('')
@@ -11,7 +12,7 @@ export default function AllSpeciesPage() {
   }, [speciesClass])
 
   return (
-    <div style={{ display: 'grid', gap: 12 }}>
+    <div style={{ display: 'grid', gap: 16 }}>
       <div className="card">
         <div className="row">
           <label>
@@ -35,8 +36,14 @@ export default function AllSpeciesPage() {
         ) : (
           <ul className="list">
             {species.map((s) => (
-              <li key={s.speciesId} style={{ marginBottom: 8 }}>
-                <div>{s.danishName}</div>
+              <li key={s.speciesId} style={{ marginBottom: 12 }}>
+                <div>
+                  <SpeciesName
+                    danishName={s.danishName}
+                    speciesId={s.speciesId}
+                    speciesStatus={s.speciesStatus}
+                  />
+                </div>
                 <div className="small">{s.latinName}</div>
               </li>
             ))}

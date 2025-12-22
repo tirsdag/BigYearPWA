@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { SPECIES_CLASSES } from '../services/listService.js'
 import { getProbableSpeciesThisWeekForClass } from '../services/probableSpeciesService.js'
+import SpeciesName from './SpeciesName.jsx'
 
 export default function ProbableSpeciesPage() {
   const [speciesClass, setSpeciesClass] = useState('Aves')
@@ -20,7 +21,7 @@ export default function ProbableSpeciesPage() {
   }, [speciesClass])
 
   return (
-    <div style={{ display: 'grid', gap: 12 }}>
+    <div style={{ display: 'grid', gap: 16 }}>
       <div className="card">
         <div className="row">
           <label>
@@ -44,14 +45,20 @@ export default function ProbableSpeciesPage() {
         ) : (
           <ul className="list">
             {result.items.map((x) => (
-              <li key={x.speciesId} style={{ marginBottom: 10 }}>
+              <li key={x.speciesId} style={{ marginBottom: 14 }}>
                 <div className="row">
                   <div style={{ minWidth: 80, fontWeight: 600 }}>Score: {x.rScore}</div>
                   <div style={{ minWidth: 90 }} className="small">
                     Observationer: {x.obsCount}
                   </div>
                   <div>
-                    <div>{x.danishName || x.speciesId}</div>
+                    <div>
+                      <SpeciesName
+                        danishName={x.danishName}
+                        speciesId={x.speciesId}
+                        speciesStatus={x.speciesStatus}
+                      />
+                    </div>
                     <div className="small">{x.latinName}</div>
                   </div>
                 </div>
