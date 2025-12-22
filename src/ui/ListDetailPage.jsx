@@ -107,7 +107,7 @@ export default function ListDetailPage() {
                   <div style={{ flex: 1 }}>
                     <div>{item.danishName || item.speciesId}</div>
                     <div className="small">{item.latinName || ''}</div>
-                    <div className="small">Score: {item.rScore} · Obs.: {item.obsCount}</div>
+                    <div className="small">Score: {item.rScore} · Observationer: {item.obsCount}</div>
                   </div>
                 </div>
               </li>

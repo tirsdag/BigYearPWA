@@ -46,9 +46,9 @@ export default function ProbableSpeciesPage() {
             {result.items.map((x) => (
               <li key={x.speciesId} style={{ marginBottom: 10 }}>
                 <div className="row">
-                  <div style={{ minWidth: 80, fontWeight: 600 }}>score={x.rScore}</div>
+                  <div style={{ minWidth: 80, fontWeight: 600 }}>Score: {x.rScore}</div>
                   <div style={{ minWidth: 90 }} className="small">
-                    obs={x.obsCount}
+                    Observationer: {x.obsCount}
                   </div>
                   <div>
                     <div>{x.danishName || x.speciesId}</div>
