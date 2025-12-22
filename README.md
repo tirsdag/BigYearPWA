@@ -17,3 +17,8 @@ Notes:
 
 - Install dependencies: `npm ci`
 - Start dev server: `npm run dev`
+
+## Preview production build (local)
+
+- Build: `npm run build`
+- Preview `dist/`: `npm run preview`
