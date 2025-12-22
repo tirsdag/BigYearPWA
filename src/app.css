@@ -11,6 +11,7 @@ body {
   margin: 0;
   background: #ffffff;
   color: #111;
+  -webkit-text-size-adjust: 100%;
 }
 
 a {
@@ -28,6 +29,7 @@ a {
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
+  padding-bottom: 84px;
 }
 
 .nav {
@@ -35,6 +37,7 @@ a {
   grid-template-columns: repeat(4, 1fr);
   gap: 4px;
   padding: 8px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom));
   border-top: 1px solid #ddd;
   position: sticky;
   bottom: 0;
@@ -61,6 +64,10 @@ a {
   background: #fff;
 }
 
+.card + .card {
+  margin-top: 12px;
+}
+
 .row {
   display: flex;
   align-items: center;
@@ -72,13 +79,44 @@ input, select, button {
   font: inherit;
 }
 
+input, select {
+  width: 100%;
+  max-width: 520px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid #d6d6d6;
+  background: #fff;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+}
+
 button {
   padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid #d6d6d6;
+  background: #f7f7f7;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:active {
+  background: #efefef;
+}
+
+button:disabled {
+  opacity: 0.6;
 }
 
 .list {
   margin: 0;
   padding-left: 18px;
+}
+
+.list li {
+  padding: 0;
 }
 
 .small {
