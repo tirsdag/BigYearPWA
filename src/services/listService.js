@@ -1,0 +1,75 @@
+import {
+  deleteList,
+  getAllLists,
+  getEntriesForList,
+  getListById,
+  putEntriesForList,
+  putEntry,
+  putList,
+} from '../repositories/listRepository.js'
+import { getSpeciesByClass } from '../repositories/speciesRepository.js'
+import { newId } from '../utils/id.js'
+
+export const SPECIES_CLASSES = ['Amphibia', 'Aves', 'Insecta', 'Mammalia', 'Reptilia']
+
+export async function listLists() {
+  const lists = await getAllLists()
+  return lists.slice().sort((a, b) => String(b.CreatedAt).localeCompare(String(a.CreatedAt)))
+}
+
+export async function getList(listId) {
+  return getListById(listId)
+}
+
+export async function getListEntries(listId) {
+  return getEntriesForList(listId)
+}
+
+export async function createList({ name, dimensionId, speciesClasses }) {
+  if (!dimensionId) throw new Error('DimensionId is required')
+  if (!speciesClasses || speciesClasses.length === 0) throw new Error('Select 1+ species classes')
+
+  const ListId = newId()
+  const list = {
+    ListId,
+    Name: name || `List-${new Date().getFullYear()}`,
+    CreatedAt: new Date().toISOString(),
+    DimensionId: dimensionId,
+    Entries: [],
+  }
+
+  const entries = []
+  for (const cls of speciesClasses) {
+    const species = await getSpeciesByClass(cls)
+    for (const s of species) {
+      entries.push({
+        EntryId: newId(),
+        SpeciesId: s.speciesId,
+        Seen: false,
+        SeenAt: null,
+        ReferenceLink: null,
+        Comment: null,
+      })
+    }
+  }
+
+  await putList(list)
+  await putEntriesForList(ListId, entries)
+
+  return list
+}
+
+export async function toggleEntrySeen(entry, seen) {
+  const next = {
+    ...entry,
+    Seen: Boolean(seen),
+    SeenAt: seen ? new Date().toISOString() : null,
+  }
+
+  await putEntry(next)
+  return next
+}
+
+export async function removeList(listId) {
+  await deleteList(listId)
+}

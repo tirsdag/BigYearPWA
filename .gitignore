@@ -1,0 +1,29 @@
+# Node / Vite
+node_modules/
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vite cache
+.vite/
+
+# Env files
+.env
+.env.*
+
+# Editor
+.vscode/
+
+# Local backup created during setup
+BigYearPWA_local_edits_backup/
+
+# Generated copy of assets (use `npm run copy-data`)
+public/Data/

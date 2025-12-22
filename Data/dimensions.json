@@ -1,0 +1,3557 @@
+[
+  {
+    "DimensionId": "3819e963-add9-461d-976d-ffb1e66948b6",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "d90f6484-396d-4813-b21f-546e1eb9d4ee",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "7f92c45e-fa3c-4443-b512-a6784c8725fb",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 1,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "7621b5f0-62a9-4133-9993-1acbd605e847",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 1,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "025a7f2d-9c86-4421-8a34-aceb50cadc5c",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 1,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "8b280e8a-98ac-4d9e-8511-9909632855f7",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 2,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "6b3c8fac-7c20-4700-a739-b31cd6b1532c",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 2,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "e2f2e363-db76-43f3-80f5-afeb4389b770",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 2,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "e1bf464b-3768-46c1-98d9-bfdde89324bd",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 3,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "be306677-6ca0-4d08-b51c-0868466e90c9",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 3,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "da89f663-1cf7-4918-948e-598b9c4deadb",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 3,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "77db9864-92e4-487e-b50c-fb803ab80a0b",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 4,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "74e00e13-dfc6-49f3-8a58-bbf6a9aa92fa",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 4,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "16f356fc-3465-4a5e-aaa6-1fbf94220461",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 4,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ca3c7da5-20d6-4121-ac86-9b59f1727566",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 5,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "4bd17ab3-7508-4494-b688-55c8db760ad8",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 5,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "07daa0fe-d4a5-4768-8eca-ea1891fe018c",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 5,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "683a767f-f612-4810-963d-4d0b818372ee",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 6,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "498b66ba-09b4-44ac-84ba-35a2e8c8ff8d",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 6,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "b640307c-ee96-44d5-83ba-9d42c2e10c88",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 6,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "eb9816b9-8761-4d03-9214-a8d9c74ff129",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 7,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "6296f485-f873-426c-bf1c-4946090a092c",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 7,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "b323e7bc-545f-4345-9223-b7d82e0040b6",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 7,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "4a21845c-6c86-4c2e-b335-0764f8e803d1",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 8,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ca9850df-aa3f-475e-9fd9-89d11313f010",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 8,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "8b038cb2-ca29-4606-be35-556c04d04828",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 8,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "f55b860f-9af0-4747-85f3-b6c6ba4e0663",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 9,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "12cd4c4f-b272-4f49-bc77-af4a2d014480",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 9,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "799d8b7b-7f53-44b2-b88f-c3ad7d969cf0",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 9,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "d17956aa-1340-4d1b-bc90-b1d1aa429b0f",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 10,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "caa3a343-c9a6-49e2-8c74-0c02ca666a5f",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 10,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "d6f8cd25-c02e-4719-a09d-9b7d6d922ed9",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 10,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "55504d41-2222-4bb2-9f64-bdff04d256a0",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 11,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "9636350f-6e4c-4580-a13a-b225ae08be38",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 11,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "ed0b6589-9d60-4c63-bc2e-08d1e491f297",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 11,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "041317ba-4c3f-4b83-b470-af6d695128cd",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 12,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "0813b1de-3aac-4894-bef2-c986bad88197",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 12,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f9592e85-dbea-4f04-9f29-98d02bb06d7a",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 12,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "1e775b6b-0a16-45b6-b816-e5c48e604b61",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 13,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "559f11b5-8af7-4877-8291-61e1ae8f6b58",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 13,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "e7f96372-9db5-460c-8a09-24594b32c63b",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 13,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b7c15ec4-7235-492c-a57d-b0341d32fe54",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 14,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "05d1220b-5f66-45a3-b433-2ff86303b755",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 14,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "50d1650e-f616-4dcd-9d2c-c1bda4ea9f8a",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 14,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "d612cdb6-4cef-48e2-b4e0-b7d912fe5261",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 15,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "cd31ef28-4210-4f13-9541-ac2628bfdc9c",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 15,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "da1fa359-25b0-4563-a65e-7285f0845ceb",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 15,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "8d5b2b47-6add-494a-ab9d-14bfd48c67c5",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 16,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "2eac23a3-8168-489c-9737-1f02b42bc0b6",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 16,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "dcdaf8dc-cb8f-451c-802b-c1b5a75767a2",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 16,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "be6ebfd8-7802-42d9-9682-b7ff9fde027a",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 17,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "87e2fc6b-bc6d-49d2-9660-784dc9a60262",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 17,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "bf7d66d6-dc18-4546-8297-2330e1017f8f",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 17,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "af830538-65af-4dff-8f80-30d4f008ac8f",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 18,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "407ad541-b77b-4c87-96c5-675e5e991590",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 18,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "27f07100-0a9b-4cd3-9434-01fc745e15cd",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 18,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "0eb79d1c-b336-483c-bfaf-b3f5213176a9",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 19,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "6de23e16-b134-4dc8-a091-a07828feb4c7",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 19,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "5b29141d-219c-4e29-a1d5-e92bf215ec11",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 19,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "f0e14ea1-f75d-4310-864f-40044f91ddaa",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 20,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "aa63bccc-b2d5-42bf-813d-129857e65232",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 20,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "0e07bc68-9bd2-4497-9e8f-c87a6d927327",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 20,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "da33ef6f-79cf-4c1e-88f0-e47ecd9c7665",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 21,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "5ac9929a-7d6c-4b7c-a34a-177284a5e1d4",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 21,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "d0eba219-c6d4-4a6c-a519-30e24511ec81",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 21,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "7db500b0-785a-456b-8a4f-1819ef332006",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 22,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "47c2907f-23eb-4113-94ce-a62202a7e6f8",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 22,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "6b8452ab-9889-44a6-9c46-f8e3bd1a6c1c",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 22,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "5ed4985e-57c2-44db-a5f7-367c6bc9e202",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 23,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "058948ef-65dc-415c-8bb7-493c8bbbeb1a",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 23,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "a1f1ace5-0bba-429e-a31a-bbbf82bce0a8",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 23,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "c799d6a6-e17c-4298-9339-6dddeef2d126",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 24,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "881fdf01-d5b4-4b5c-b4bd-1b606848b86b",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 24,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "71c4cf1b-8c0f-4d07-bfd8-bf7dde2d70a3",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 24,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "6e4b1897-394d-4034-a1df-4fefb6fb23c0",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 25,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ba227051-11fe-48cc-8082-5df71166be23",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 25,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "b58a8b7e-308b-4d9f-93d4-75f401349e61",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 25,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "15fc9a1c-539f-460e-92d0-d01c642e7ff7",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 26,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "f5bcbe05-e1ed-4d0b-8a70-d48d35f3069b",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 26,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "dd611ab8-bb69-4e25-a782-23d1a87c17bd",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 26,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "dcd8a03b-6ab3-423b-8cf6-ae057cac9c44",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 27,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "430463e0-c7e0-4465-8acd-69cb6ea7497f",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 27,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "53c4f484-dd92-436d-9851-50ec06768f86",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 27,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "3cb5b7cc-c774-4664-bab2-9ab57ccab134",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 28,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "039b5e93-0010-4d98-ac59-46d343c4afdb",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 28,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "89d50a4f-6415-4acf-b302-a64933318eda",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 28,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "71620bdb-4045-4d5d-90d5-671679ea959e",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 29,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "d9e6cf08-6f0a-45bd-8e28-c028941d45f5",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 29,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "45b61937-d690-48c2-8347-f55f9cba7f61",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 29,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "404ae20e-2818-4342-a771-a8f458e49ac2",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 30,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "702da5d4-9e46-4dd7-a3da-1d2cdb7f8299",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 30,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "291e850e-ec7d-4b47-9d84-edb490d70df4",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 30,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "0f4c8a5c-03c2-43d2-a9a5-5a0a428046e8",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 31,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "6d112de7-a6da-48d0-9c99-3aaad05fcadd",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 31,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "b374164b-71cf-4909-bd88-9171a65ffafa",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 31,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "a35e3e30-030d-41e5-9917-bcb12a3b4b42",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 32,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "f1757f06-b0f4-4f40-90a4-75ffed80e14e",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 32,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "295840d5-6657-4151-8430-4b921a54f746",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 32,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "c782de8d-dbc1-4577-bd25-390d276cb6f0",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 33,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "d2474fdc-9390-47ba-a3bb-969d623666e0",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 33,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "838f2edf-988c-4fd1-844b-bdac1e811307",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 33,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "bcfe75ac-61dd-4843-9ed6-59695a0bb177",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 34,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "86202ad5-e458-4022-83c8-87a8c1fed837",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 34,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f713b033-8afb-44f9-b353-268e23cd9ab5",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 34,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "798daa6f-a15c-4e8f-900f-0ac9ae3b402a",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 35,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "07806185-2424-4f78-8c66-f4480c959b15",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 35,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "8e239ade-6ac5-49c7-96ce-4140460f2b19",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 35,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "0cc0a236-1226-481f-9f17-616cf18d2d6d",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 36,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "cb49a2c2-07a3-4c13-8096-2f95c23073ff",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 36,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "a510d085-1651-4bc9-9c4f-78f8d3d60cb3",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 36,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "a6fa0443-907c-4b6a-a733-89537e654682",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 37,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "c716e0bf-8375-4e39-aba6-ef5f65935d8b",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 37,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f43c24ae-c135-45f9-80f7-1ff24c0addc6",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 37,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "44e9d88f-9961-4b7c-90b0-14d1cd12c923",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 38,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "8721f10d-e370-40e8-8151-7d8e8f1edea6",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 38,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "59836551-dc2f-4754-9e54-ba0281a0a76b",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 38,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "0a71d105-7d8c-4686-9fe0-dd01d2698ced",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 39,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ccb452a9-e809-4ddd-9a70-1ab2a2616346",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 39,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "48811cae-f3b6-4f87-be65-597551b3acb1",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 39,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "4a9e132b-861c-4282-bcc2-15357e3f4a97",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 40,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "0616aad9-9f47-408a-93fb-fd787073b245",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 40,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "bcf1f886-f0c5-44e7-b072-3d643cb640e1",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 40,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "02860c94-d49b-4eb4-bba3-3cd5e6b61d5f",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 41,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "8b4275e0-e2fd-490d-a49f-462d3f1bb80e",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 41,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "c3a3ac86-ea43-4c5d-850e-dac2c1f14102",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 41,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "f7e8bc56-7196-4347-86ea-34d803096c9b",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 42,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ecfa933d-368a-453c-aef1-9b06e4628f5f",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 42,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "024ef770-e3cc-4b7a-bbdc-cc6e5508a762",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 42,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "decc6363-9505-4917-99b2-da36b8d0a72f",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 43,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "2de96c10-a8ca-4860-8c24-0857b223c2d5",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 43,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "2196d8c6-c0da-4630-b599-b719bcd70c6c",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 43,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "bdece540-23a6-46a5-b1a7-35e65d1d6b77",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 44,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "4cfa301b-b021-47b5-bcb6-ec65986dd8f7",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 44,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f7d21e90-d9fb-436d-9e60-419386d7471e",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 44,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "3bad076c-6251-4a33-a7e7-97a1f7ee7ac5",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 45,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "c9e2c69b-29b5-40e1-8f55-a681af256937",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 45,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "72ca5252-9213-4005-b849-789696f53eea",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 45,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "4204fd05-39af-4f1e-a0ae-0cf07e40b688",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 46,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "95798006-c916-456b-a0f2-63a06a28724f",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 46,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "9e9f09b7-423c-490a-9712-4ade29e2648d",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 46,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "3a39ba08-4882-40d4-8e01-bf5fa378cde6",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 47,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ca1655e9-c41a-451d-85c3-ff623dccafbe",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 47,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "94873ad1-465a-45ae-9b35-b32fd17dd0bf",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 47,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "9448cc4d-2ae6-408c-aa24-44a65c4065d5",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 48,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ad2e68cd-bfb0-4720-850a-43aa0e27341f",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 48,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "6346096e-05ad-4cb4-b64b-d42fd3309f72",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 48,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "0a006a6b-be91-47ea-85fe-79d100f9d317",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 49,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "036eff84-248f-433b-aaba-c843aa217013",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 49,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "35535937-dad4-4ad9-b11d-6c6f7c99425f",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 49,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "949f471f-3992-4a67-b24c-52ba93026318",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 50,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "d6d3743a-7be2-4a55-9c53-a617e72d71b6",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 50,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "302715e8-2c38-46dd-945a-e7cb4d5917cb",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 50,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "d0b30b84-8ef6-4485-830a-572a6de636ee",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 51,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "fdf500a1-99bd-4e42-9933-818f455b6cf3",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 51,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "0fe6a018-99be-4dfc-b134-08c4814ad788",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 51,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "3c441c53-36a2-4e8b-ba4d-5076d206c0f9",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 52,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "162bb8af-e329-4534-ae9c-c9135127587d",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 52,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "9efa865e-3ccd-4acf-afb6-8123f7e674a3",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 52,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "79b172b5-9b37-41af-a9ae-b18f41d609bd",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 53,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "fd48d3e6-3fff-4954-97d4-7dad7c138fd4",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 53,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "84db9b7a-9e9a-4858-9ca1-b4e4423025bf",
+    "Year": 2025,
+    "Month": null,
+    "WeekNumber": 53,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "e14368b5-15fc-415f-989a-0e9549a20e83",
+    "Year": 2025,
+    "Month": 1,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b1ba7a7b-13ea-4ecc-9ebc-efc990d14b20",
+    "Year": 2025,
+    "Month": 1,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "19dc9be0-d240-413b-a269-021001d18175",
+    "Year": 2025,
+    "Month": 1,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "7cddd924-61e0-405b-ae29-a907edc99caa",
+    "Year": 2025,
+    "Month": 2,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "f5d3feef-b541-47b3-a419-6fa1536a17a1",
+    "Year": 2025,
+    "Month": 2,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "3e1036ef-4d67-4d26-a889-89fdd4ac707b",
+    "Year": 2025,
+    "Month": 2,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "59335fa4-2cf9-4e3e-b355-927876b581e9",
+    "Year": 2025,
+    "Month": 3,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b0cca51d-0de1-4355-9461-738984c42168",
+    "Year": 2025,
+    "Month": 3,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "0d1c574d-67cc-4620-90a3-fc990d721c0c",
+    "Year": 2025,
+    "Month": 3,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "cfda8e58-4500-4238-b618-f9bc6393e5d1",
+    "Year": 2025,
+    "Month": 4,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "7268c433-3720-44a8-8136-383d4a30a03f",
+    "Year": 2025,
+    "Month": 4,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "a3ecaa99-7391-4d5f-b13c-2b58bbd13396",
+    "Year": 2025,
+    "Month": 4,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "2d704279-f721-4c28-8834-3f8f882dd4c6",
+    "Year": 2025,
+    "Month": 5,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "dcae8332-b9fc-437e-bbc7-399bf94ef665",
+    "Year": 2025,
+    "Month": 5,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "5a8e6531-37fd-48c3-8939-8f4bcfc0fb27",
+    "Year": 2025,
+    "Month": 5,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "15ffafcb-b73e-49c1-88b5-b00eb3ec775f",
+    "Year": 2025,
+    "Month": 6,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "a017e118-4d71-403f-a131-e27c88fdacc7",
+    "Year": 2025,
+    "Month": 6,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "4f9b7f99-7695-4fd0-8456-4b6a3b7cbdce",
+    "Year": 2025,
+    "Month": 6,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "7b712b88-569e-4377-a159-df0e07cb1cf2",
+    "Year": 2025,
+    "Month": 7,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "34b4f829-3b8a-4cfe-8255-951d32c9e73a",
+    "Year": 2025,
+    "Month": 7,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "c79217f4-ae9b-40f9-8a76-aa23a393c4c9",
+    "Year": 2025,
+    "Month": 7,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "3962f4fa-d679-4c0a-9824-1694e78036c6",
+    "Year": 2025,
+    "Month": 8,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "4dcdea63-dc56-46c8-9aad-1b7cf4805223",
+    "Year": 2025,
+    "Month": 8,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "24a52602-930b-4704-8e0f-0b364fc64e12",
+    "Year": 2025,
+    "Month": 8,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "d574b013-8265-4948-9f5e-cd515f4ce183",
+    "Year": 2025,
+    "Month": 9,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "5baa02ef-10a6-4921-925f-2fb73d84bb32",
+    "Year": 2025,
+    "Month": 9,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "a32563eb-7197-482c-ad28-3eed6699a811",
+    "Year": 2025,
+    "Month": 9,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "0543d936-611f-41da-befe-e3ad7b3fba0d",
+    "Year": 2025,
+    "Month": 10,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "20e7901f-876d-4438-93ec-1a2422aaafe3",
+    "Year": 2025,
+    "Month": 10,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "ba597488-00a4-4e02-8ccf-e4d5a5495267",
+    "Year": 2025,
+    "Month": 10,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "74385fda-2d74-4f65-9a6d-02e56ae9d0d1",
+    "Year": 2025,
+    "Month": 11,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "72fd71fe-1ab8-45ce-99bc-bac78147bdd2",
+    "Year": 2025,
+    "Month": 11,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "051ba0fd-08a3-4aaf-9b7a-2480aeb100ca",
+    "Year": 2025,
+    "Month": 11,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "95377999-c713-4442-81a7-92bebe5b3f3f",
+    "Year": 2025,
+    "Month": 12,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b5c19c67-802b-4536-8513-12a436e3b854",
+    "Year": 2025,
+    "Month": 12,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "3210ac0e-94fa-431a-be93-a8da0cf0cf66",
+    "Year": 2025,
+    "Month": 12,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "c4e5413e-cb1e-4eb9-bcc8-f913c7a973d6",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "60ebc5f8-61ba-4dd5-b0ca-1030c5d2dea9",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "9f73fba4-edd3-4283-b030-08b5ad75963a",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 1,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "e0617685-0833-4606-9d53-d7891fb6134e",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 1,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "d364f033-8747-4dd1-9bbf-bc8dd3004d84",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 1,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "371b087a-13ac-4047-83f7-3f732881719c",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 2,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "76c0f7d8-ea77-4351-872d-316b656b8ac6",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 2,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "3bfb63e6-4d46-437f-9f76-38026a634104",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 2,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "911a7ff0-4322-4cf0-996d-ddc85b0cc14a",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 3,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "26c6f615-3ddb-4e88-99ae-e43113d360b6",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 3,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f10f1500-2d69-492f-a64f-96ff71253fc0",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 3,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "c1ac3eb4-c7a2-437d-badb-71219a6a2ccd",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 4,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "62258e8d-fb27-4bbc-ae86-2a77e71a6f8e",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 4,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f1c344c9-25b2-4e61-94f8-7ac0fd6d2011",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 4,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b1b3f086-39a5-4633-bb56-70e693fcef24",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 5,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "150c7929-12ed-4834-a2dc-963aa440acf4",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 5,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "775a995f-5509-480d-8006-d2331155c79d",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 5,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "0d929f1c-3f3f-41da-a55b-285092efe053",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 6,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "f4f5ae24-98db-41b6-8d29-1660cca4fd72",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 6,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "600bd423-bc35-43b7-a5b4-78904068f627",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 6,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "e5c243e5-a9af-44c5-82cd-51fe19564b94",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 7,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "145de73b-46ce-483c-af39-ae598ab85583",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 7,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "8ce17fee-eb86-4ace-a331-59e588dda226",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 7,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "f5363aec-27ff-499e-b683-2e60a22ef26d",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 8,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "7a97eb88-e964-4e02-89e1-cdc1ae1cfa08",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 8,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "a2a124c2-c71f-41c1-aee7-f7f53d4541ad",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 8,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "483d1f20-852e-4152-9f0a-b93578fcc9b4",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 9,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "cab546b8-e2cb-4f9d-83f2-9358a28ad683",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 9,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "06a852c7-806e-40b5-bc0f-b1383c563b2a",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 9,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "992cbb13-0ce9-4cf5-860e-a6af4cae9222",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 10,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "3893ffc2-f578-4886-8a9c-3a9c10d9ae6d",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 10,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "7a3430b9-e015-4f1a-b645-cf51a72b651e",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 10,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "bb5ab63a-6f02-4803-9add-28464f03ecc5",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 11,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "a2a89442-8003-4d04-9220-cb50a1556778",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 11,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "3bcd1367-12dd-4358-9410-f2cdbb3f3309",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 11,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "c815bec3-be9f-4469-a92b-f3d5cb0a26dc",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 12,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "48a1c5c5-90eb-4a3a-a1ed-741b0c90d1d4",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 12,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "5acbaf5a-7514-4b9d-9e72-2634c0282782",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 12,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "d4aeaea0-74d3-4f3b-9a09-dc8d2066b7f7",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 13,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "225337ca-52fd-499d-97bf-38f14af85458",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 13,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "94a35338-ca08-4581-a949-a02cc972eeaf",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 13,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "aec8df06-0b5c-4f2a-ad69-461ef662db90",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 14,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "c100e6f2-6d6a-45a3-8994-071d70b58312",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 14,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "53c12283-2f3d-44b6-bdb5-41931153e79e",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 14,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "e30b3e2e-784d-4630-bd7c-f5ffdb792bf1",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 15,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "02a36692-d0a8-48b5-a637-22b0e6ccc304",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 15,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "3378ecbb-ae51-4c4e-b292-e12735ed6ff1",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 15,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "fd437170-8d36-45c4-a393-d4360bf3109e",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 16,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "a0166b3b-eb3c-4bcf-b00c-47c45f944c80",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 16,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "19091936-8979-4afb-807f-ad77bac563d3",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 16,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "4acc35ba-d850-4f99-b44d-adea785233c3",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 17,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "a6b0482a-7502-44e8-829c-79e91c307371",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 17,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "0b25dcef-8726-4102-8faf-02810f88075d",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 17,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "2f465ebe-440d-418f-a895-70440894b76b",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 18,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "65a21ae9-51e6-4589-9776-11e7a77664c9",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 18,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "8afd294b-dafa-4e45-a0d4-e8ff9bf3b56a",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 18,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "5ae28432-bbc8-4f90-966b-5d6beabcae4a",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 19,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "48e8bfd0-308a-4289-a84d-f7a5f5e9685c",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 19,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "c9263a80-5862-4191-828b-fb096f2ae699",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 19,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "e0409bb5-43f8-4abb-ae74-ea2226c54ba3",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 20,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "c6644e7e-2b9f-4938-87ca-f98c7d602869",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 20,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f8699a86-b0cc-475c-bbfc-e5f320267787",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 20,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "bd451748-8056-4008-b699-a1d5663076ef",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 21,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "e88275e4-20d0-4bac-869d-63c8335fb597",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 21,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f10f9918-b820-4da1-9f5f-737ed4537380",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 21,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "55ace72b-5445-4753-825e-975bef2148e0",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 22,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "892b7fb5-c9f1-4a57-9544-311940824443",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 22,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "21192744-1029-4e44-89d1-ba805d84b45b",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 22,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "4fc84b58-cedf-42cc-8013-be02019f40e2",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 23,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "edd6d2ed-4b8d-47b2-88ff-8293b8c7c78d",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 23,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "3f5e52f2-f7ec-43fb-8912-dda8bd6c9421",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 23,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b2a3b3d3-630b-470b-9dd7-d4df82596b97",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 24,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "1e09e16f-d59f-4595-a1ba-46103677daad",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 24,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "ef48dff3-4ecc-4304-86fe-0e54ce30e497",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 24,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b4c1b3d1-e0ad-4ff7-b43a-cc145b5773c6",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 25,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "95595046-b5ed-49da-ac2e-f8db48dcf4ca",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 25,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "3de8fae6-2095-4be1-92e9-5c1718343d49",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 25,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "f6109d62-24dc-4107-801f-b41bb0519c90",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 26,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "2c69a967-b239-4ed0-9b12-776dd29eb2cd",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 26,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "c393d2b1-41f6-4487-936e-cceffb09598f",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 26,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "3588fa53-9b86-4a5d-a6e4-a511c9bec779",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 27,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "9e430daf-e79e-4a4f-8186-edd62532bdce",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 27,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "539cfe5e-3138-4478-9a4f-cc03e077342e",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 27,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "9df3fecd-4784-40c9-96cf-476241395f18",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 28,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "06053701-3783-4c9a-be6c-1d1a9178f0c0",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 28,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "db9a52a9-f1e9-45ee-918b-a8d0db38fd4d",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 28,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "bdec21bc-a4cd-41a9-bbc8-536780b4459b",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 29,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "954dea81-6f15-4bcd-813a-df7ba9398002",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 29,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f0fa7374-1f26-4188-abc9-192399dcb6ca",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 29,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "9ff64d24-0a22-4a98-8269-06d81c76823d",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 30,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "a6bbbab3-03a3-467b-a3af-a72767923a73",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 30,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "efe3dc72-9ac4-4fa2-8211-1b1a22d598a0",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 30,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "f0bf9774-883c-4f6d-8a58-f3bd198558a4",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 31,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "e55a2c37-4451-488d-bcc9-1e90cf6004a9",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 31,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "ea3c24b2-3303-4e4d-87a9-ab5d8701a39f",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 31,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "00eeb985-d0ac-4422-936f-f318bdf6f53f",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 32,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b9414d02-7daa-4377-bc5a-02214e7ae17a",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 32,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "08e0ab47-1041-4650-ac3b-8e6d4047d4b5",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 32,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "2e9d828d-311a-4e2b-a22d-41f0bb67de21",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 33,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b38e8d10-e9e9-448c-8511-18ed5758df22",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 33,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f074d22e-4902-4909-8cef-e902c12257e0",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 33,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "c1661f7f-6491-4560-b713-a5bac504ceac",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 34,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b17b3610-b452-4391-b9cf-2c29e43f97b9",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 34,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f27faed2-e550-4a0b-947a-3668b17c39ba",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 34,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "9eb8d9e3-88fd-4d93-bfd7-573a78c1d4a7",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 35,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ef58a6ad-f0fe-4de3-9a44-e596be0015fa",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 35,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "622a6271-6eb9-44b0-8545-93364e8e4f83",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 35,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "8a78492f-1bc1-458a-a2ad-f9fa2fb1ffa1",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 36,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "0fe86210-d098-4aa8-ac0c-dc45c48cf1af",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 36,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "8134fae6-046a-4841-9b21-68e3af843d6b",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 36,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "20aed541-bc05-46e3-bad7-b404521196d0",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 37,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "9a1206a0-5625-4f63-85ef-222ab8b17204",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 37,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "42ceb76b-615d-41ed-ae00-004d39bdf357",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 37,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "dd7c3e0b-91c5-4a60-8539-927111ad8b05",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 38,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "e7c66d42-8000-41d3-9cb8-a1b60a9ee519",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 38,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "455f86fd-c67d-41e0-80e2-2e338c0eb2aa",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 38,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "524e3d1e-efea-4011-92d1-572c3400a3d6",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 39,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "5ad1cbfe-c2ea-49ad-bf16-a7f09f2beb72",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 39,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "2fad42b1-4e4a-4200-822d-94e68471d3f0",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 39,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "02fffe69-1317-4269-bab5-00f60f1f5c5a",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 40,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "2ae1a949-bc9c-487d-bef4-2280aee5230d",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 40,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "161510c4-df99-494f-8157-af5ad6acbe47",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 40,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "d376b216-536a-48f9-8e05-3c8656968189",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 41,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "9269ff74-dc97-4954-b53d-3c404a3b87d3",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 41,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f2eab8ba-8b6b-4087-8860-f01394bcb69c",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 41,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "4b30fccc-f6d4-4939-8cc3-0fdbf02df1fa",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 42,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "a2f27ff0-9040-49b0-804d-9b94d27b4285",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 42,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "cfa95c12-745d-4371-9525-684bc47eda64",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 42,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "8ccc7195-f9e6-4ea7-ae3f-625c1dd48292",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 43,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "364d9ce0-e1ba-4347-bba9-7a0cc7e4984b",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 43,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "edfa331a-e0eb-4287-941f-271684f04f37",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 43,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "1b440004-6be3-4478-862b-f33569d4a3b0",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 44,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "1ed1433e-622b-4499-9fea-f7dd871016b8",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 44,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "71fdca4c-3146-4dba-82f0-e288aa637ddc",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 44,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "c130a82f-d2dc-42d0-9edb-a7bca89afb21",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 45,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "26d09e2c-c080-47fb-9711-95bb4051cd46",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 45,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "32518e2d-2e84-4eb4-9d02-e1d096b0406d",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 45,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "5e536945-3651-47b9-be08-38225b88cfb6",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 46,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ded9ecba-7305-4a52-a076-f44d3a38d485",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 46,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "7c1aab31-7b8d-4ed9-b716-d8fa2871213d",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 46,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "4d437cf6-73c1-4630-89e3-8542ba3fa67a",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 47,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b7cb1a88-1a23-4226-8241-d7c14e0afd34",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 47,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "5ff521ef-8897-4dc1-8568-c0378992104e",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 47,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "5167a15f-6233-4d0b-940f-ee1053d50d4c",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 48,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "220f66ec-1ad4-414b-b25a-e0675c913707",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 48,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "aa6f6cb7-5231-4426-8f70-f2b26e54667a",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 48,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b74939f3-ad49-42b4-bda6-2766f14c3f18",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 49,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "78af3349-1923-458a-91ea-917326469f2e",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 49,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "1c3ade9d-a04b-454e-8901-4c0fc08a4df7",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 49,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "12eff28a-3c1e-4a2b-a3c6-4110044f0f1b",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 50,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "fff83d6a-c93b-4a3e-8a7d-931a3b4ce052",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 50,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "55607132-e009-4f28-838d-a902e90ded08",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 50,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ac7a74d2-892b-4814-981b-7958c61a63d7",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 51,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "05f5b5bb-e84c-4ca5-99bc-3dc099c0d647",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 51,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "6604c9a6-2130-4f04-9554-a14b235edbc8",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 51,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ab8208a0-ee8b-4654-a614-3b66fed18154",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 52,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "53318752-5f60-432a-8bee-e46a82efe089",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 52,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "3789f684-cc72-4d17-953f-50f013c23f86",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 52,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "9fbee2a0-20fa-4d60-a44c-617b66fbe53e",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 53,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "209b6607-a8c8-4ce4-aeec-0e85af44e3ba",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 53,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "59672d97-7984-4a5b-8d21-bd1d5c8ad6a3",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": 53,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "055daf70-2234-452a-bccb-e15ccefd1a6f",
+    "Year": 2026,
+    "Month": 1,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "dc095a32-501f-4a63-bc3a-704b35a82ab6",
+    "Year": 2026,
+    "Month": 1,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "1d15d525-f75e-404e-b7e8-41e02b44194a",
+    "Year": 2026,
+    "Month": 1,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "e356fb07-d4a4-40db-b2c1-462c765354e5",
+    "Year": 2026,
+    "Month": 2,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "b0325146-5a15-4304-9588-81aa704f206c",
+    "Year": 2026,
+    "Month": 2,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "c6f66a93-6f6b-4910-a8f4-94f97f98bd34",
+    "Year": 2026,
+    "Month": 2,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "d5844b95-ade7-4d11-9a0b-6f221482e883",
+    "Year": 2026,
+    "Month": 3,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "f0819703-898f-4e63-a270-326567d6e225",
+    "Year": 2026,
+    "Month": 3,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "dc2cf5fb-a196-4f63-a114-00af6046901b",
+    "Year": 2026,
+    "Month": 3,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "cbb0104e-8171-4a67-9e17-e729235b5510",
+    "Year": 2026,
+    "Month": 4,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ece37708-0a56-41a9-862d-fa49ab64ffce",
+    "Year": 2026,
+    "Month": 4,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "f4f2ede2-353a-481b-ada5-cb07e0f1b920",
+    "Year": 2026,
+    "Month": 4,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "5beb001c-1e0d-446a-87f4-53c70efa5a81",
+    "Year": 2026,
+    "Month": 5,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "3562e41f-2a8a-4627-b2cf-f63667a732ed",
+    "Year": 2026,
+    "Month": 5,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "079cc5e9-8d60-4072-8b78-b58c96662582",
+    "Year": 2026,
+    "Month": 5,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "2f89ceae-f1ec-47c5-8046-af6538e21226",
+    "Year": 2026,
+    "Month": 6,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ca00b560-0da5-4223-b28a-e5553851d70d",
+    "Year": 2026,
+    "Month": 6,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "8133b796-d29d-4f7b-b6e2-beb3fc6a3e2a",
+    "Year": 2026,
+    "Month": 6,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "6daa647d-9f16-4cf3-b539-199aa4eda33d",
+    "Year": 2026,
+    "Month": 7,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "0c44a94e-e7b1-47ca-86ee-0c4338438fc8",
+    "Year": 2026,
+    "Month": 7,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "d6e59baa-be83-4263-9728-93223cb3c165",
+    "Year": 2026,
+    "Month": 7,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "a2b7d6a2-01e6-42eb-85a7-c1d0650bc45b",
+    "Year": 2026,
+    "Month": 8,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "64f3e63b-6154-494e-9efe-16d0fc8ae168",
+    "Year": 2026,
+    "Month": 8,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "d1238490-0b41-48ac-ade2-4c4b1895bdb4",
+    "Year": 2026,
+    "Month": 8,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "02b93531-18a3-4644-95c6-d0b3f51f4b47",
+    "Year": 2026,
+    "Month": 9,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "7be2d4de-0e03-4106-aea2-e069628b7fee",
+    "Year": 2026,
+    "Month": 9,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "7dafa34e-3020-45ea-9d51-744d99582514",
+    "Year": 2026,
+    "Month": 9,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "513b8c93-a915-4499-9df1-b2d9314cc543",
+    "Year": 2026,
+    "Month": 10,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "ce2d0478-b4cd-4cc9-9d66-89ce493ca50e",
+    "Year": 2026,
+    "Month": 10,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "dfc2b276-a5f8-4398-bb88-917a0a78af1c",
+    "Year": 2026,
+    "Month": 10,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "98e4ef85-f091-4f7d-96f2-413a0fa6ff67",
+    "Year": 2026,
+    "Month": 11,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "6a3287ea-c161-4e11-987d-862012cfb100",
+    "Year": 2026,
+    "Month": 11,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "8887af16-7c10-4bf0-8bdd-87de62865cbb",
+    "Year": 2026,
+    "Month": 11,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "eea283b9-db25-44b6-a5e4-3ace8d6afb69",
+    "Year": 2026,
+    "Month": 12,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "18db9ad7-0956-4970-9523-d03b99e496a5",
+    "Year": 2026,
+    "Month": 12,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": "Aarhus",
+    "Region": null
+  },
+  {
+    "DimensionId": "dc316996-5f9d-42ea-8e38-48eaa99fe786",
+    "Year": 2026,
+    "Month": 12,
+    "WeekNumber": null,
+    "LocationId": "matrikel",
+    "Municipality": null,
+    "Region": null
+  },
+  {
+    "DimensionId": "58ac2f85-d307-4085-80b4-07aedd3a5323",
+    "Year": null,
+    "Month": null,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": "DK"
+  }
+]

@@ -1,0 +1,70 @@
+async function fetchJson(url) {
+  const res = await fetch(url)
+  if (!res.ok) {
+    throw new Error(`Failed to fetch ${url}: ${res.status} ${res.statusText}`)
+  }
+
+  // Some bundled assets (notably WeekStat files) are UTF-16LE encoded.
+  // `response.json()` assumes UTF-8 and will throw.
+  const buf = await res.arrayBuffer()
+  const bytes = new Uint8Array(buf)
+  const text = sanitizeJsonText(decodeTextWithBom(bytes))
+  if (!text) {
+    throw new Error(`Empty JSON from ${url}`)
+  }
+
+  try {
+    return JSON.parse(text)
+  } catch (err) {
+    const preview = text.slice(0, 50)
+    throw new Error(`Invalid JSON from ${url}: ${preview}`)
+  }
+}
+
+function sanitizeJsonText(text) {
+  // Remove BOM char and any embedded NULs that can appear when decoding UTF-16 content.
+  return String(text).replace(/^\uFEFF/, '').replace(/\u0000/g, '').trim()
+}
+
+function decodeTextWithBom(bytes) {
+  if (bytes.length >= 2 && bytes[0] === 0xff && bytes[1] === 0xfe) {
+    // UTF-16 LE BOM
+    return new TextDecoder('utf-16le').decode(bytes)
+  }
+  if (bytes.length >= 2 && bytes[0] === 0xfe && bytes[1] === 0xff) {
+    // UTF-16 BE BOM
+    return new TextDecoder('utf-16be').decode(bytes)
+  }
+  if (bytes.length >= 3 && bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf) {
+    // UTF-8 BOM
+    return new TextDecoder('utf-8').decode(bytes)
+  }
+
+  return new TextDecoder('utf-8').decode(bytes)
+}
+
+export function fetchSpeciesFile(speciesClass) {
+  return fetchJson(`Data/Species/SPECIES-${speciesClass}.json`).then((data) => {
+    // Legacy files were arrays; corrected files are shaped as { species: [...] }
+    if (Array.isArray(data)) return data
+    if (data && Array.isArray(data.species)) return data.species
+    throw new Error(`Unexpected species payload for ${speciesClass}`)
+  })
+}
+
+export function fetchDimensionsPreset() {
+  return fetchJson('Data/dimensions.json')
+}
+
+export async function fetchWeekStat(speciesClass, weekNumber) {
+  const url = `Data/WeekStat/${speciesClass}-${weekNumber}.json`
+  try {
+    return await fetchJson(url)
+  } catch (err) {
+    // Some WeekStat files may be intentionally empty for certain classes/weeks.
+    if (String(err?.message || '').startsWith('Empty JSON from')) {
+      return { species: [] }
+    }
+    throw err
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "BigYearPWA",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye",
+  "remoteUser": "node",
+  "postCreateCommand": "npm ci",
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": {
+      "label": "Vite dev server",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  }
+}

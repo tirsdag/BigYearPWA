@@ -1,0 +1,24 @@
+{
+  "name": "bigyearpwa",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "copy-data": "node scripts/copyDataToPublic.mjs",
+    "predev": "npm run copy-data",
+    "dev": "vite",
+    "prebuild": "npm run copy-data",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "idb": "^8.0.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "vite": "^5.4.11"
+  }
+}
