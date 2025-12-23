@@ -111,6 +111,7 @@ export default function ListDetailPage() {
                         danishName={item.danishName}
                         speciesId={item.speciesId}
                         speciesStatus={item.speciesStatus}
+                        speciesClass={item.speciesClass}
                       />
                     </div>
                     <div className="small">{item.latinName || ''}</div>
@@ -142,6 +143,7 @@ export default function ListDetailPage() {
                             danishName={species.danishName}
                             speciesId={species.speciesId}
                             speciesStatus={species.speciesStatus}
+                            speciesClass={species.speciesClass}
                           />
                         ) : (
                           entry.SpeciesId

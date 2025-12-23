@@ -105,6 +105,7 @@ export default function ProbableSpeciesPage() {
                         danishName={x.danishName}
                         speciesId={x.speciesId}
                         speciesStatus={x.speciesStatus}
+                        speciesClass={x.speciesClass || speciesClass}
                       />
                     </div>
                     <div className="small">{x.latinName}</div>

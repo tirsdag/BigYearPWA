@@ -42,6 +42,7 @@ export default function AllSpeciesPage() {
                     danishName={s.danishName}
                     speciesId={s.speciesId}
                     speciesStatus={s.speciesStatus}
+                    speciesClass={s.speciesClass}
                   />
                 </div>
                 <div className="small">{s.latinName}</div>

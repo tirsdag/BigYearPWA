@@ -26,6 +26,7 @@ export async function getProbableSpeciesThisWeek({ listId, speciesClass }) {
     const speciesId = String(s.speciesid)
     const ref = refs[idx]
     return {
+      speciesClass: ref?.speciesClass ?? speciesClass,
       speciesId,
       rScore: s.rScore ?? 0,
       obsCount: s.obsCount ?? 0,
@@ -73,6 +74,7 @@ export async function getProbableSpeciesThisWeekForClass({ speciesClass, weekNum
   const items = limited.map((x, idx) => {
     const ref = refs[idx]
     return {
+      speciesClass: ref?.speciesClass ?? speciesClass,
       speciesId: x.speciesId,
       rScore: x.rScore,
       obsCount: x.obsCount,
@@ -134,6 +136,7 @@ export async function getTopProbableUnseenEntriesThisWeek({ listId, limit = 50 }
     const ref = refs[idx]
     return {
       entryId: x.entry.EntryId,
+      speciesClass: ref?.speciesClass ?? '',
       speciesId: x.speciesId,
       rScore: x.rScore,
       obsCount: x.obsCount,
