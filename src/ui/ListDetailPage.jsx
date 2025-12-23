@@ -6,6 +6,13 @@ import { getSpeciesById } from '../repositories/speciesRepository.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
 import SpeciesName from './SpeciesName.jsx'
 
+function formatSeenAtDa(seenAt) {
+  if (!seenAt) return ''
+  const d = new Date(seenAt)
+  if (Number.isNaN(d.getTime())) return String(seenAt)
+  return d.toLocaleDateString('da-DK')
+}
+
 export default function ListDetailPage() {
   const { listId } = useParams()
   const { setActiveListId } = useAppState()
@@ -192,6 +199,7 @@ export default function ListDetailPage() {
                         )}
                       </div>
                       <div className="small">{species?.latinName || ''}</div>
+                      {entry.SeenAt ? <div className="small">Set: {formatSeenAtDa(entry.SeenAt)}</div> : null}
                     </div>
                   </div>
                 </li>
