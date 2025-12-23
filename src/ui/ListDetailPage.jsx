@@ -64,14 +64,16 @@ export default function ListDetailPage() {
 
   const sorted = useMemo(() => {
     const base = entries.slice().sort((a, b) => {
-      if (sortMode === 'seenAt') {
+      if (sortMode === 'seenAt' || sortMode === 'seenAtOldest') {
         const ta = a?.SeenAt ? new Date(a.SeenAt).getTime() : 0
         const tb = b?.SeenAt ? new Date(b.SeenAt).getTime() : 0
 
         // Put entries without SeenAt last.
         if (!ta && tb) return 1
         if (ta && !tb) return -1
-        if (ta && tb && tb !== ta) return tb - ta
+        if (ta && tb && tb !== ta) {
+          return sortMode === 'seenAtOldest' ? ta - tb : tb - ta
+        }
       }
 
       const sa = speciesById.get(a.SpeciesId)
@@ -178,6 +180,7 @@ export default function ListDetailPage() {
             <select value={sortMode} onChange={(e) => setSortMode(e.target.value)}>
               <option value="sortId">SortId</option>
               <option value="seenAt">Set dato (nyeste først)</option>
+              <option value="seenAtOldest">Set dato (ældste først)</option>
             </select>
           </label>
           <label style={{ maxWidth: 260 }}>
