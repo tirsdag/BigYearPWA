@@ -28,6 +28,7 @@ export default function ListDetailPage() {
 
   const [seenFilter, setSeenFilter] = useState('all')
   const [query, setQuery] = useState('')
+  const [sortMode, setSortMode] = useState('sortId')
 
   async function refresh() {
     const [l, e] = await Promise.all([getList(listId), getListEntries(listId)])
@@ -63,9 +64,21 @@ export default function ListDetailPage() {
 
   const sorted = useMemo(() => {
     const base = entries.slice().sort((a, b) => {
+      if (sortMode === 'seenAt') {
+        const ta = a?.SeenAt ? new Date(a.SeenAt).getTime() : 0
+        const tb = b?.SeenAt ? new Date(b.SeenAt).getTime() : 0
+
+        // Put entries without SeenAt last.
+        if (!ta && tb) return 1
+        if (ta && !tb) return -1
+        if (ta && tb && tb !== ta) return tb - ta
+      }
+
       const sa = speciesById.get(a.SpeciesId)
       const sb = speciesById.get(b.SpeciesId)
-      return (sa?.sortCodeInt ?? 0) - (sb?.sortCodeInt ?? 0)
+      const diff = (sa?.sortCodeInt ?? 0) - (sb?.sortCodeInt ?? 0)
+      if (diff !== 0) return diff
+      return String(a?.SpeciesId || '').localeCompare(String(b?.SpeciesId || ''))
     })
 
     const q = query.trim().toLowerCase()
@@ -82,7 +95,7 @@ export default function ListDetailPage() {
       const s = speciesById.get(e.SpeciesId)
       return String(s?.danishName || '').toLowerCase().includes(q)
     })
-  }, [entries, speciesById, seenFilter, query])
+  }, [entries, speciesById, seenFilter, query, sortMode])
 
   async function onToggle(entry) {
     const updated = await toggleEntrySeen(entry, !entry.Seen)
@@ -158,6 +171,13 @@ export default function ListDetailPage() {
               <option value="all">Alle</option>
               <option value="unseen">Ikke set</option>
               <option value="seen">Set</option>
+            </select>
+          </label>
+          <label style={{ maxWidth: 240 }}>
+            Sorter{' '}
+            <select value={sortMode} onChange={(e) => setSortMode(e.target.value)}>
+              <option value="sortId">SortId</option>
+              <option value="seenAt">Set dato (nyeste først)</option>
             </select>
           </label>
           <label style={{ maxWidth: 260 }}>
