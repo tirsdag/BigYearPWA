@@ -3,7 +3,7 @@
    - Network-first for app shell, cache-first for /Data/
 */
 
-const CACHE_NAME = 'bigyear-cache-v2'
+const CACHE_NAME = 'bigyear-cache-v3'
 
 self.addEventListener('message', (event) => {
   if (event?.data?.type === 'SKIP_WAITING') {
@@ -16,7 +16,16 @@ self.addEventListener('install', (event) => {
     (async () => {
       const cache = await caches.open(CACHE_NAME)
       // Use relative URLs so this works under GitHub Pages subpaths (/repo/).
-      await cache.addAll(['./', './manifest.webmanifest'])
+      await cache.addAll([
+        './',
+        './manifest.webmanifest',
+        './images/species/default.jpeg',
+        './images/species/aves.jpeg',
+        './images/species/mammalia.jpeg',
+        './images/species/amphibia.jpeg',
+        './images/species/reptilia.jpeg',
+        './images/species/insecta.jpeg',
+      ])
       self.skipWaiting()
     })(),
   )

@@ -5,6 +5,7 @@ import { getList, getListEntries, toggleEntrySeen } from '../services/listServic
 import { getSpeciesById } from '../repositories/speciesRepository.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
 import SpeciesName from './SpeciesName.jsx'
+import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 function formatSeenAtDa(seenAt) {
   if (!seenAt) return ''
@@ -146,15 +147,24 @@ export default function ListDetailPage() {
                     Set
                   </button>
                   <div style={{ flex: 1 }}>
-                    <div>
-                      <SpeciesName
-                        danishName={item.danishName}
+                    <div className="row" style={{ alignItems: 'flex-start' }}>
+                      <SpeciesThumbnail
                         speciesId={item.speciesId}
-                        speciesStatus={item.speciesStatus}
                         speciesClass={item.speciesClass}
+                        alt={item.danishName || ''}
                       />
+                      <div>
+                        <div>
+                          <SpeciesName
+                            danishName={item.danishName}
+                            speciesId={item.speciesId}
+                            speciesStatus={item.speciesStatus}
+                            speciesClass={item.speciesClass}
+                          />
+                        </div>
+                        <div className="small">{item.latinName || ''}</div>
+                      </div>
                     </div>
-                    <div className="small">{item.latinName || ''}</div>
                     <div className="small">Score: {item.rScore} · Observationer: {item.obsCount}</div>
                   </div>
                 </div>
@@ -209,20 +219,29 @@ export default function ListDetailPage() {
                       {entry.Seen ? 'Set' : 'Ikke set'}
                     </button>
                     <div>
-                      <div>
-                        {species ? (
-                          <SpeciesName
-                            danishName={species.danishName}
-                            speciesId={species.speciesId}
-                            speciesStatus={species.speciesStatus}
-                            speciesClass={species.speciesClass}
-                          />
-                        ) : (
-                          entry.SpeciesId
-                        )}
+                      <div className="row" style={{ alignItems: 'flex-start' }}>
+                        <SpeciesThumbnail
+                          speciesId={entry.SpeciesId}
+                          speciesClass={species?.speciesClass || ''}
+                          alt={species?.danishName || ''}
+                        />
+                        <div>
+                          <div>
+                            {species ? (
+                              <SpeciesName
+                                danishName={species.danishName}
+                                speciesId={species.speciesId}
+                                speciesStatus={species.speciesStatus}
+                                speciesClass={species.speciesClass}
+                              />
+                            ) : (
+                              entry.SpeciesId
+                            )}
+                          </div>
+                          <div className="small">{species?.latinName || ''}</div>
+                          {entry.SeenAt ? <div className="small">Set: {formatSeenAtDa(entry.SeenAt)}</div> : null}
+                        </div>
                       </div>
-                      <div className="small">{species?.latinName || ''}</div>
-                      {entry.SeenAt ? <div className="small">Set: {formatSeenAtDa(entry.SeenAt)}</div> : null}
                     </div>
                   </div>
                 </li>

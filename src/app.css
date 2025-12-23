@@ -179,3 +179,13 @@ button:disabled {
   text-decoration: underline;
   opacity: 0.85;
 }
+
+.speciesThumb {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #d6d6d6;
+  background: #fff;
+  flex: 0 0 auto;
+}

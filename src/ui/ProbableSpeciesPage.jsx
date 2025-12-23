@@ -3,6 +3,7 @@ import { SPECIES_CLASSES } from '../services/listService.js'
 import { getProbableSpeciesThisWeekForClass } from '../services/probableSpeciesService.js'
 import { getISOWeek, getISOWeekStartDate } from '../utils/isoWeek.js'
 import SpeciesName from './SpeciesName.jsx'
+import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 const MAX_WEEK = 52
 
@@ -114,16 +115,23 @@ export default function ProbableSpeciesPage() {
                   <div style={{ minWidth: 90 }} className="small">
                     Observationer: {x.obsCount}
                   </div>
-                  <div>
+                  <div className="row" style={{ flex: 1, alignItems: 'flex-start' }}>
+                    <SpeciesThumbnail
+                      speciesId={x.speciesId}
+                      speciesClass={x.speciesClass || speciesClass}
+                      alt={x.danishName || ''}
+                    />
                     <div>
-                      <SpeciesName
-                        danishName={x.danishName}
-                        speciesId={x.speciesId}
-                        speciesStatus={x.speciesStatus}
-                        speciesClass={x.speciesClass || speciesClass}
-                      />
+                      <div>
+                        <SpeciesName
+                          danishName={x.danishName}
+                          speciesId={x.speciesId}
+                          speciesStatus={x.speciesStatus}
+                          speciesClass={x.speciesClass || speciesClass}
+                        />
+                      </div>
+                      <div className="small">{x.latinName}</div>
                     </div>
-                    <div className="small">{x.latinName}</div>
                   </div>
                 </div>
               </li>

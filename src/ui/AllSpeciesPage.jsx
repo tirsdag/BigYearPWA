@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { listSpecies } from '../services/speciesService.js'
 import { SPECIES_CLASSES } from '../services/listService.js'
 import SpeciesName from './SpeciesName.jsx'
+import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 export default function AllSpeciesPage() {
   const [speciesClass, setSpeciesClass] = useState('')
@@ -52,15 +53,22 @@ export default function AllSpeciesPage() {
           <ul className="list">
             {filtered.map((s) => (
               <li key={s.speciesId} style={{ marginBottom: 12 }}>
-                <div>
-                  <SpeciesName
-                    danishName={s.danishName}
+                <div className="row" style={{ alignItems: 'flex-start' }}>
+                  <SpeciesThumbnail
                     speciesId={s.speciesId}
-                    speciesStatus={s.speciesStatus}
                     speciesClass={s.speciesClass}
+                    alt={s.danishName || ''}
                   />
+                  <div>
+                    <SpeciesName
+                      danishName={s.danishName}
+                      speciesId={s.speciesId}
+                      speciesStatus={s.speciesStatus}
+                      speciesClass={s.speciesClass}
+                    />
+                    <div className="small">{s.latinName}</div>
+                  </div>
                 </div>
-                <div className="small">{s.latinName}</div>
               </li>
             ))}
           </ul>
