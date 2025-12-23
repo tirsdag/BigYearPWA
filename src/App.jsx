@@ -3,7 +3,6 @@ import { NavLink, Route, Routes } from 'react-router-dom'
 import ListsPage from './ui/ListsPage.jsx'
 import ListDetailPage from './ui/ListDetailPage.jsx'
 import AllSpeciesPage from './ui/AllSpeciesPage.jsx'
-import DimensionsPage from './ui/DimensionsPage.jsx'
 import ProbableSpeciesPage from './ui/ProbableSpeciesPage.jsx'
 import { bootstrapReferenceData } from './services/bootstrapService.js'
 import { AppStateContext } from './ui/appState.js'
@@ -61,7 +60,6 @@ export default function App() {
             <Route path="/" element={<ListsPage />} />
             <Route path="/lists/:listId" element={<ListDetailPage />} />
             <Route path="/species" element={<AllSpeciesPage />} />
-            <Route path="/dimensions" element={<DimensionsPage />} />
             <Route path="/probable" element={<ProbableSpeciesPage />} />
           </Routes>
         </main>
@@ -71,7 +69,6 @@ export default function App() {
             Lister
           </NavLink>
           <NavLink to="/species">Alle arter</NavLink>
-          <NavLink to="/dimensions">Dimensioner</NavLink>
           <NavLink to="/probable">Sandsynlige</NavLink>
         </nav>
       </div>

@@ -24,6 +24,16 @@ export async function putDimensionsMany(dimensions) {
   await tx.done
 }
 
+export async function replaceDimensionsMany(dimensions) {
+  const db = await getDb()
+  const tx = db.transaction('dimensions', 'readwrite')
+  await tx.store.clear()
+  for (const d of dimensions) {
+    tx.store.put(d)
+  }
+  await tx.done
+}
+
 export async function deleteDimension(dimensionId) {
   const db = await getDb()
   await db.delete('dimensions', dimensionId)
