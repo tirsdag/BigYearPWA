@@ -12,17 +12,28 @@ function getCategoryFallbackSrc(speciesClass) {
 
 export default function SpeciesThumbnail({ speciesId, speciesClass, alt = '', size = 44, className = '' }) {
   const id = String(speciesId || '').trim()
-  const primarySrc = useMemo(() => (id ? `./images/species/${id}.jpg` : ''), [id])
+  const primaryPngSrc = useMemo(() => (id ? `./images/species/${id}.png` : ''), [id])
+  const primaryJpgSrc = useMemo(() => (id ? `./images/species/${id}.jpg` : ''), [id])
   const fallbackSrc = useMemo(() => getCategoryFallbackSrc(speciesClass), [speciesClass])
 
-  const [src, setSrc] = useState(primarySrc || fallbackSrc)
+  const [src, setSrc] = useState(primaryPngSrc || primaryJpgSrc || fallbackSrc)
 
   // If props change (different list row), keep src in sync.
   useEffect(() => {
-    setSrc(primarySrc || fallbackSrc)
-  }, [primarySrc, fallbackSrc])
+    setSrc(primaryPngSrc || primaryJpgSrc || fallbackSrc)
+  }, [primaryPngSrc, primaryJpgSrc, fallbackSrc])
 
   function onError() {
+    if (src && src === primaryPngSrc && primaryJpgSrc) {
+      setSrc(primaryJpgSrc)
+      return
+    }
+
+    if (src && src === primaryJpgSrc) {
+      setSrc(fallbackSrc)
+      return
+    }
+
     if (src === fallbackSrc) {
       if (fallbackSrc !== './images/species/default.jpeg') {
         setSrc('./images/species/default.jpeg')
