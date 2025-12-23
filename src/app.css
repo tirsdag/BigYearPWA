@@ -189,3 +189,37 @@ button:disabled {
   background: #fff;
   flex: 0 0 auto;
 }
+
+.speciesThumbButton {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 10px;
+  display: inline-flex;
+  cursor: zoom-in;
+}
+
+.speciesThumbButton:active {
+  background: transparent;
+}
+
+.speciesImageDialog {
+  padding: 0;
+  border: 1px solid #d6d6d6;
+  border-radius: 12px;
+  background: #fff;
+  max-width: min(92vw, 720px);
+}
+
+.speciesImageDialog::backdrop {
+  background: rgba(17, 17, 17, 0.6);
+}
+
+.speciesImageDialog__img {
+  display: block;
+  max-width: 92vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+}

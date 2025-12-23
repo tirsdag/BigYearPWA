@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "copy-data": "node scripts/copyDataToPublic.mjs",
-    "predev": "npm run copy-data",
+    "verify-species-images": "node scripts/verifyLowercaseSpeciesImages.mjs",
+    "predev": "npm run copy-data && npm run verify-species-images",
     "dev": "vite",
-    "prebuild": "npm run copy-data",
+    "prebuild": "npm run copy-data && npm run verify-species-images",
     "build": "vite build",
     "preview": "vite preview"
   },
