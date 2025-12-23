@@ -15,6 +15,7 @@ function formatWeekStartDateDa(date) {
 
 export default function ProbableSpeciesPage() {
   const [speciesClass, setSpeciesClass] = useState('Aves')
+  const [query, setQuery] = useState('')
   const [selectedWeek, setSelectedWeek] = useState(() => {
     const w = getISOWeek(new Date()).week
     return Math.min(Math.max(1, w), MAX_WEEK)
@@ -50,6 +51,11 @@ export default function ProbableSpeciesPage() {
       })
   }, [speciesClass, selectedWeek])
 
+  const q = query.trim().toLowerCase()
+  const filtered = q
+    ? result.items.filter((x) => String(x?.danishName || '').toLowerCase().includes(q))
+    : result.items
+
   return (
     <div style={{ display: 'grid', gap: 16 }}>
       <div className="card">
@@ -63,6 +69,15 @@ export default function ProbableSpeciesPage() {
                 </option>
               ))}
             </select>
+          </label>
+          <label>
+            Søg{' '}
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Dansk navn…"
+              inputMode="search"
+            />
           </label>
           <label>
             Uge{' '}
@@ -88,11 +103,11 @@ export default function ProbableSpeciesPage() {
       </div>
 
       <div className="card">
-        {result.items.length === 0 ? (
+        {filtered.length === 0 ? (
           <div className="small">Ingen træffere.</div>
         ) : (
           <ul className="list">
-            {result.items.map((x) => (
+            {filtered.map((x) => (
               <li key={x.speciesId} style={{ marginBottom: 14 }}>
                 <div className="row">
                   <div style={{ minWidth: 80, fontWeight: 600 }}>Score: {x.rScore}</div>

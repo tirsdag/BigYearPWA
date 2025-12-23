@@ -20,6 +20,7 @@ export default function ListDetailPage() {
   const [probableError, setProbableError] = useState('')
 
   const [seenFilter, setSeenFilter] = useState('all')
+  const [query, setQuery] = useState('')
 
   async function refresh() {
     const [l, e] = await Promise.all([getList(listId), getListEntries(listId)])
@@ -60,10 +61,21 @@ export default function ListDetailPage() {
       return (sa?.sortCodeInt ?? 0) - (sb?.sortCodeInt ?? 0)
     })
 
-    if (seenFilter === 'seen') return base.filter((e) => Boolean(e.Seen))
-    if (seenFilter === 'unseen') return base.filter((e) => !e.Seen)
-    return base
-  }, [entries, speciesById, seenFilter])
+    const q = query.trim().toLowerCase()
+    const withSeen =
+      seenFilter === 'seen'
+        ? base.filter((e) => Boolean(e.Seen))
+        : seenFilter === 'unseen'
+          ? base.filter((e) => !e.Seen)
+          : base
+
+    if (!q) return withSeen
+
+    return withSeen.filter((e) => {
+      const s = speciesById.get(e.SpeciesId)
+      return String(s?.danishName || '').toLowerCase().includes(q)
+    })
+  }, [entries, speciesById, seenFilter, query])
 
   async function onToggle(entry) {
     const updated = await toggleEntrySeen(entry, !entry.Seen)
@@ -140,6 +152,15 @@ export default function ListDetailPage() {
               <option value="unseen">Ikke set</option>
               <option value="seen">Set</option>
             </select>
+          </label>
+          <label style={{ maxWidth: 260 }}>
+            Søg{' '}
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Dansk navn…"
+              inputMode="search"
+            />
           </label>
         </div>
         {sorted.length === 0 ? (

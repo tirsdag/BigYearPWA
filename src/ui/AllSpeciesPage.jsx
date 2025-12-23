@@ -5,11 +5,17 @@ import SpeciesName from './SpeciesName.jsx'
 
 export default function AllSpeciesPage() {
   const [speciesClass, setSpeciesClass] = useState('')
+  const [query, setQuery] = useState('')
   const [species, setSpecies] = useState([])
 
   useEffect(() => {
     listSpecies({ speciesClass }).then(setSpecies).catch(() => setSpecies([]))
   }, [speciesClass])
+
+  const q = query.trim().toLowerCase()
+  const filtered = q
+    ? species.filter((s) => String(s?.danishName || '').toLowerCase().includes(q))
+    : species
 
   return (
     <div style={{ display: 'grid', gap: 16 }}>
@@ -26,16 +32,25 @@ export default function AllSpeciesPage() {
               ))}
             </select>
           </label>
-          <div className="small">{species.length} arter</div>
+          <label>
+            Søg{' '}
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Dansk navn…"
+              inputMode="search"
+            />
+          </label>
+          <div className="small">{filtered.length} arter</div>
         </div>
       </div>
 
       <div className="card">
-        {species.length === 0 ? (
+        {filtered.length === 0 ? (
           <div className="small">Ingen arter.</div>
         ) : (
           <ul className="list">
-            {species.map((s) => (
+            {filtered.map((s) => (
               <li key={s.speciesId} style={{ marginBottom: 12 }}>
                 <div>
                   <SpeciesName
