@@ -1,21 +1,21 @@
 [
   {
+    "DimensionId": "dk",
+    "Year": null,
+    "Month": null,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": "DK"
+  },
+  {
     "DimensionId": "dk-2025",
     "Year": 2025,
     "Month": null,
     "WeekNumber": null,
     "LocationId": null,
     "Municipality": null,
-    "Region": null
-  },
-  {
-    "DimensionId": "aarhus-2025",
-    "Year": 2025,
-    "Month": null,
-    "WeekNumber": null,
-    "LocationId": null,
-    "Municipality": "Aarhus",
-    "Region": null
+    "Region": "DK"
   },
   {
     "DimensionId": "matrikel-2025",
@@ -24,15 +24,24 @@
     "WeekNumber": null,
     "LocationId": "matrikel",
     "Municipality": null,
-    "Region": null
+    "Region": "DK"
+  },
+    {
+    "DimensionId": "dk-2026",
+    "Year": 2026,
+    "Month": null,
+    "WeekNumber": null,
+    "LocationId": null,
+    "Municipality": null,
+    "Region": "DK"
   },
   {
-    "DimensionId": "aarhus-matrikel-2025",
-    "Year": 2025,
+    "DimensionId": "matrikel-2026",
+    "Year": 2026,
     "Month": null,
     "WeekNumber": null,
     "LocationId": "matrikel",
-    "Municipality": "Aarhus",
-    "Region": null
+    "Municipality": null,
+    "Region": "DK"
   }
 ]
