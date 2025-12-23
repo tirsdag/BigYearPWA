@@ -203,23 +203,24 @@ button:disabled {
   background: transparent;
 }
 
-.speciesImageDialog {
-  padding: 0;
-  border: 1px solid #d6d6d6;
-  border-radius: 12px;
-  background: #fff;
-  max-width: min(92vw, 720px);
-}
-
-.speciesImageDialog::backdrop {
+.speciesImageOverlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
   background: rgba(17, 17, 17, 0.6);
+  z-index: 1000;
 }
 
-.speciesImageDialog__img {
+.speciesImageOverlay__img {
   display: block;
   max-width: 92vw;
   max-height: 80vh;
   width: auto;
   height: auto;
   border-radius: 12px;
+  border: 1px solid #d6d6d6;
+  background: #fff;
 }

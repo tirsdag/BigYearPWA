@@ -16,20 +16,35 @@ function ensureSharedViewer() {
   if (sharedViewer) return sharedViewer
   if (typeof document === 'undefined') return null
 
-  const dialog = document.createElement('dialog')
-  dialog.className = 'speciesImageDialog'
-  dialog.addEventListener('click', (e) => {
-    if (e.target === dialog) dialog.close()
-  })
+  const overlay = document.createElement('div')
+  overlay.className = 'speciesImageOverlay'
+  overlay.setAttribute('role', 'dialog')
+  overlay.setAttribute('aria-modal', 'true')
+  overlay.setAttribute('aria-hidden', 'true')
 
   const img = document.createElement('img')
-  img.className = 'speciesImageDialog__img'
+  img.className = 'speciesImageOverlay__img'
   img.alt = ''
-  dialog.appendChild(img)
+  overlay.appendChild(img)
 
-  document.body.appendChild(dialog)
+  function close() {
+    overlay.style.display = 'none'
+    overlay.setAttribute('aria-hidden', 'true')
+    // Release memory on iOS by clearing src.
+    img.removeAttribute('src')
+  }
 
-  sharedViewer = { dialog, img }
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close()
+  })
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close()
+  })
+
+  document.body.appendChild(overlay)
+
+  sharedViewer = { overlay, img, close }
   return sharedViewer
 }
 
@@ -69,19 +84,17 @@ export default function SpeciesThumbnail({ speciesId, speciesClass, alt = '', si
 
   function openPreview() {
     const viewer = ensureSharedViewer()
-    if (!viewer) return
-
-    const { dialog, img } = viewer
-    img.src = src
-    img.alt = alt || ''
-
-    if (typeof dialog.showModal === 'function') {
-      if (!dialog.open) dialog.showModal()
+    if (!viewer) {
+      window.open(src, '_blank', 'noopener,noreferrer')
       return
     }
 
-    // Fallback for older browsers without <dialog>.
-    window.open(src, '_blank', 'noopener,noreferrer')
+    const { overlay, img } = viewer
+
+    img.src = src
+    img.alt = alt || ''
+    overlay.style.display = 'flex'
+    overlay.setAttribute('aria-hidden', 'false')
   }
 
   return (
