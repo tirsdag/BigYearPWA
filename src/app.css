@@ -111,6 +111,27 @@ button:disabled {
   opacity: 0.6;
 }
 
+.seenToggleButton {
+  min-width: 92px;
+}
+
+.seenToggleButton--unseen {
+  background: #f0f0f0;
+}
+
+.seenToggleButton--unseen:active {
+  background: #e8e8e8;
+}
+
+.seenToggleButton--seen {
+  background: #ffe08a;
+  border-color: #e0c060;
+}
+
+.seenToggleButton--seen:active {
+  background: #ffd66b;
+}
+
 .list {
   margin: 0;
   padding-left: 18px;

@@ -19,6 +19,8 @@ export default function ListDetailPage() {
   const [probableLoading, setProbableLoading] = useState(false)
   const [probableError, setProbableError] = useState('')
 
+  const [seenFilter, setSeenFilter] = useState('all')
+
   async function refresh() {
     const [l, e] = await Promise.all([getList(listId), getListEntries(listId)])
     setList(l)
@@ -52,14 +54,16 @@ export default function ListDetailPage() {
   }, [listId])
 
   const sorted = useMemo(() => {
-    return entries
-      .slice()
-      .sort((a, b) => {
-        const sa = speciesById.get(a.SpeciesId)
-        const sb = speciesById.get(b.SpeciesId)
-        return (sa?.sortCodeInt ?? 0) - (sb?.sortCodeInt ?? 0)
-      })
-  }, [entries, speciesById])
+    const base = entries.slice().sort((a, b) => {
+      const sa = speciesById.get(a.SpeciesId)
+      const sb = speciesById.get(b.SpeciesId)
+      return (sa?.sortCodeInt ?? 0) - (sb?.sortCodeInt ?? 0)
+    })
+
+    if (seenFilter === 'seen') return base.filter((e) => Boolean(e.Seen))
+    if (seenFilter === 'unseen') return base.filter((e) => !e.Seen)
+    return base
+  }, [entries, speciesById, seenFilter])
 
   async function onToggle(entry) {
     const updated = await toggleEntrySeen(entry, !entry.Seen)
@@ -104,7 +108,9 @@ export default function ListDetailPage() {
             {probableItems.map((item) => (
               <li key={item.entryId} style={{ marginBottom: 12 }}>
                 <div className="row">
-                  <button onClick={() => markProbableSeen(item)}>Markér som set</button>
+                  <button className="seenToggleButton seenToggleButton--unseen" onClick={() => markProbableSeen(item)}>
+                    Set
+                  </button>
                   <div style={{ flex: 1 }}>
                     <div>
                       <SpeciesName
@@ -125,7 +131,17 @@ export default function ListDetailPage() {
       </div>
 
       <div className="card">
-        <div style={{ fontWeight: 600, marginBottom: 8 }}>Arter</div>
+        <div className="row" style={{ marginBottom: 8 }}>
+          <div style={{ fontWeight: 600 }}>Arter</div>
+          <label style={{ maxWidth: 220 }}>
+            Vis{' '}
+            <select value={seenFilter} onChange={(e) => setSeenFilter(e.target.value)}>
+              <option value="all">Alle</option>
+              <option value="unseen">Ikke set</option>
+              <option value="seen">Set</option>
+            </select>
+          </label>
+        </div>
         {sorted.length === 0 ? (
           <div className="small">Ingen arter.</div>
         ) : (
@@ -135,7 +151,12 @@ export default function ListDetailPage() {
               return (
                 <li key={entry.EntryId} style={{ marginBottom: 12 }}>
                   <div className="row">
-                    <button onClick={() => onToggle(entry)}>{entry.Seen ? 'Set' : 'Ikke set'}</button>
+                    <button
+                      className={`seenToggleButton ${entry.Seen ? 'seenToggleButton--seen' : 'seenToggleButton--unseen'}`}
+                      onClick={() => onToggle(entry)}
+                    >
+                      {entry.Seen ? 'Set' : 'Ikke set'}
+                    </button>
                     <div>
                       <div>
                         {species ? (
