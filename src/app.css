@@ -76,13 +76,18 @@ a {
   display: flex;
   gap: 12px;
   overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
   padding: 6px 2px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
 }
 
 .probableCard {
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   flex: 0 0 auto;
   width: min(78vw, 520px);
   border: 1px solid #e5e5e5;
