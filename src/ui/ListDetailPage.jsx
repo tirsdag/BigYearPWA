@@ -140,14 +140,6 @@ export default function ListDetailPage() {
       <div className="card">
         <div className="probableHeader">
           <div style={{ fontWeight: 600 }}>Sandsynlige arter (denne uge)</div>
-          <div className="probableNav">
-            <button type="button" onClick={() => scrollProbableBy(-1)} aria-label="Forrige sandsynlige arter">
-              Forrige
-            </button>
-            <button type="button" onClick={() => scrollProbableBy(1)} aria-label="Næste sandsynlige arter">
-              Næste
-            </button>
-          </div>
         </div>
         <div className="small" style={{ marginBottom: 8 }}>
           {probableWeek ? `Uge ${probableWeek}` : 'Uge ?'} · Top 50 · Kun ikke sete
@@ -160,35 +152,55 @@ export default function ListDetailPage() {
         ) : probableItems.length === 0 ? (
           <div className="small">Ingen sandsynlige ikke-sete arter i denne uge.</div>
         ) : (
-          <div ref={probableScrollerRef} className="probableCarousel" role="list" aria-label="Sandsynlige arter">
-            {probableItems.map((item) => (
-              <div key={item.entryId} className="probableCard" role="listitem">
-                <div className="row" style={{ alignItems: 'flex-start' }}>
-                  <SpeciesThumbnail speciesId={item.speciesId} speciesClass={item.speciesClass} alt={item.danishName || ''} />
-                  <div style={{ minWidth: 0 }}>
-                    <div>
-                      <SpeciesName
-                        danishName={item.danishName}
-                        speciesId={item.speciesId}
-                        speciesStatus={item.speciesStatus}
-                        speciesClass={item.speciesClass}
-                      />
+          <div className="probableCarouselWrap">
+            <button
+              type="button"
+              className="probableArrow probableArrow--left"
+              onClick={() => scrollProbableBy(-1)}
+              aria-label="Forrige sandsynlige arter"
+              title="Forrige"
+            >
+              ‹
+            </button>
+            <div ref={probableScrollerRef} className="probableCarousel" role="list" aria-label="Sandsynlige arter">
+              {probableItems.map((item) => (
+                <div key={item.entryId} className="probableCard" role="listitem">
+                  <div className="row" style={{ alignItems: 'flex-start' }}>
+                    <SpeciesThumbnail speciesId={item.speciesId} speciesClass={item.speciesClass} alt={item.danishName || ''} />
+                    <div style={{ minWidth: 0 }}>
+                      <div>
+                        <SpeciesName
+                          danishName={item.danishName}
+                          speciesId={item.speciesId}
+                          speciesStatus={item.speciesStatus}
+                          speciesClass={item.speciesClass}
+                        />
+                      </div>
+                      <div className="small">{item.latinName || ''}</div>
+                      <div className="small">Score: {item.rScore} · Observationer: {item.obsCount}</div>
                     </div>
-                    <div className="small">{item.latinName || ''}</div>
-                    <div className="small">Score: {item.rScore} · Observationer: {item.obsCount}</div>
+                  </div>
+                  <div style={{ marginTop: 10 }}>
+                    <button
+                      type="button"
+                      className="seenToggleButton seenToggleButton--unseen"
+                      onClick={() => markProbableSeen(item)}
+                    >
+                      Set
+                    </button>
                   </div>
                 </div>
-                <div style={{ marginTop: 10 }}>
-                  <button
-                    type="button"
-                    className="seenToggleButton seenToggleButton--unseen"
-                    onClick={() => markProbableSeen(item)}
-                  >
-                    Set
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <button
+              type="button"
+              className="probableArrow probableArrow--right"
+              onClick={() => scrollProbableBy(1)}
+              aria-label="Næste sandsynlige arter"
+              title="Næste"
+            >
+              ›
+            </button>
           </div>
         )}
       </div>

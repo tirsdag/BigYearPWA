@@ -13,6 +13,7 @@ body {
   background: #ffffff;
   color: #111;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 a {
@@ -72,24 +73,49 @@ a {
   gap: 8px;
 }
 
+.probableCarouselWrap {
+  position: relative;
+}
+
 .probableCarousel {
   display: flex;
   gap: 12px;
   overflow-x: auto;
   overflow-y: hidden;
   width: 100%;
-  padding: 6px 2px;
+  box-sizing: border-box;
+  padding: 6px 40px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   touch-action: pan-x;
 }
 
+.probableArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 44px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+
+.probableArrow--left {
+  left: 4px;
+}
+
+.probableArrow--right {
+  right: 4px;
+}
+
 .probableCard {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   flex: 0 0 auto;
-  width: min(78vw, 520px);
+  width: min(64vw, 240px);
   border: 1px solid #e5e5e5;
   border-radius: 12px;
   padding: 12px;
