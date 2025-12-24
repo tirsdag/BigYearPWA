@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAppState } from './appState.js'
 import { getList, getListEntries, toggleEntrySeen } from '../services/listService.js'
@@ -17,6 +17,8 @@ function formatSeenAtDa(seenAt) {
 export default function ListDetailPage() {
   const { listId } = useParams()
   const { setActiveListId } = useAppState()
+
+  const probableScrollerRef = useRef(null)
 
   const [list, setList] = useState(null)
   const [entries, setEntries] = useState([])
@@ -119,6 +121,15 @@ export default function ListDetailPage() {
 
   if (!listId) return <div className="card">Mangler liste-id.</div>
 
+  function scrollProbableBy(direction) {
+    const el = probableScrollerRef.current
+    if (!el) return
+
+    // Scroll roughly one card at a time.
+    const step = Math.max(240, Math.floor(el.clientWidth * 0.85))
+    el.scrollBy({ left: direction * step, behavior: 'smooth' })
+  }
+
   return (
     <div style={{ display: 'grid', gap: 16 }}>
       <div className="card">
@@ -127,7 +138,17 @@ export default function ListDetailPage() {
       </div>
 
       <div className="card">
-        <div style={{ fontWeight: 600, marginBottom: 8 }}>Sandsynlige arter (denne uge)</div>
+        <div className="probableHeader">
+          <div style={{ fontWeight: 600 }}>Sandsynlige arter (denne uge)</div>
+          <div className="probableNav">
+            <button type="button" onClick={() => scrollProbableBy(-1)} aria-label="Forrige sandsynlige arter">
+              Forrige
+            </button>
+            <button type="button" onClick={() => scrollProbableBy(1)} aria-label="Næste sandsynlige arter">
+              Næste
+            </button>
+          </div>
+        </div>
         <div className="small" style={{ marginBottom: 8 }}>
           {probableWeek ? `Uge ${probableWeek}` : 'Uge ?'} · Top 50 · Kun ikke sete
         </div>
@@ -139,38 +160,36 @@ export default function ListDetailPage() {
         ) : probableItems.length === 0 ? (
           <div className="small">Ingen sandsynlige ikke-sete arter i denne uge.</div>
         ) : (
-          <ul className="list">
+          <div ref={probableScrollerRef} className="probableCarousel" role="list" aria-label="Sandsynlige arter">
             {probableItems.map((item) => (
-              <li key={item.entryId} style={{ marginBottom: 12 }}>
-                <div className="row">
-                  <button className="seenToggleButton seenToggleButton--unseen" onClick={() => markProbableSeen(item)}>
-                    Set
-                  </button>
-                  <div style={{ flex: 1 }}>
-                    <div className="row" style={{ alignItems: 'flex-start' }}>
-                      <SpeciesThumbnail
+              <div key={item.entryId} className="probableCard" role="listitem">
+                <div className="row" style={{ alignItems: 'flex-start' }}>
+                  <SpeciesThumbnail speciesId={item.speciesId} speciesClass={item.speciesClass} alt={item.danishName || ''} />
+                  <div style={{ minWidth: 0 }}>
+                    <div>
+                      <SpeciesName
+                        danishName={item.danishName}
                         speciesId={item.speciesId}
+                        speciesStatus={item.speciesStatus}
                         speciesClass={item.speciesClass}
-                        alt={item.danishName || ''}
                       />
-                      <div>
-                        <div>
-                          <SpeciesName
-                            danishName={item.danishName}
-                            speciesId={item.speciesId}
-                            speciesStatus={item.speciesStatus}
-                            speciesClass={item.speciesClass}
-                          />
-                        </div>
-                        <div className="small">{item.latinName || ''}</div>
-                      </div>
                     </div>
+                    <div className="small">{item.latinName || ''}</div>
                     <div className="small">Score: {item.rScore} · Observationer: {item.obsCount}</div>
                   </div>
                 </div>
-              </li>
+                <div style={{ marginTop: 10 }}>
+                  <button
+                    type="button"
+                    className="seenToggleButton seenToggleButton--unseen"
+                    onClick={() => markProbableSeen(item)}
+                  >
+                    Set
+                  </button>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
 
