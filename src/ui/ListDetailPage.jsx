@@ -126,7 +126,10 @@ export default function ListDetailPage() {
     if (!el) return
 
     // Scroll roughly one card at a time.
-    const step = Math.max(240, Math.floor(el.clientWidth * 0.85))
+    const first = el.querySelector('.probableCard')
+    const step = first
+      ? Math.max(200, Math.floor(first.getBoundingClientRect().width + 12))
+      : Math.max(240, Math.floor(el.clientWidth * 0.85))
     el.scrollBy({ left: direction * step, behavior: 'smooth' })
   }
 
@@ -153,15 +156,6 @@ export default function ListDetailPage() {
           <div className="small">Ingen sandsynlige ikke-sete arter i denne uge.</div>
         ) : (
           <div className="probableCarouselWrap">
-            <button
-              type="button"
-              className="probableArrow probableArrow--left"
-              onClick={() => scrollProbableBy(-1)}
-              aria-label="Forrige sandsynlige arter"
-              title="Forrige"
-            >
-              ‹
-            </button>
             <div ref={probableScrollerRef} className="probableCarousel" role="list" aria-label="Sandsynlige arter">
               {probableItems.map((item) => (
                 <div key={item.entryId} className="probableCard" role="listitem">
@@ -192,15 +186,15 @@ export default function ListDetailPage() {
                 </div>
               ))}
             </div>
-            <button
-              type="button"
-              className="probableArrow probableArrow--right"
-              onClick={() => scrollProbableBy(1)}
-              aria-label="Næste sandsynlige arter"
-              title="Næste"
-            >
-              ›
-            </button>
+
+            <div className="probableFooterNav">
+              <button type="button" onClick={() => scrollProbableBy(-1)} aria-label="Forrige sandsynlige arter">
+                Forrige
+              </button>
+              <button type="button" onClick={() => scrollProbableBy(1)} aria-label="Næste sandsynlige arter">
+                Næste
+              </button>
+            </div>
           </div>
         )}
       </div>
