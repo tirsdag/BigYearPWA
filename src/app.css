@@ -35,7 +35,7 @@ a {
 
 .nav {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 6px;
   padding: 10px;
   padding-bottom: calc(10px + env(safe-area-inset-bottom));

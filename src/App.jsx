@@ -113,8 +113,6 @@ export default function App() {
           <NavLink to="/" end>
             Lister
           </NavLink>
-          <NavLink to="/species">Alle arter</NavLink>
-          <NavLink to="/probable">Sandsynlige</NavLink>
         </nav>
       </div>
     </AppStateContext.Provider>
