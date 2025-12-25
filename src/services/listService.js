@@ -1,6 +1,7 @@
 import {
   deleteList,
   getAllLists,
+  getEntryById,
   getEntriesForList,
   getListById,
   putEntriesForList,
@@ -68,6 +69,13 @@ export async function toggleEntrySeen(entry, seen) {
 
   await putEntry(next)
   return next
+}
+
+export async function toggleEntrySeenById(entryId, seen) {
+  if (!entryId) throw new Error('EntryId er påkrævet')
+  const entry = await getEntryById(entryId)
+  if (!entry) throw new Error('Entry blev ikke fundet')
+  return toggleEntrySeen(entry, seen)
 }
 
 export async function removeList(listId) {

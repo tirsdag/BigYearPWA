@@ -1,11 +1,20 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAppState } from './appState.js'
-import { getList, getListEntries, toggleEntrySeen } from '../services/listService.js'
+import { getList, getListEntries, listLists, toggleEntrySeen, toggleEntrySeenById } from '../services/listService.js'
 import { getSpeciesById } from '../repositories/speciesRepository.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
+import { getISOWeek } from '../utils/isoWeek.js'
 import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
+
+const MAX_WEEK = 52
+
+function clampWeek(w) {
+  const n = Number(w)
+  if (!Number.isFinite(n)) return 1
+  return Math.min(MAX_WEEK, Math.max(1, Math.trunc(n)))
+}
 
 function formatSeenAtDa(seenAt) {
   if (!seenAt) return ''
@@ -24,6 +33,10 @@ export default function ListDetailPage() {
   const [entries, setEntries] = useState([])
   const [speciesById, setSpeciesById] = useState(new Map())
 
+  const [availableLists, setAvailableLists] = useState([])
+  const [probableListId, setProbableListId] = useState('')
+  const [selectedWeek, setSelectedWeek] = useState(() => clampWeek(getISOWeek(new Date()).week))
+
   const [probableWeek, setProbableWeek] = useState(null)
   const [probableItems, setProbableItems] = useState([])
   const [probableLoading, setProbableLoading] = useState(false)
@@ -34,39 +47,57 @@ export default function ListDetailPage() {
   const [query, setQuery] = useState('')
   const [sortMode, setSortMode] = useState('sortId')
 
-  async function refresh() {
-    const [l, e] = await Promise.all([getList(listId), getListEntries(listId)])
+  async function refreshListData() {
+    const [l, e, allLists] = await Promise.all([getList(listId), getListEntries(listId), listLists()])
     setList(l)
     setEntries(e)
+    setAvailableLists(allLists)
 
     const uniqueIds = Array.from(new Set(e.map((x) => x.SpeciesId)))
     const refs = await Promise.all(uniqueIds.map((id) => getSpeciesById(id)))
     const map = new Map(uniqueIds.map((id, idx) => [id, refs[idx]]))
     setSpeciesById(map)
-
-    setProbableLoading(true)
-    setProbableError('')
-    try {
-      const { week, items } = await getTopProbableUnseenEntriesThisWeek({ listId, limit: 50 })
-      setProbableWeek(week)
-      setProbableItems(items)
-      setProbableIndex(0)
-    } catch (err) {
-      setProbableItems([])
-      setProbableWeek(null)
-      setProbableError(String(err?.message || err))
-      setProbableIndex(0)
-    } finally {
-      setProbableLoading(false)
-    }
   }
 
   useEffect(() => {
     if (!listId) return
     setActiveListId(listId)
-    refresh().catch(() => {})
+
+    setProbableListId(listId)
+    setSelectedWeek(clampWeek(getISOWeek(new Date()).week))
+    refreshListData().catch(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listId])
+
+  useEffect(() => {
+    let cancelled = false
+    if (!probableListId) return
+
+    setProbableLoading(true)
+    setProbableError('')
+    getTopProbableUnseenEntriesThisWeek({ listId: probableListId, weekNumber: selectedWeek, limit: 50 })
+      .then(({ week, items }) => {
+        if (cancelled) return
+        setProbableWeek(week)
+        setProbableItems(items)
+        setProbableIndex(0)
+      })
+      .catch((err) => {
+        if (cancelled) return
+        setProbableItems([])
+        setProbableWeek(null)
+        setProbableError(String(err?.message || err))
+        setProbableIndex(0)
+      })
+      .finally(() => {
+        if (cancelled) return
+        setProbableLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [probableListId, selectedWeek])
 
   const sorted = useMemo(() => {
     const base = entries.slice().sort((a, b) => {
@@ -108,17 +139,21 @@ export default function ListDetailPage() {
   async function onToggle(entry) {
     const updated = await toggleEntrySeen(entry, !entry.Seen)
     setEntries((prev) => prev.map((e) => (e.EntryId === updated.EntryId ? updated : e)))
+
+    if (updated?.Seen) {
+      setProbableItems((prev) => {
+        const next = prev.filter((p) => p.entryId !== updated.EntryId)
+        setProbableIndex((i) => Math.max(0, Math.min(i, next.length - 1)))
+        return next
+      })
+    }
   }
 
   async function markProbableSeen(item) {
-    const entry = entries.find((e) => e.EntryId === item.entryId)
-    if (!entry) {
-      await refresh()
-      return
+    const updated = await toggleEntrySeenById(item.entryId, true)
+    if (String(updated?.ListId || '') === String(listId)) {
+      setEntries((prev) => prev.map((e) => (e.EntryId === updated.EntryId ? updated : e)))
     }
-
-    const updated = await toggleEntrySeen(entry, true)
-    setEntries((prev) => prev.map((e) => (e.EntryId === updated.EntryId ? updated : e)))
     setProbableItems((prev) => {
       const next = prev.filter((p) => p.entryId !== updated.EntryId)
       setProbableIndex((i) => Math.max(0, Math.min(i, next.length - 1)))
@@ -137,6 +172,14 @@ export default function ListDetailPage() {
 
   function nextProbable() {
     setProbableIndex((i) => Math.min(probableItems.length - 1, i + 1))
+  }
+
+  function prevWeek() {
+    setSelectedWeek((w) => (w <= 1 ? MAX_WEEK : w - 1))
+  }
+
+  function nextWeek() {
+    setSelectedWeek((w) => (w >= MAX_WEEK ? 1 : w + 1))
   }
 
   function onProbableTouchStart(e) {
@@ -171,6 +214,34 @@ export default function ListDetailPage() {
       <div className="card">
         <div className="probableHeader">
           <div style={{ fontWeight: 600 }}>Sandsynlige arter (denne uge)</div>
+        </div>
+        <div className="row" style={{ marginBottom: 8, flexWrap: 'wrap' }}>
+          <label style={{ maxWidth: 260 }}>
+            Liste{' '}
+            <select value={probableListId} onChange={(e) => setProbableListId(e.target.value)}>
+              {availableLists.map((l) => (
+                <option key={l.ListId} value={l.ListId}>
+                  {l.Name || l.ListId}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label style={{ maxWidth: 180 }}>
+            Uge{' '}
+            <select value={selectedWeek} onChange={(e) => setSelectedWeek(clampWeek(e.target.value))}>
+              {Array.from({ length: MAX_WEEK }, (_, i) => i + 1).map((w) => (
+                <option key={w} value={w}>
+                  {w}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button type="button" onClick={prevWeek} aria-label="Forrige uge">
+            Forrige uge
+          </button>
+          <button type="button" onClick={nextWeek} aria-label="Næste uge">
+            Næste uge
+          </button>
         </div>
         <div className="small" style={{ marginBottom: 8 }}>
           {probableWeek ? `Uge ${probableWeek}` : 'Uge ?'} · Top 50 · Kun ikke sete
