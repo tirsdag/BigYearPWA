@@ -11,6 +11,10 @@ import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 const MAX_WEEK = 52
 
+const RARE_STATUSES = new Set(['AU', 'HU', 'BU', 'CU', 'U', 'AS'])
+const EXOTIC_STATUSES = new Set(['EU', 'DU', 'E', 'D'])
+const COMMON_STATUSES = new Set(['A', 'X', 'C'])
+
 function formatWeekStartDateDa(date) {
   const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAJ', 'JUN', 'JUL', 'AUG', 'SEP', 'OKT', 'NOV', 'DEC']
   const d = String(date.getDate()).padStart(2, '0')
@@ -56,6 +60,7 @@ export default function ListDetailPage() {
   const [probableIndex, setProbableIndex] = useState(0)
 
   const [seenFilter, setSeenFilter] = useState('all')
+  const [statusFilter, setStatusFilter] = useState('common')
   const [query, setQuery] = useState('')
   const [sortMode, setSortMode] = useState('sortId')
 
@@ -140,13 +145,26 @@ export default function ListDetailPage() {
           ? base.filter((e) => !e.Seen)
           : base
 
-    if (!q) return withSeen
+    const withStatus =
+      statusFilter === 'all'
+        ? withSeen
+        : withSeen.filter((e) => {
+            const s = speciesById.get(e.SpeciesId)
+            const status = String(s?.speciesStatus || '').trim().toUpperCase()
+            if (!status) return false
+            if (statusFilter === 'rare') return RARE_STATUSES.has(status)
+            if (statusFilter === 'exotic') return EXOTIC_STATUSES.has(status)
+            if (statusFilter === 'common') return COMMON_STATUSES.has(status)
+            return true
+          })
 
-    return withSeen.filter((e) => {
+    if (!q) return withStatus
+
+    return withStatus.filter((e) => {
       const s = speciesById.get(e.SpeciesId)
       return String(s?.danishName || '').toLowerCase().includes(q)
     })
-  }, [entries, speciesById, seenFilter, query, sortMode])
+  }, [entries, speciesById, seenFilter, statusFilter, query, sortMode])
 
   async function onToggle(entry) {
     const updated = await toggleEntrySeen(entry, !entry.Seen)
@@ -382,6 +400,19 @@ export default function ListDetailPage() {
 
       <div className="card">
         <div className="row" style={{ marginBottom: 8 }}>
+          <label style={{ width: '100%' }}>
+            <input
+              style={{ width: '100%' }}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Søg dansk navn…"
+              inputMode="search"
+              aria-label="Søg dansk navn"
+            />
+          </label>
+        </div>
+
+        <div className="row" style={{ marginBottom: 8 }}>
           <label style={{ maxWidth: 220 }}>
             Vis{' '}
             <select value={seenFilter} onChange={(e) => setSeenFilter(e.target.value)}>
@@ -390,6 +421,17 @@ export default function ListDetailPage() {
               <option value="seen">Set</option>
             </select>
           </label>
+
+          <label style={{ maxWidth: 260 }}>
+            Status{' '}
+            <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+              <option value="all">All</option>
+              <option value="rare">sjældne (rød/grøn)</option>
+              <option value="exotic">[eksotiske]</option>
+              <option value="common">Almindelige</option>
+            </select>
+          </label>
+
           <label style={{ maxWidth: 240 }}>
             Sorter{' '}
             <select value={sortMode} onChange={(e) => setSortMode(e.target.value)}>
@@ -397,15 +439,6 @@ export default function ListDetailPage() {
               <option value="seenAt">Set dato (nyeste først)</option>
               <option value="seenAtOldest">Set dato (ældste først)</option>
             </select>
-          </label>
-          <label style={{ maxWidth: 260 }}>
-            Søg{' '}
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Dansk navn…"
-              inputMode="search"
-            />
           </label>
         </div>
         {sorted.length === 0 ? (
