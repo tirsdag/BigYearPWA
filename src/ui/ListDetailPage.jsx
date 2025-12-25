@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useAppState } from './appState.js'
 import { getList, getListEntries, listLists, toggleEntrySeen, toggleEntrySeenById } from '../services/listService.js'
 import { getSpeciesById } from '../repositories/speciesRepository.js'
@@ -25,6 +25,7 @@ function formatSeenAtDa(seenAt) {
 
 export default function ListDetailPage() {
   const { listId } = useParams()
+  const navigate = useNavigate()
   const { setActiveListId } = useAppState()
 
   const probableTouchRef = useRef({ x: 0, y: 0 })
@@ -207,16 +208,8 @@ export default function ListDetailPage() {
   return (
     <div style={{ display: 'grid', gap: 16 }}>
       <div className="card">
-        <div style={{ fontWeight: 600 }}>{list?.Name || 'Liste'}</div>
-        <div className="small">{listId}</div>
-      </div>
-
-      <div className="card">
-        <div className="probableHeader">
-          <div style={{ fontWeight: 600 }}>Sandsynlige arter (denne uge)</div>
-        </div>
-        <div className="row" style={{ marginBottom: 8, flexWrap: 'wrap' }}>
-          <label style={{ maxWidth: 260 }}>
+        <div className="row" style={{ flexWrap: 'wrap' }}>
+          <label style={{ maxWidth: 320 }}>
             Liste{' '}
             <select value={probableListId} onChange={(e) => setProbableListId(e.target.value)}>
               {availableLists.map((l) => (
@@ -226,6 +219,22 @@ export default function ListDetailPage() {
               ))}
             </select>
           </label>
+
+          <button type="button" onClick={() => setProbableListId(listId)} aria-label="Vælg denne liste">
+            Denne liste
+          </button>
+
+          <button type="button" onClick={() => navigate('/')} aria-label="Opret ny liste">
+            Opret ny liste
+          </button>
+        </div>
+      </div>
+
+      <div className="card">
+        <div className="probableHeader">
+          <div style={{ fontWeight: 600 }}>Sandsynlige arter (denne uge)</div>
+        </div>
+        <div className="row" style={{ marginBottom: 8, flexWrap: 'wrap' }}>
           <label style={{ maxWidth: 180 }}>
             Uge{' '}
             <select value={selectedWeek} onChange={(e) => setSelectedWeek(clampWeek(e.target.value))}>
