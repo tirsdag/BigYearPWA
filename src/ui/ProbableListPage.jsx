@@ -3,11 +3,18 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAppState } from './appState.js'
 import { listLists, toggleEntrySeenById } from '../services/listService.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
-import { getISOWeek } from '../utils/isoWeek.js'
+import { getISOWeek, getISOWeekStartDate } from '../utils/isoWeek.js'
 import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 const MAX_WEEK = 52
+
+function formatWeekStartDateDa(date) {
+  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAJ', 'JUN', 'JUL', 'AUG', 'SEP', 'OKT', 'NOV', 'DEC']
+  const d = String(date.getDate()).padStart(2, '0')
+  const m = months[date.getMonth()] || ''
+  return `${d}-${m}`
+}
 
 function clampWeek(w) {
   const n = Number(w)
@@ -18,6 +25,8 @@ function clampWeek(w) {
 export default function ProbableListPage() {
   const location = useLocation()
   const { activeListId } = useAppState()
+
+  const isoYear = getISOWeek(new Date()).year
 
   const search = useMemo(() => new URLSearchParams(location.search || ''), [location.search])
   const initialListId = String(search.get('listId') || activeListId || '').trim()
@@ -129,7 +138,7 @@ export default function ProbableListPage() {
           >
             {Array.from({ length: MAX_WEEK }, (_, i) => i + 1).map((w) => (
               <option key={w} value={w}>
-                {w}
+                {w} ({formatWeekStartDateDa(getISOWeekStartDate(isoYear, w))})
               </option>
             ))}
           </select>
@@ -143,7 +152,7 @@ export default function ProbableListPage() {
           Uge {selectedWeek} · Kun ikke sete
         </div>
         <div style={{ marginTop: 8 }}>
-          <Link to={selectedListId ? `/lists/${selectedListId}` : '/'}>Lister</Link>
+          <Link to={selectedListId ? `/lists/${selectedListId}` : '/'}>Tilbage til listen</Link>
         </div>
         {error ? <div className="small">{error}</div> : null}
       </div>

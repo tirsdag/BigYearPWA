@@ -4,11 +4,18 @@ import { useAppState } from './appState.js'
 import { getList, getListEntries, listLists, toggleEntrySeen, toggleEntrySeenById } from '../services/listService.js'
 import { getSpeciesById } from '../repositories/speciesRepository.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
-import { getISOWeek } from '../utils/isoWeek.js'
+import { getISOWeek, getISOWeekStartDate } from '../utils/isoWeek.js'
 import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 const MAX_WEEK = 52
+
+function formatWeekStartDateDa(date) {
+  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAJ', 'JUN', 'JUL', 'AUG', 'SEP', 'OKT', 'NOV', 'DEC']
+  const d = String(date.getDate()).padStart(2, '0')
+  const m = months[date.getMonth()] || ''
+  return `${d}-${m}`
+}
 
 function clampWeek(w) {
   const n = Number(w)
@@ -27,6 +34,8 @@ export default function ListDetailPage() {
   const { listId } = useParams()
   const navigate = useNavigate()
   const { setActiveListId } = useAppState()
+
+  const isoYear = getISOWeek(new Date()).year
 
   const probableTouchRef = useRef({ x: 0, y: 0 })
 
@@ -235,13 +244,6 @@ export default function ListDetailPage() {
       <div className="card">
         <div className="probableHeader">
           <div style={{ fontWeight: 600 }}>Forslag for uge ({selectedWeek})</div>
-          <button
-            type="button"
-            onClick={() => navigate(`/probable-list?listId=${encodeURIComponent(probableListId)}&week=${encodeURIComponent(String(selectedWeek))}`)}
-            aria-label="Vis alle sandsynlige arter som liste"
-          >
-            Andre forslag
-          </button>
         </div>
         <div className="row" style={{ marginBottom: 8, flexWrap: 'wrap' }}>
           <button type="button" onClick={prevWeek} aria-label="Forrige uge">
@@ -256,7 +258,7 @@ export default function ListDetailPage() {
           >
             {Array.from({ length: MAX_WEEK }, (_, i) => i + 1).map((w) => (
               <option key={w} value={w}>
-                {w}
+                {w} ({formatWeekStartDateDa(getISOWeekStartDate(isoYear, w))})
               </option>
             ))}
           </select>
@@ -318,13 +320,27 @@ export default function ListDetailPage() {
                     </div>
                   </div>
                   <div style={{ marginTop: 10 }}>
-                    <button
-                      type="button"
-                      className="seenToggleButton seenToggleButton--unseen"
-                      onClick={() => markProbableSeen(focusedProbable)}
-                    >
-                      Set
-                    </button>
+                    <div className="row" style={{ gap: 8, flexWrap: 'nowrap' }}>
+                      <button
+                        type="button"
+                        className="seenToggleButton seenToggleButton--unseen"
+                        onClick={() => markProbableSeen(focusedProbable)}
+                      >
+                        Set
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          navigate(
+                            `/probable-list?listId=${encodeURIComponent(probableListId)}&week=${encodeURIComponent(String(selectedWeek))}`,
+                          )
+                        }
+                        aria-label="Vis alle forslag som liste"
+                      >
+                        Andre forslag
+                      </button>
+                    </div>
                   </div>
                 </div>
               ) : null}
