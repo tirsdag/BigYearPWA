@@ -4,7 +4,8 @@ import { useAppState } from './appState.js'
 import { listLists, toggleEntrySeenById } from '../services/listService.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
 import { getISOWeek, getISOWeekStartDate } from '../utils/isoWeek.js'
-import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
+import { getDofKnownLocationsUrl } from '../utils/dofLinks.js'
+import SpeciesName from './SpeciesName.jsx'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 const MAX_WEEK = 52
@@ -26,6 +27,7 @@ export default function ProbableListPage() {
   const location = useLocation()
   const { activeListId } = useAppState()
 
+  const currentYear = new Date().getFullYear()
   const isoYear = getISOWeek(new Date()).year
 
   const search = useMemo(() => new URLSearchParams(location.search || ''), [location.search])
@@ -165,7 +167,7 @@ export default function ProbableListPage() {
         ) : (
           <ul className="list entryList">
             {items.map((x) => {
-              const link = getSpeciesExternalLink({ speciesClass: x.speciesClass, speciesId: x.speciesId })
+              const url = getDofKnownLocationsUrl({ speciesId: x.speciesId, weekNumber: selectedWeek, year: currentYear })
               return (
                 <li key={x.entryId}>
                   <div className="entryItem">
@@ -199,10 +201,10 @@ export default function ProbableListPage() {
                         <div className="small">
                           Score: {x.rScore} · Observationer: {x.obsCount}
                         </div>
-                        {link ? (
+                        {url ? (
                           <div className="small">
-                            <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
-                              {link.label}
+                            <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
+                              Set her
                             </a>
                           </div>
                         ) : null}

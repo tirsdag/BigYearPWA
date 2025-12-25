@@ -5,7 +5,8 @@ import { getList, getListEntries, listLists, toggleEntrySeen, toggleEntrySeenByI
 import { getSpeciesById } from '../repositories/speciesRepository.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
 import { getISOWeek, getISOWeekStartDate } from '../utils/isoWeek.js'
-import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
+import { getDofKnownLocationsUrl } from '../utils/dofLinks.js'
+import SpeciesName from './SpeciesName.jsx'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 const MAX_WEEK = 52
@@ -35,6 +36,7 @@ export default function ListDetailPage() {
   const navigate = useNavigate()
   const { setActiveListId } = useAppState()
 
+  const currentYear = new Date().getFullYear()
   const isoYear = getISOWeek(new Date()).year
 
   const probableTouchRef = useRef({ x: 0, y: 0 })
@@ -305,14 +307,15 @@ export default function ListDetailPage() {
                       </div>
                       <div className="small">{focusedProbable.latinName || ''}</div>
                       {(() => {
-                        const link = getSpeciesExternalLink({
-                          speciesClass: focusedProbable.speciesClass,
+                        const url = getDofKnownLocationsUrl({
                           speciesId: focusedProbable.speciesId,
+                          weekNumber: selectedWeek,
+                          year: currentYear,
                         })
-                        return link ? (
+                        return url ? (
                           <div className="small">
-                            <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
-                              {link.label}
+                            <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
+                              Set her
                             </a>
                           </div>
                         ) : null
@@ -397,9 +400,9 @@ export default function ListDetailPage() {
           <ul className="list entryList">
             {sorted.map((entry) => {
               const species = speciesById.get(entry.SpeciesId)
-              const link = species
-                ? getSpeciesExternalLink({ speciesClass: species.speciesClass, speciesId: species.speciesId })
-                : null
+              const url = species
+                ? getDofKnownLocationsUrl({ speciesId: species.speciesId, weekNumber: selectedWeek, year: currentYear })
+                : ''
               return (
                 <li key={entry.EntryId} style={{ marginBottom: 12 }}>
                   <div className="entryItem">
@@ -436,10 +439,10 @@ export default function ListDetailPage() {
 
                       <div className="entryBody">
                         <div className="small">{species?.latinName || ''}</div>
-                        {link ? (
+                        {url ? (
                           <div className="small">
-                            <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
-                              {link.label}
+                            <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
+                              Set her
                             </a>
                           </div>
                         ) : null}
