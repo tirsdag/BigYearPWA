@@ -4,6 +4,7 @@ import ListsPage from './ui/ListsPage.jsx'
 import ListDetailPage from './ui/ListDetailPage.jsx'
 import AllSpeciesPage from './ui/AllSpeciesPage.jsx'
 import ProbableSpeciesPage from './ui/ProbableSpeciesPage.jsx'
+import ProbableListPage from './ui/ProbableListPage.jsx'
 import { bootstrapReferenceData } from './services/bootstrapService.js'
 import { AppStateContext } from './ui/appState.js'
 import { createList, listLists, SPECIES_CLASSES } from './services/listService.js'
@@ -106,6 +107,7 @@ export default function App() {
             <Route path="/lists/:listId" element={<ListDetailPage />} />
             <Route path="/species" element={<AllSpeciesPage />} />
             <Route path="/probable" element={<ProbableSpeciesPage />} />
+            <Route path="/probable-list" element={<ProbableListPage />} />
           </Routes>
         </main>
       </div>

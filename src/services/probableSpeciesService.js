@@ -88,7 +88,7 @@ export async function getProbableSpeciesThisWeekForClass({ speciesClass, weekNum
   return { week, items }
 }
 
-export async function getTopProbableUnseenEntriesThisWeek({ listId, limit = 50, weekNumber } = {}) {
+export async function getTopProbableUnseenEntriesThisWeek({ listId, limit, weekNumber } = {}) {
   if (!listId) throw new Error('Der kræves en aktiv liste')
 
   const { week: currentWeek } = getISOWeek(new Date())
@@ -130,7 +130,7 @@ export async function getTopProbableUnseenEntriesThisWeek({ listId, limit = 50, 
     return String(a.speciesId).localeCompare(String(b.speciesId))
   })
 
-  const top = matchedStats.slice(0, limit)
+  const top = typeof limit === 'number' ? matchedStats.slice(0, Math.max(0, limit)) : matchedStats
   const refs = await Promise.all(top.map((x) => getSpeciesById(x.speciesId)))
 
   const items = top.map((x, idx) => {

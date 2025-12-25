@@ -235,6 +235,13 @@ export default function ListDetailPage() {
       <div className="card">
         <div className="probableHeader">
           <div style={{ fontWeight: 600 }}>Sandsynlige arter (valgte uge)</div>
+          <button
+            type="button"
+            onClick={() => navigate(`/probable-list?listId=${encodeURIComponent(probableListId)}&week=${encodeURIComponent(String(selectedWeek))}`)}
+            aria-label="Vis alle sandsynlige arter som liste"
+          >
+            Liste
+          </button>
         </div>
         <div className="row" style={{ marginBottom: 8, flexWrap: 'wrap' }}>
           <button type="button" onClick={prevWeek} aria-label="Forrige uge">
