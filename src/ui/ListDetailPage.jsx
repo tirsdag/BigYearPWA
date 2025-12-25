@@ -425,7 +425,7 @@ export default function ListDetailPage() {
           <label style={{ maxWidth: 260 }}>
             Status{' '}
             <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-              <option value="all">All</option>
+              <option value="all">Alle</option>
               <option value="rare">sjældne (rød/grøn)</option>
               <option value="exotic">[eksotiske]</option>
               <option value="common">Almindelige</option>
