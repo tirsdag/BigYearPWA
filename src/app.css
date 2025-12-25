@@ -109,6 +109,23 @@ a {
   background: #fff;
 }
 
+.probableDeckWrap {
+  display: grid;
+  gap: 10px;
+}
+
+.probableDeck {
+  width: 100%;
+  touch-action: pan-y;
+}
+
+.probableDeckCard {
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+}
+
 .card {
   border: 1px solid #e5e5e5;
   border-radius: 12px;

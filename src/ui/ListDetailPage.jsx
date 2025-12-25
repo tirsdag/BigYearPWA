@@ -18,7 +18,7 @@ export default function ListDetailPage() {
   const { listId } = useParams()
   const { setActiveListId } = useAppState()
 
-  const probableScrollerRef = useRef(null)
+  const probableTouchRef = useRef({ x: 0, y: 0 })
 
   const [list, setList] = useState(null)
   const [entries, setEntries] = useState([])
@@ -28,6 +28,7 @@ export default function ListDetailPage() {
   const [probableItems, setProbableItems] = useState([])
   const [probableLoading, setProbableLoading] = useState(false)
   const [probableError, setProbableError] = useState('')
+  const [probableIndex, setProbableIndex] = useState(0)
 
   const [seenFilter, setSeenFilter] = useState('all')
   const [query, setQuery] = useState('')
@@ -49,10 +50,12 @@ export default function ListDetailPage() {
       const { week, items } = await getTopProbableUnseenEntriesThisWeek({ listId, limit: 50 })
       setProbableWeek(week)
       setProbableItems(items)
+      setProbableIndex(0)
     } catch (err) {
       setProbableItems([])
       setProbableWeek(null)
       setProbableError(String(err?.message || err))
+      setProbableIndex(0)
     } finally {
       setProbableLoading(false)
     }
@@ -116,21 +119,46 @@ export default function ListDetailPage() {
 
     const updated = await toggleEntrySeen(entry, true)
     setEntries((prev) => prev.map((e) => (e.EntryId === updated.EntryId ? updated : e)))
-    setProbableItems((prev) => prev.filter((p) => p.entryId !== updated.EntryId))
+    setProbableItems((prev) => {
+      const next = prev.filter((p) => p.entryId !== updated.EntryId)
+      setProbableIndex((i) => Math.max(0, Math.min(i, next.length - 1)))
+      return next
+    })
   }
 
   if (!listId) return <div className="card">Mangler liste-id.</div>
 
-  function scrollProbableBy(direction) {
-    const el = probableScrollerRef.current
-    if (!el) return
+  const hasProbable = probableItems.length > 0
+  const focusedProbable = hasProbable ? probableItems[Math.min(probableIndex, probableItems.length - 1)] : null
 
-    // Scroll roughly one card at a time.
-    const first = el.querySelector('.probableCard')
-    const step = first
-      ? Math.max(200, Math.floor(first.getBoundingClientRect().width + 12))
-      : Math.max(240, Math.floor(el.clientWidth * 0.85))
-    el.scrollBy({ left: direction * step, behavior: 'smooth' })
+  function prevProbable() {
+    setProbableIndex((i) => Math.max(0, i - 1))
+  }
+
+  function nextProbable() {
+    setProbableIndex((i) => Math.min(probableItems.length - 1, i + 1))
+  }
+
+  function onProbableTouchStart(e) {
+    const t = e.touches?.[0]
+    if (!t) return
+    probableTouchRef.current = { x: t.clientX, y: t.clientY }
+  }
+
+  function onProbableTouchEnd(e) {
+    const t = e.changedTouches?.[0]
+    if (!t) return
+
+    const start = probableTouchRef.current
+    const dx = t.clientX - start.x
+    const dy = t.clientY - start.y
+
+    // Only treat as swipe if it's primarily horizontal.
+    if (Math.abs(dx) < 40) return
+    if (Math.abs(dx) < Math.abs(dy) * 1.5) return
+
+    if (dx < 0) nextProbable()
+    else prevProbable()
   }
 
   return (
@@ -155,43 +183,60 @@ export default function ListDetailPage() {
         ) : probableItems.length === 0 ? (
           <div className="small">Ingen sandsynlige ikke-sete arter i denne uge.</div>
         ) : (
-          <div className="probableCarouselWrap">
-            <div ref={probableScrollerRef} className="probableCarousel" role="list" aria-label="Sandsynlige arter">
-              {probableItems.map((item) => (
-                <div key={item.entryId} className="probableCard" role="listitem">
+          <div className="probableDeckWrap">
+            <div
+              className="probableDeck"
+              onTouchStart={onProbableTouchStart}
+              onTouchEnd={onProbableTouchEnd}
+              role="group"
+              aria-label="Sandsynlige arter"
+            >
+              {focusedProbable ? (
+                <div className="probableDeckCard">
                   <div className="row" style={{ alignItems: 'flex-start' }}>
-                    <SpeciesThumbnail speciesId={item.speciesId} speciesClass={item.speciesClass} alt={item.danishName || ''} />
+                    <SpeciesThumbnail
+                      speciesId={focusedProbable.speciesId}
+                      speciesClass={focusedProbable.speciesClass}
+                      alt={focusedProbable.danishName || ''}
+                    />
                     <div style={{ minWidth: 0 }}>
                       <div>
                         <SpeciesName
-                          danishName={item.danishName}
-                          speciesId={item.speciesId}
-                          speciesStatus={item.speciesStatus}
-                          speciesClass={item.speciesClass}
+                          danishName={focusedProbable.danishName}
+                          speciesId={focusedProbable.speciesId}
+                          speciesStatus={focusedProbable.speciesStatus}
+                          speciesClass={focusedProbable.speciesClass}
                         />
                       </div>
-                      <div className="small">{item.latinName || ''}</div>
-                      <div className="small">Score: {item.rScore} · Observationer: {item.obsCount}</div>
+                      <div className="small">{focusedProbable.latinName || ''}</div>
+                      <div className="small">
+                        Score: {focusedProbable.rScore} · Observationer: {focusedProbable.obsCount}
+                      </div>
                     </div>
                   </div>
                   <div style={{ marginTop: 10 }}>
                     <button
                       type="button"
                       className="seenToggleButton seenToggleButton--unseen"
-                      onClick={() => markProbableSeen(item)}
+                      onClick={() => markProbableSeen(focusedProbable)}
                     >
                       Set
                     </button>
                   </div>
                 </div>
-              ))}
+              ) : null}
             </div>
 
             <div className="probableFooterNav">
-              <button type="button" onClick={() => scrollProbableBy(-1)} aria-label="Forrige sandsynlige arter">
+              <button type="button" onClick={prevProbable} aria-label="Forrige sandsynlige art" disabled={probableIndex <= 0}>
                 Forrige
               </button>
-              <button type="button" onClick={() => scrollProbableBy(1)} aria-label="Næste sandsynlige arter">
+              <button
+                type="button"
+                onClick={nextProbable}
+                aria-label="Næste sandsynlige art"
+                disabled={probableIndex >= probableItems.length - 1}
+              >
                 Næste
               </button>
             </div>
