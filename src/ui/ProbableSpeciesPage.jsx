@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { SPECIES_CLASSES } from '../services/listService.js'
 import { getProbableSpeciesThisWeekForClass } from '../services/probableSpeciesService.js'
 import { getISOWeek, getISOWeekStartDate } from '../utils/isoWeek.js'
-import SpeciesName from './SpeciesName.jsx'
+import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 const MAX_WEEK = 52
@@ -131,6 +131,19 @@ export default function ProbableSpeciesPage() {
                         />
                       </div>
                       <div className="small">{x.latinName}</div>
+                      {(() => {
+                        const link = getSpeciesExternalLink({
+                          speciesClass: x.speciesClass || speciesClass,
+                          speciesId: x.speciesId,
+                        })
+                        return link ? (
+                          <div className="small">
+                            <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
+                              {link.label}
+                            </a>
+                          </div>
+                        ) : null
+                      })()}
                     </div>
                   </div>
                 </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { listSpecies } from '../services/speciesService.js'
 import { SPECIES_CLASSES } from '../services/listService.js'
-import SpeciesName from './SpeciesName.jsx'
+import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 export default function AllSpeciesPage() {
@@ -67,6 +67,16 @@ export default function AllSpeciesPage() {
                       speciesClass={s.speciesClass}
                     />
                     <div className="small">{s.latinName}</div>
+                    {(() => {
+                      const link = getSpeciesExternalLink({ speciesClass: s.speciesClass, speciesId: s.speciesId })
+                      return link ? (
+                        <div className="small">
+                          <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
+                            {link.label}
+                          </a>
+                        </div>
+                      ) : null
+                    })()}
                   </div>
                 </div>
               </li>

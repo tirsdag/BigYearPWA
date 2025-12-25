@@ -13,6 +13,15 @@ const EXTERNAL_LINKS_BY_CLASS = {
   },
 }
 
+export function getSpeciesExternalLink({ speciesClass = '', speciesId = '' } = {}) {
+  const cls = String(speciesClass || '').trim()
+  const linkConfig = EXTERNAL_LINKS_BY_CLASS[cls]
+  const id = String(speciesId || '').trim()
+  const url = linkConfig?.urlForSpeciesId ? linkConfig.urlForSpeciesId(id) : ''
+  if (!url) return null
+  return { label: linkConfig?.label || 'Link', url }
+}
+
 function getStyleConfig(status) {
   const s = String(status || '').trim().toUpperCase()
 
@@ -36,25 +45,11 @@ export default function SpeciesName({ danishName, speciesId, speciesStatus, spec
 
   const text = brackets ? `[${name}]` : name
 
-  const cls = String(speciesClass || '').trim()
-  const linkConfig = EXTERNAL_LINKS_BY_CLASS[cls]
-  const linkUrl = linkConfig?.urlForSpeciesId ? linkConfig.urlForSpeciesId(String(speciesId || '').trim()) : ''
-
   return (
     <span className={classes.join(' ')}>
-      <span>{text}</span>
-      {linkUrl ? (
-        <a
-          className="speciesExternalLink"
-          href={linkUrl}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`Åbn ${linkConfig?.label || 'link'} for ${name}`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {linkConfig?.label || 'Link'}
-        </a>
-      ) : null}
+      <span className="speciesNameText" title={text}>
+        {text}
+      </span>
     </span>
   )
 }

@@ -4,7 +4,7 @@ import { useAppState } from './appState.js'
 import { getList, getListEntries, toggleEntrySeen } from '../services/listService.js'
 import { getSpeciesById } from '../repositories/speciesRepository.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
-import SpeciesName from './SpeciesName.jsx'
+import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 function formatSeenAtDa(seenAt) {
@@ -212,6 +212,19 @@ export default function ListDetailPage() {
                       <div className="small">
                         Score: {focusedProbable.rScore} · Observationer: {focusedProbable.obsCount}
                       </div>
+                      {(() => {
+                        const link = getSpeciesExternalLink({
+                          speciesClass: focusedProbable.speciesClass,
+                          speciesId: focusedProbable.speciesId,
+                        })
+                        return link ? (
+                          <div className="small">
+                            <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
+                              {link.label}
+                            </a>
+                          </div>
+                        ) : null
+                      })()}
                     </div>
                   </div>
                   <div style={{ marginTop: 10 }}>
@@ -279,23 +292,31 @@ export default function ListDetailPage() {
           <ul className="list">
             {sorted.map((entry) => {
               const species = speciesById.get(entry.SpeciesId)
+              const link = species
+                ? getSpeciesExternalLink({ speciesClass: species.speciesClass, speciesId: species.speciesId })
+                : null
               return (
                 <li key={entry.EntryId} style={{ marginBottom: 12 }}>
-                  <div className="row">
-                    <button
-                      className={`seenToggleButton ${entry.Seen ? 'seenToggleButton--seen' : 'seenToggleButton--unseen'}`}
-                      onClick={() => onToggle(entry)}
-                    >
-                      {entry.Seen ? 'Set' : 'Ikke set'}
-                    </button>
-                    <div>
-                      <div className="row" style={{ alignItems: 'flex-start' }}>
+                  <div className="entryRow">
+                    <div className="entryLeft">
+                      <button
+                        className={`seenToggleButton ${entry.Seen ? 'seenToggleButton--seen' : 'seenToggleButton--unseen'}`}
+                        onClick={() => onToggle(entry)}
+                        aria-label={entry.Seen ? 'Set' : 'Ikke set'}
+                      >
+                        {entry.Seen ? 'Set' : '\u00A0'}
+                      </button>
+                      <div className="small entrySeenDate">{entry.SeenAt ? formatSeenAtDa(entry.SeenAt) : ''}</div>
+                    </div>
+
+                    <div className="entryBody">
+                      <div className="entryBodyRow">
                         <SpeciesThumbnail
                           speciesId={entry.SpeciesId}
                           speciesClass={species?.speciesClass || ''}
                           alt={species?.danishName || ''}
                         />
-                        <div>
+                        <div style={{ minWidth: 0 }}>
                           <div>
                             {species ? (
                               <SpeciesName
@@ -309,7 +330,13 @@ export default function ListDetailPage() {
                             )}
                           </div>
                           <div className="small">{species?.latinName || ''}</div>
-                          {entry.SeenAt ? <div className="small">Set: {formatSeenAtDa(entry.SeenAt)}</div> : null}
+                          {link ? (
+                            <div className="small">
+                              <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
+                                {link.label}
+                              </a>
+                            </div>
+                          ) : null}
                         </div>
                       </div>
                     </div>
