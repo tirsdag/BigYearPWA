@@ -3,7 +3,7 @@
    - Network-first for app shell, cache-first for /Data/
 */
 
-const CACHE_NAME = 'bigyear-cache-v3'
+const CACHE_NAME = 'bigyear-cache-v4'
 
 self.addEventListener('message', (event) => {
   if (event?.data?.type === 'SKIP_WAITING') {
@@ -19,12 +19,12 @@ self.addEventListener('install', (event) => {
       await cache.addAll([
         './',
         './manifest.webmanifest',
-        './images/species/default.jpeg',
-        './images/species/aves.jpeg',
-        './images/species/mammalia.jpeg',
-        './images/species/amphibia.jpeg',
-        './images/species/reptilia.jpeg',
-        './images/species/insecta.jpeg',
+        './images/default.jpeg',
+        './images/aves/default.jpeg',
+        './images/mammalia/default.jpeg',
+        './images/amphibia/default.jpeg',
+        './images/reptilia/default.jpeg',
+        './images/insecta/default.jpeg',
       ])
       self.skipWaiting()
     })(),

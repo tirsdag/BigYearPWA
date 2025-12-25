@@ -6,8 +6,8 @@ function toClassKey(speciesClass) {
 
 function getCategoryFallbackSrc(speciesClass) {
   const key = toClassKey(speciesClass)
-  if (!key) return './images/species/default.jpeg'
-  return `./images/species/${key}.jpeg`
+  if (!key) return './images/default.jpeg'
+  return `./images/${key}/default.jpeg`
 }
 
 let sharedViewer = null
@@ -50,6 +50,7 @@ function ensureSharedViewer() {
 
 export default function SpeciesThumbnail({ speciesId, speciesClass, alt = '', size = 44, className = '' }) {
   const id = String(speciesId || '').trim()
+  const classKey = useMemo(() => toClassKey(speciesClass), [speciesClass])
   const fallbackSrc = useMemo(() => getCategoryFallbackSrc(speciesClass), [speciesClass])
 
   const candidates = useMemo(() => {
@@ -57,21 +58,21 @@ export default function SpeciesThumbnail({ speciesId, speciesClass, alt = '', si
 
     if (id) {
       items.push(
-        `./images/species/${id}.png`,
-        `./images/species/${id}.jpg`,
-        `./images/species/${id}.jpeg`
+        classKey ? `./images/${classKey}/${id}.png` : null,
+        classKey ? `./images/${classKey}/${id}.jpg` : null,
+        classKey ? `./images/${classKey}/${id}.jpeg` : null
       )
     }
 
     items.push(fallbackSrc)
-    items.push('./images/species/default.jpeg')
+    items.push('./images/default.jpeg')
 
     // De-dupe while preserving order.
     return items.filter(Boolean).filter((x, idx, arr) => arr.indexOf(x) === idx)
-  }, [id, fallbackSrc])
+  }, [id, classKey, fallbackSrc])
 
   const [candidateIndex, setCandidateIndex] = useState(0)
-  const src = candidates[candidateIndex] || './images/species/default.jpeg'
+  const src = candidates[candidateIndex] || './images/default.jpeg'
 
   // If props change (different list row), keep src in sync.
   useEffect(() => {
