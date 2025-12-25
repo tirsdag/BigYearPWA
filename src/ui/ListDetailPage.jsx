@@ -236,10 +236,10 @@ export default function ListDetailPage() {
           <button type="button" onClick={() => navigate('/')} aria-label="Opret ny liste">
             Opret ny liste
           </button>
-        </div>
 
-        <div style={{ marginTop: 8 }}>
-          <Link to="/">Lister</Link>
+          <button type="button" onClick={() => navigate('/')} aria-label="Lister">
+            Lister
+          </button>
         </div>
       </div>
 
@@ -269,9 +269,6 @@ export default function ListDetailPage() {
             {'>'}
           </button>
         </div>
-        <div className="small" style={{ marginBottom: 8 }}>
-          Uge {selectedWeek} · Top 50 · Kun ikke sete
-        </div>
 
         {probableLoading ? (
           <div className="small">Indlæser…</div>
@@ -291,6 +288,14 @@ export default function ListDetailPage() {
               {focusedProbable ? (
                 <div className="probableDeckCard">
                   <div className="row" style={{ alignItems: 'flex-start' }}>
+                    <button
+                      type="button"
+                      className="seenToggleButton seenToggleButton--unseen"
+                      onClick={() => markProbableSeen(focusedProbable)}
+                      aria-label="Marker som set"
+                    >
+                      Set
+                    </button>
                     <SpeciesThumbnail
                       speciesId={focusedProbable.speciesId}
                       speciesClass={focusedProbable.speciesClass}
@@ -339,10 +344,20 @@ export default function ListDetailPage() {
                     <div className="row" style={{ gap: 8, flexWrap: 'nowrap' }}>
                       <button
                         type="button"
-                        className="seenToggleButton seenToggleButton--unseen"
-                        onClick={() => markProbableSeen(focusedProbable)}
+                        onClick={prevProbable}
+                        aria-label="Forrige sandsynlige art"
+                        disabled={probableIndex <= 0}
                       >
-                        Set
+                        Forrige
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={nextProbable}
+                        aria-label="Næste sandsynlige art"
+                        disabled={probableIndex >= probableItems.length - 1}
+                      >
+                        Næste
                       </button>
 
                       <button
@@ -360,20 +375,6 @@ export default function ListDetailPage() {
                   </div>
                 </div>
               ) : null}
-            </div>
-
-            <div className="probableFooterNav">
-              <button type="button" onClick={prevProbable} aria-label="Forrige sandsynlige art" disabled={probableIndex <= 0}>
-                Forrige
-              </button>
-              <button
-                type="button"
-                onClick={nextProbable}
-                aria-label="Næste sandsynlige art"
-                disabled={probableIndex >= probableItems.length - 1}
-              >
-                Næste
-              </button>
             </div>
           </div>
         )}
