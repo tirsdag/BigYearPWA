@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAppState } from './appState.js'
 import { getList, getListEntries, listLists, toggleEntrySeen, toggleEntrySeenById } from '../services/listService.js'
 import { getSpeciesById } from '../repositories/speciesRepository.js'
@@ -209,51 +209,57 @@ export default function ListDetailPage() {
     <div style={{ display: 'grid', gap: 16 }}>
       <div className="card">
         <div className="row" style={{ flexWrap: 'wrap' }}>
-          <label style={{ maxWidth: 320 }}>
-            Liste{' '}
-            <select value={probableListId} onChange={(e) => setProbableListId(e.target.value)}>
-              {availableLists.map((l) => (
-                <option key={l.ListId} value={l.ListId}>
-                  {l.Name || l.ListId}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <button type="button" onClick={() => setProbableListId(listId)} aria-label="Vælg denne liste">
-            Denne liste
-          </button>
+          <select
+            aria-label="Liste"
+            style={{ maxWidth: 320 }}
+            value={probableListId}
+            onChange={(e) => setProbableListId(e.target.value)}
+          >
+            {availableLists.map((l) => (
+              <option key={l.ListId} value={l.ListId}>
+                {l.Name || l.ListId}
+              </option>
+            ))}
+          </select>
 
           <button type="button" onClick={() => navigate('/')} aria-label="Opret ny liste">
             Opret ny liste
           </button>
         </div>
+
+        <div style={{ marginTop: 8 }}>
+          <Link to="/">Lister</Link>
+        </div>
       </div>
 
       <div className="card">
         <div className="probableHeader">
-          <div style={{ fontWeight: 600 }}>Sandsynlige arter (denne uge)</div>
+          <div style={{ fontWeight: 600 }}>Sandsynlige arter (valgte uge)</div>
         </div>
         <div className="row" style={{ marginBottom: 8, flexWrap: 'wrap' }}>
-          <label style={{ maxWidth: 180 }}>
-            Uge{' '}
-            <select value={selectedWeek} onChange={(e) => setSelectedWeek(clampWeek(e.target.value))}>
-              {Array.from({ length: MAX_WEEK }, (_, i) => i + 1).map((w) => (
-                <option key={w} value={w}>
-                  {w}
-                </option>
-              ))}
-            </select>
-          </label>
           <button type="button" onClick={prevWeek} aria-label="Forrige uge">
-            Forrige uge
+            {'<'}
           </button>
+
+          <select
+            aria-label="Uge"
+            style={{ maxWidth: 180 }}
+            value={selectedWeek}
+            onChange={(e) => setSelectedWeek(clampWeek(e.target.value))}
+          >
+            {Array.from({ length: MAX_WEEK }, (_, i) => i + 1).map((w) => (
+              <option key={w} value={w}>
+                {w}
+              </option>
+            ))}
+          </select>
+
           <button type="button" onClick={nextWeek} aria-label="Næste uge">
-            Næste uge
+            {'>'}
           </button>
         </div>
         <div className="small" style={{ marginBottom: 8 }}>
-          {probableWeek ? `Uge ${probableWeek}` : 'Uge ?'} · Top 50 · Kun ikke sete
+          Valgte uge {selectedWeek} · Top 50 · Kun ikke sete
         </div>
 
         {probableLoading ? (
@@ -261,7 +267,7 @@ export default function ListDetailPage() {
         ) : probableError ? (
           <div className="small">{probableError}</div>
         ) : probableItems.length === 0 ? (
-          <div className="small">Ingen sandsynlige ikke-sete arter i denne uge.</div>
+          <div className="small">Ingen sandsynlige ikke-sete arter i valgte uge.</div>
         ) : (
           <div className="probableDeckWrap">
             <div
@@ -339,7 +345,6 @@ export default function ListDetailPage() {
 
       <div className="card">
         <div className="row" style={{ marginBottom: 8 }}>
-          <div style={{ fontWeight: 600 }}>Arter</div>
           <label style={{ maxWidth: 220 }}>
             Vis{' '}
             <select value={seenFilter} onChange={(e) => setSeenFilter(e.target.value)}>
@@ -351,7 +356,7 @@ export default function ListDetailPage() {
           <label style={{ maxWidth: 240 }}>
             Sorter{' '}
             <select value={sortMode} onChange={(e) => setSortMode(e.target.value)}>
-              <option value="sortId">SortId</option>
+              <option value="sortId">Art</option>
               <option value="seenAt">Set dato (nyeste først)</option>
               <option value="seenAtOldest">Set dato (ældste først)</option>
             </select>

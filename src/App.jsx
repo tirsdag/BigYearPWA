@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { NavLink, Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import ListsPage from './ui/ListsPage.jsx'
 import ListDetailPage from './ui/ListDetailPage.jsx'
 import AllSpeciesPage from './ui/AllSpeciesPage.jsx'
@@ -108,12 +108,6 @@ export default function App() {
             <Route path="/probable" element={<ProbableSpeciesPage />} />
           </Routes>
         </main>
-
-        <nav className="nav">
-          <NavLink to="/" end>
-            Lister
-          </NavLink>
-        </nav>
       </div>
     </AppStateContext.Provider>
   )
