@@ -37,6 +37,7 @@ export default function ProbableListPage() {
   const [availableLists, setAvailableLists] = useState([])
   const [selectedListId, setSelectedListId] = useState(initialListId)
   const [selectedWeek, setSelectedWeek] = useState(initialWeek)
+  const [viewMode, setViewMode] = useState('list')
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -125,6 +126,11 @@ export default function ProbableListPage() {
               </option>
             ))}
           </select>
+
+          <select aria-label="Visning" style={{ maxWidth: 180 }} value={viewMode} onChange={(e) => setViewMode(e.target.value)}>
+            <option value="list">Liste</option>
+            <option value="gallery">Galleri</option>
+          </select>
         </div>
 
         <div className="row" style={{ marginTop: 8, flexWrap: 'wrap' }}>
@@ -164,6 +170,14 @@ export default function ProbableListPage() {
           <div className="small">Indlæser…</div>
         ) : items.length === 0 ? (
           <div className="small">Ingen sandsynlige ikke-sete arter i uge {selectedWeek}.</div>
+        ) : viewMode === 'gallery' ? (
+          <div className="galleryGrid" aria-label="Galleri">
+            {items.map((x) => (
+              <div key={x.entryId} className="galleryCell">
+                <SpeciesThumbnail speciesId={x.speciesId} speciesClass={x.speciesClass} alt={x.danishName || ''} />
+              </div>
+            ))}
+          </div>
         ) : (
           <ul className="list entryList">
             {items.map((x) => {

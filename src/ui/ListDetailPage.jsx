@@ -63,6 +63,7 @@ export default function ListDetailPage() {
   const [statusFilter, setStatusFilter] = useState('common')
   const [query, setQuery] = useState('')
   const [sortMode, setSortMode] = useState('sortId')
+  const [speciesViewMode, setSpeciesViewMode] = useState('list')
 
   async function refreshListData() {
     const [l, e, allLists] = await Promise.all([getList(listId), getListEntries(listId), listLists()])
@@ -425,7 +426,7 @@ export default function ListDetailPage() {
           <label style={{ maxWidth: 260 }}>
             Status{' '}
             <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-              <option value="all">Alle</option>
+              <option value="all">All</option>
               <option value="rare">sjældne (rød/grøn)</option>
               <option value="exotic">[eksotiske]</option>
               <option value="common">Almindelige</option>
@@ -440,9 +441,32 @@ export default function ListDetailPage() {
               <option value="seenAtOldest">Set dato (ældste først)</option>
             </select>
           </label>
+
+          <label style={{ maxWidth: 200 }}>
+            Visning{' '}
+            <select value={speciesViewMode} onChange={(e) => setSpeciesViewMode(e.target.value)}>
+              <option value="list">Liste</option>
+              <option value="gallery">Galleri</option>
+            </select>
+          </label>
         </div>
         {sorted.length === 0 ? (
           <div className="small">Ingen arter.</div>
+        ) : speciesViewMode === 'gallery' ? (
+          <div className="galleryGrid" aria-label="Galleri">
+            {sorted.map((entry) => {
+              const species = speciesById.get(entry.SpeciesId)
+              return (
+                <div key={entry.EntryId} className="galleryCell">
+                  <SpeciesThumbnail
+                    speciesId={entry.SpeciesId}
+                    speciesClass={species?.speciesClass || ''}
+                    alt={species?.danishName || ''}
+                  />
+                </div>
+              )
+            })}
+          </div>
         ) : (
           <ul className="list entryList">
             {sorted.map((entry) => {
