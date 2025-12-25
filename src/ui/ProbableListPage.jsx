@@ -5,7 +5,7 @@ import { listLists, toggleEntrySeenById } from '../services/listService.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
 import { getISOWeek, getISOWeekStartDate } from '../utils/isoWeek.js'
 import { getDofKnownLocationsUrl } from '../utils/dofLinks.js'
-import SpeciesName from './SpeciesName.jsx'
+import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 const MAX_WEEK = 52
@@ -167,6 +167,7 @@ export default function ProbableListPage() {
         ) : (
           <ul className="list entryList">
             {items.map((x) => {
+              const link = getSpeciesExternalLink({ speciesClass: x.speciesClass, speciesId: x.speciesId })
               const url = getDofKnownLocationsUrl({ speciesId: x.speciesId, weekNumber: selectedWeek, year: currentYear })
               return (
                 <li key={x.entryId}>
@@ -201,11 +202,19 @@ export default function ProbableListPage() {
                         <div className="small">
                           Score: {x.rScore} · Observationer: {x.obsCount}
                         </div>
-                        {url ? (
+                        {link || url ? (
                           <div className="small">
-                            <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
-                              Set her
-                            </a>
+                            {link ? (
+                              <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
+                                {link.label}
+                              </a>
+                            ) : null}
+                            {link && url ? ' · ' : null}
+                            {url ? (
+                              <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
+                                Set her
+                              </a>
+                            ) : null}
                           </div>
                         ) : null}
                       </div>

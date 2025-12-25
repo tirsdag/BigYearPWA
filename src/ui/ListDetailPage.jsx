@@ -6,7 +6,7 @@ import { getSpeciesById } from '../repositories/speciesRepository.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
 import { getISOWeek, getISOWeekStartDate } from '../utils/isoWeek.js'
 import { getDofKnownLocationsUrl } from '../utils/dofLinks.js'
-import SpeciesName from './SpeciesName.jsx'
+import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 const MAX_WEEK = 52
@@ -307,18 +307,31 @@ export default function ListDetailPage() {
                       </div>
                       <div className="small">{focusedProbable.latinName || ''}</div>
                       {(() => {
+                        const link = getSpeciesExternalLink({
+                          speciesClass: focusedProbable.speciesClass,
+                          speciesId: focusedProbable.speciesId,
+                        })
                         const url = getDofKnownLocationsUrl({
                           speciesId: focusedProbable.speciesId,
                           weekNumber: selectedWeek,
                           year: currentYear,
                         })
-                        return url ? (
+                        if (!link && !url) return null
+                        return (
                           <div className="small">
-                            <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
-                              Set her
-                            </a>
+                            {link ? (
+                              <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
+                                {link.label}
+                              </a>
+                            ) : null}
+                            {link && url ? ' · ' : null}
+                            {url ? (
+                              <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
+                                Set her
+                              </a>
+                            ) : null}
                           </div>
-                        ) : null
+                        )
                       })()}
                     </div>
                   </div>
@@ -400,6 +413,9 @@ export default function ListDetailPage() {
           <ul className="list entryList">
             {sorted.map((entry) => {
               const species = speciesById.get(entry.SpeciesId)
+              const link = species
+                ? getSpeciesExternalLink({ speciesClass: species.speciesClass, speciesId: species.speciesId })
+                : null
               const url = species
                 ? getDofKnownLocationsUrl({ speciesId: species.speciesId, weekNumber: selectedWeek, year: currentYear })
                 : ''
@@ -439,11 +455,19 @@ export default function ListDetailPage() {
 
                       <div className="entryBody">
                         <div className="small">{species?.latinName || ''}</div>
-                        {url ? (
+                        {link || url ? (
                           <div className="small">
-                            <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
-                              Set her
-                            </a>
+                            {link ? (
+                              <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
+                                {link.label}
+                              </a>
+                            ) : null}
+                            {link && url ? ' · ' : null}
+                            {url ? (
+                              <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
+                                Set her
+                              </a>
+                            ) : null}
                           </div>
                         ) : null}
                       </div>
