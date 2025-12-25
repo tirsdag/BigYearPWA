@@ -219,6 +219,30 @@ button:disabled {
   margin-bottom: 12px;
 }
 
+.entryList > li {
+  margin-bottom: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.entryList > li:first-child {
+  padding-top: 0;
+}
+
+.entryList > li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.entryItem {
+  display: grid;
+  gap: 8px;
+}
+
+.entryNameLine {
+  min-width: 0;
+}
+
 .entryRow {
   display: flex;
   align-items: flex-start;

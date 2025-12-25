@@ -360,7 +360,7 @@ export default function ListDetailPage() {
         {sorted.length === 0 ? (
           <div className="small">Ingen arter.</div>
         ) : (
-          <ul className="list">
+          <ul className="list entryList">
             {sorted.map((entry) => {
               const species = speciesById.get(entry.SpeciesId)
               const link = species
@@ -368,47 +368,47 @@ export default function ListDetailPage() {
                 : null
               return (
                 <li key={entry.EntryId} style={{ marginBottom: 12 }}>
-                  <div className="entryRow">
-                    <div className="entryLeft">
-                      <button
-                        className={`seenToggleButton ${entry.Seen ? 'seenToggleButton--seen' : 'seenToggleButton--unseen'}`}
-                        onClick={() => onToggle(entry)}
-                        aria-label={entry.Seen ? 'Set' : 'Ikke set'}
-                      >
-                        {entry.Seen ? 'Set' : '\u00A0'}
-                      </button>
-                      <div className="small entrySeenDate">{entry.SeenAt ? formatSeenAtDa(entry.SeenAt) : ''}</div>
+                  <div className="entryItem">
+                    <div className="entryNameLine">
+                      {species ? (
+                        <SpeciesName
+                          danishName={species.danishName}
+                          speciesId={species.speciesId}
+                          speciesStatus={species.speciesStatus}
+                          speciesClass={species.speciesClass}
+                        />
+                      ) : (
+                        entry.SpeciesId
+                      )}
                     </div>
 
-                    <div className="entryBody">
-                      <div className="entryBodyRow">
-                        <SpeciesThumbnail
-                          speciesId={entry.SpeciesId}
-                          speciesClass={species?.speciesClass || ''}
-                          alt={species?.danishName || ''}
-                        />
-                        <div style={{ minWidth: 0 }}>
-                          <div>
-                            {species ? (
-                              <SpeciesName
-                                danishName={species.danishName}
-                                speciesId={species.speciesId}
-                                speciesStatus={species.speciesStatus}
-                                speciesClass={species.speciesClass}
-                              />
-                            ) : (
-                              entry.SpeciesId
-                            )}
+                    <div className="entryRow">
+                      <div className="entryLeft">
+                        <button
+                          className={`seenToggleButton ${entry.Seen ? 'seenToggleButton--seen' : 'seenToggleButton--unseen'}`}
+                          onClick={() => onToggle(entry)}
+                          aria-label={entry.Seen ? 'Set' : 'Ikke set'}
+                        >
+                          {entry.Seen ? 'Set' : '\u00A0'}
+                        </button>
+                        <div className="small entrySeenDate">{entry.SeenAt ? formatSeenAtDa(entry.SeenAt) : ''}</div>
+                      </div>
+
+                      <SpeciesThumbnail
+                        speciesId={entry.SpeciesId}
+                        speciesClass={species?.speciesClass || ''}
+                        alt={species?.danishName || ''}
+                      />
+
+                      <div className="entryBody">
+                        <div className="small">{species?.latinName || ''}</div>
+                        {link ? (
+                          <div className="small">
+                            <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
+                              {link.label}
+                            </a>
                           </div>
-                          <div className="small">{species?.latinName || ''}</div>
-                          {link ? (
-                            <div className="small">
-                              <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
-                                {link.label}
-                              </a>
-                            </div>
-                          ) : null}
-                        </div>
+                        ) : null}
                       </div>
                     </div>
                   </div>
