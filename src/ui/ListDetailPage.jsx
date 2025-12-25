@@ -302,9 +302,6 @@ export default function ListDetailPage() {
                         />
                       </div>
                       <div className="small">{focusedProbable.latinName || ''}</div>
-                      <div className="small">
-                        Score: {focusedProbable.rScore} · Observationer: {focusedProbable.obsCount}
-                      </div>
                       {(() => {
                         const link = getSpeciesExternalLink({
                           speciesClass: focusedProbable.speciesClass,

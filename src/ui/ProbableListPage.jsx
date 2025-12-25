@@ -143,7 +143,7 @@ export default function ProbableListPage() {
           Uge {selectedWeek} · Kun ikke sete
         </div>
         <div style={{ marginTop: 8 }}>
-          <Link to="/">Lister</Link>
+          <Link to={selectedListId ? `/lists/${selectedListId}` : '/'}>Lister</Link>
         </div>
         {error ? <div className="small">{error}</div> : null}
       </div>
