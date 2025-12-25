@@ -234,13 +234,13 @@ export default function ListDetailPage() {
 
       <div className="card">
         <div className="probableHeader">
-          <div style={{ fontWeight: 600 }}>Sandsynlige arter (valgte uge)</div>
+          <div style={{ fontWeight: 600 }}>Forslag for uge ({selectedWeek})</div>
           <button
             type="button"
             onClick={() => navigate(`/probable-list?listId=${encodeURIComponent(probableListId)}&week=${encodeURIComponent(String(selectedWeek))}`)}
             aria-label="Vis alle sandsynlige arter som liste"
           >
-            Liste
+            Andre forslag
           </button>
         </div>
         <div className="row" style={{ marginBottom: 8, flexWrap: 'wrap' }}>
@@ -266,7 +266,7 @@ export default function ListDetailPage() {
           </button>
         </div>
         <div className="small" style={{ marginBottom: 8 }}>
-          Valgte uge {selectedWeek} · Top 50 · Kun ikke sete
+          Uge {selectedWeek} · Top 50 · Kun ikke sete
         </div>
 
         {probableLoading ? (
@@ -274,7 +274,7 @@ export default function ListDetailPage() {
         ) : probableError ? (
           <div className="small">{probableError}</div>
         ) : probableItems.length === 0 ? (
-          <div className="small">Ingen sandsynlige ikke-sete arter i valgte uge.</div>
+          <div className="small">Ingen sandsynlige ikke-sete arter i uge {selectedWeek}.</div>
         ) : (
           <div className="probableDeckWrap">
             <div

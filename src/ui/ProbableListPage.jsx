@@ -140,7 +140,7 @@ export default function ProbableListPage() {
         </div>
 
         <div className="small" style={{ marginTop: 8 }}>
-          Valgte uge {selectedWeek} · Kun ikke sete
+          Uge {selectedWeek} · Kun ikke sete
         </div>
         <div style={{ marginTop: 8 }}>
           <Link to="/">Lister</Link>
@@ -152,7 +152,7 @@ export default function ProbableListPage() {
         {loading ? (
           <div className="small">Indlæser…</div>
         ) : items.length === 0 ? (
-          <div className="small">Ingen sandsynlige ikke-sete arter i valgte uge.</div>
+          <div className="small">Ingen sandsynlige ikke-sete arter i uge {selectedWeek}.</div>
         ) : (
           <ul className="list entryList">
             {items.map((x) => {
