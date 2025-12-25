@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAppState } from './appState.js'
-import { listLists } from '../services/listService.js'
+import { listLists, toggleEntrySeenById } from '../services/listService.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
 import { getISOWeek } from '../utils/isoWeek.js'
 import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
@@ -37,6 +37,16 @@ export default function ProbableListPage() {
 
   function nextWeek() {
     setSelectedWeek((w) => (w >= MAX_WEEK ? 1 : w + 1))
+  }
+
+  async function markSeen(entryId) {
+    if (!entryId) return
+    try {
+      await toggleEntrySeenById(entryId, true)
+      setItems((prev) => prev.filter((x) => x.entryId !== entryId))
+    } catch (err) {
+      setError(String(err?.message || err))
+    }
   }
 
   useEffect(() => {
@@ -104,7 +114,9 @@ export default function ProbableListPage() {
               </option>
             ))}
           </select>
+        </div>
 
+        <div className="row" style={{ marginTop: 8, flexWrap: 'wrap' }}>
           <button type="button" onClick={prevWeek} aria-label="Forrige uge">
             {'<'}
           </button>
@@ -129,6 +141,9 @@ export default function ProbableListPage() {
 
         <div className="small" style={{ marginTop: 8 }}>
           Valgte uge {selectedWeek} · Kun ikke sete
+        </div>
+        <div style={{ marginTop: 8 }}>
+          <Link to="/">Lister</Link>
         </div>
         {error ? <div className="small">{error}</div> : null}
       </div>
@@ -155,6 +170,16 @@ export default function ProbableListPage() {
                     </div>
 
                     <div className="entryRow">
+                      <div className="entryLeft">
+                        <button
+                          type="button"
+                          className="seenToggleButton seenToggleButton--unseen"
+                          onClick={() => markSeen(x.entryId)}
+                          aria-label="Marker som set"
+                        >
+                          Set
+                        </button>
+                      </div>
                       <SpeciesThumbnail
                         speciesId={x.speciesId}
                         speciesClass={x.speciesClass}
