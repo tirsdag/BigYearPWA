@@ -46,6 +46,33 @@ a {
   background: #fff;
 }
 
+.updateBanner {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  background: #fff;
+  margin-bottom: 12px;
+}
+
+.updateBanner__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.updateBanner__button {
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+
 .nav a {
   text-align: center;
   padding: 10px 8px;

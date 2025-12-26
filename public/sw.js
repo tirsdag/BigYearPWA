@@ -26,7 +26,6 @@ self.addEventListener('install', (event) => {
         './images/reptilia/default.jpeg',
         './images/insecta/default.jpeg',
       ])
-      self.skipWaiting()
     })(),
   )
 })

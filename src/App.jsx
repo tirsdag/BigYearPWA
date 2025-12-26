@@ -16,6 +16,9 @@ export default function App() {
   const [bootstrapError, setBootstrapError] = useState(null)
   const [activeListId, setActiveListId] = useState(localStorage.getItem('activeListId') || '')
 
+  const [updateRegistration, setUpdateRegistration] = useState(null)
+  const [updateDismissed, setUpdateDismissed] = useState(false)
+
   useEffect(() => {
     localStorage.setItem('activeListId', activeListId || '')
   }, [activeListId])
@@ -28,6 +31,34 @@ export default function App() {
         setIsBootstrapped(true)
       })
   }, [])
+
+  useEffect(() => {
+    function onUpdateAvailable(e) {
+      const reg = e?.detail?.registration
+      if (!reg) return
+      setUpdateRegistration(reg)
+      setUpdateDismissed(false)
+    }
+
+    window.addEventListener('pwa:updateAvailable', onUpdateAvailable)
+    return () => {
+      window.removeEventListener('pwa:updateAvailable', onUpdateAvailable)
+    }
+  }, [])
+
+  async function applyUpdate() {
+    try {
+      const reg = updateRegistration
+      if (!reg) return
+      if (reg.waiting) {
+        reg.waiting.postMessage({ type: 'SKIP_WAITING' })
+      } else {
+        await reg.update().catch(() => {})
+      }
+    } catch {
+      // Ignore
+    }
+  }
 
   useEffect(() => {
     if (!isBootstrapped) return
@@ -126,6 +157,23 @@ export default function App() {
     <AppStateContext.Provider value={ctx}>
       <div className="app">
         <main className="main">
+          {updateRegistration && !updateDismissed ? (
+            <div className="updateBanner" role="status" aria-live="polite">
+              <div>
+                <div style={{ fontWeight: 600 }}>Ny version klar</div>
+                <div className="small">Tryk Opdater for at hente den nyeste version.</div>
+              </div>
+              <div className="updateBanner__actions">
+                <button type="button" className="updateBanner__button" onClick={() => applyUpdate()}>
+                  Opdater
+                </button>
+                <button type="button" className="updateBanner__button" onClick={() => setUpdateDismissed(true)}>
+                  Senere
+                </button>
+              </div>
+            </div>
+          ) : null}
+
           {bootstrapError ? (
             <div className="card">
               <div>Indlæsning af referencedata mislykkedes.</div>
