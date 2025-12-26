@@ -36,6 +36,7 @@ export async function createList({ name, dimensionId, speciesClasses }) {
     Name: name || `Liste-${new Date().getFullYear()}`,
     CreatedAt: new Date().toISOString(),
     DimensionId: dimensionId,
+    SpeciesClasses: speciesClasses.slice(),
     Entries: [],
   }
 

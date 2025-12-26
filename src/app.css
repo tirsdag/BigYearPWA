@@ -144,6 +144,31 @@ a {
   flex-wrap: wrap;
 }
 
+.speciesClassPick {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.speciesClassPickList {
+  display: grid;
+  gap: 8px;
+}
+
+.speciesClassPickList .speciesClassPick {
+  width: 100%;
+}
+
+.speciesClassPick input {
+  width: auto;
+}
+
+.speciesThumb.classPreviewThumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+}
+
 .listRow {
   display: flex;
   align-items: center;
@@ -225,12 +250,13 @@ button:disabled {
 }
 
 .seenToggleButton--seen {
-  background: #ffe08a;
-  border-color: #e0c060;
+  background: #78c478;
+  border-color: #5faa5f;
+  color: #0b2a0b;
 }
 
 .seenToggleButton--seen:active {
-  background: #ffd66b;
+  background: #6ab86a;
 }
 
 .list {
@@ -306,35 +332,38 @@ button:disabled {
 }
 
 .galleryTile {
-  position: relative;
-  width: 100%;
+  width: 75%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  box-sizing: border-box;
+  padding: 6px;
+  border: 1px solid #d6d6d6;
+  border-radius: 10px;
+  background: #fff;
 }
 
 .speciesThumb.galleryThumb {
-  width: 75%;
+  width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
 }
 
-.galleryTile__name {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  right: 6px;
-  z-index: 2;
+.galleryTile__nameAbove {
   font-size: 12px;
   font-weight: 600;
   line-height: 1.1;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding: 4px 6px;
-  border-radius: 8px;
-  background: #fff;
-  border: 1px solid #d6d6d6;
+}
+
+.galleryTile__media {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .galleryTile__seenButton {

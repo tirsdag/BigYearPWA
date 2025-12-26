@@ -124,7 +124,6 @@ export async function getTopProbableUnseenEntriesThisWeek({ listId, limit, weekN
   }
 
   matchedStats.sort((a, b) => {
-    if (b.rScore !== a.rScore) return b.rScore - a.rScore
     const obsDiff = (b.obsCount ?? 0) - (a.obsCount ?? 0)
     if (obsDiff !== 0) return obsDiff
     return String(a.speciesId).localeCompare(String(b.speciesId))
@@ -146,6 +145,25 @@ export async function getTopProbableUnseenEntriesThisWeek({ listId, limit, weekN
       latinName: ref?.latinName ?? '',
       speciesStatus: ref?.speciesStatus ?? '',
     }
+  })
+
+  // Final stable ordering to match the ListDetailPage "Forslag" sort:
+  // obsCount DESC, then taxonomic sort (sortCodeInt) ASC, then speciesId.
+  const sortCodeBySpeciesId = new Map()
+  for (let i = 0; i < top.length; i++) {
+    sortCodeBySpeciesId.set(String(top[i].speciesId), refs[i]?.sortCodeInt ?? 0)
+  }
+
+  items.sort((a, b) => {
+    const obsDiff = (b.obsCount ?? 0) - (a.obsCount ?? 0)
+    if (obsDiff !== 0) return obsDiff
+
+    const sortA = sortCodeBySpeciesId.get(String(a.speciesId)) ?? 0
+    const sortB = sortCodeBySpeciesId.get(String(b.speciesId)) ?? 0
+    const sortDiff = sortA - sortB
+    if (sortDiff !== 0) return sortDiff
+
+    return String(a.speciesId).localeCompare(String(b.speciesId))
   })
 
   return { week, items }

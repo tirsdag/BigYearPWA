@@ -4,12 +4,15 @@ import { useAppState } from './appState.js'
 import { getList, getListEntries, listLists, toggleEntrySeen, toggleEntrySeenById } from '../services/listService.js'
 import { getSpeciesById } from '../repositories/speciesRepository.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
+import { fetchWeekStat } from '../repositories/assetsRepository.js'
 import { getISOWeek, getISOWeekStartDate } from '../utils/isoWeek.js'
 import { getDofKnownLocationsUrl } from '../utils/dofLinks.js'
 import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
 const MAX_WEEK = 52
+
+const ALL_SPECIES_CLASSES = ['Amphibia', 'Aves', 'Insecta', 'Mammalia', 'Reptilia']
 
 const RARE_STATUSES = new Set(['AU', 'HU', 'BU', 'CU', 'U', 'AS'])
 const EXOTIC_STATUSES = new Set(['EU', 'DU', 'E', 'D'])
@@ -44,6 +47,7 @@ export default function ListDetailPage() {
   const isoYear = getISOWeek(new Date()).year
 
   const probableTouchRef = useRef({ x: 0, y: 0 })
+  const weekStatCacheRef = useRef(new Map())
 
   const [list, setList] = useState(null)
   const [entries, setEntries] = useState([])
@@ -64,6 +68,10 @@ export default function ListDetailPage() {
   const [query, setQuery] = useState('')
   const [sortMode, setSortMode] = useState('sortId')
   const [speciesViewMode, setSpeciesViewMode] = useState('list')
+
+  const [suggestionObsCountBySpeciesId, setSuggestionObsCountBySpeciesId] = useState(() => new Map())
+  const [suggestionsLoading, setSuggestionsLoading] = useState(false)
+  const [suggestionsError, setSuggestionsError] = useState('')
 
   async function refreshListData() {
     const [l, e, allLists] = await Promise.all([getList(listId), getListEntries(listId), listLists()])
@@ -93,7 +101,7 @@ export default function ListDetailPage() {
 
     setProbableLoading(true)
     setProbableError('')
-    getTopProbableUnseenEntriesThisWeek({ listId: probableListId, weekNumber: selectedWeek, limit: 50 })
+    getTopProbableUnseenEntriesThisWeek({ listId: probableListId, weekNumber: selectedWeek, limit: 10 })
       .then(({ week, items }) => {
         if (cancelled) return
         setProbableWeek(week)
@@ -117,32 +125,119 @@ export default function ListDetailPage() {
     }
   }, [probableListId, selectedWeek])
 
-  const sorted = useMemo(() => {
-    const base = entries.slice().sort((a, b) => {
-      if (sortMode === 'seenAt' || sortMode === 'seenAtOldest') {
-        const ta = a?.SeenAt ? new Date(a.SeenAt).getTime() : 0
-        const tb = b?.SeenAt ? new Date(b.SeenAt).getTime() : 0
+  useEffect(() => {
+    if (sortMode !== 'suggestions') return
+    if (seenFilter !== 'unseen') setSeenFilter('unseen')
+  }, [sortMode, seenFilter])
 
-        // Put entries without SeenAt last.
-        if (!ta && tb) return 1
-        if (ta && !tb) return -1
-        if (ta && tb && tb !== ta) {
-          return sortMode === 'seenAtOldest' ? ta - tb : tb - ta
+  useEffect(() => {
+    let cancelled = false
+    if (sortMode !== 'suggestions') return
+
+    const classSet = new Set()
+    for (const entry of entries) {
+      const s = speciesById.get(entry.SpeciesId)
+      const cls = String(s?.speciesClass || '').trim()
+      if (cls) classSet.add(cls)
+    }
+
+    if (classSet.size === 0) {
+      for (const cls of ALL_SPECIES_CLASSES) classSet.add(cls)
+    }
+
+    setSuggestionsLoading(true)
+    setSuggestionsError('')
+
+    ;(async () => {
+      const nextMap = new Map()
+
+      for (const cls of Array.from(classSet)) {
+        const cacheKey = `${cls}-${selectedWeek}`
+        let cached = weekStatCacheRef.current.get(cacheKey)
+
+        if (!cached) {
+          try {
+            const json = await fetchWeekStat(cls, selectedWeek)
+            const arr = Array.isArray(json?.species) ? json.species : []
+            cached = arr
+              .map((x) => ({ speciesId: String(x?.speciesid || ''), obsCount: Number(x?.obsCount || 0) }))
+              .filter((x) => x.speciesId)
+          } catch {
+            cached = []
+          }
+
+          weekStatCacheRef.current.set(cacheKey, cached)
+        }
+
+        for (const row of cached) {
+          const prev = nextMap.get(row.speciesId)
+          const v = Number.isFinite(row.obsCount) ? row.obsCount : 0
+          if (prev == null || v > prev) nextMap.set(row.speciesId, v)
         }
       }
 
-      const sa = speciesById.get(a.SpeciesId)
-      const sb = speciesById.get(b.SpeciesId)
-      const diff = (sa?.sortCodeInt ?? 0) - (sb?.sortCodeInt ?? 0)
-      if (diff !== 0) return diff
-      return String(a?.SpeciesId || '').localeCompare(String(b?.SpeciesId || ''))
-    })
+      if (cancelled) return
+      setSuggestionObsCountBySpeciesId(nextMap)
+    })()
+      .catch((err) => {
+        if (cancelled) return
+        setSuggestionObsCountBySpeciesId(new Map())
+        setSuggestionsError(String(err?.message || err))
+      })
+      .finally(() => {
+        if (cancelled) return
+        setSuggestionsLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [sortMode, selectedWeek, entries, speciesById])
+
+  const sorted = useMemo(() => {
+    let base = entries.slice()
+
+    if (sortMode === 'suggestions') {
+      base = base.sort((a, b) => {
+        const oa = suggestionObsCountBySpeciesId.get(a.SpeciesId) || 0
+        const ob = suggestionObsCountBySpeciesId.get(b.SpeciesId) || 0
+        if (ob !== oa) return ob - oa
+
+        const sa = speciesById.get(a.SpeciesId)
+        const sb = speciesById.get(b.SpeciesId)
+        const diff = (sa?.sortCodeInt ?? 0) - (sb?.sortCodeInt ?? 0)
+        if (diff !== 0) return diff
+        return String(a?.SpeciesId || '').localeCompare(String(b?.SpeciesId || ''))
+      })
+    } else {
+      base = base.sort((a, b) => {
+        if (sortMode === 'seenAt' || sortMode === 'seenAtOldest') {
+          const ta = a?.SeenAt ? new Date(a.SeenAt).getTime() : 0
+          const tb = b?.SeenAt ? new Date(b.SeenAt).getTime() : 0
+
+          // Put entries without SeenAt last.
+          if (!ta && tb) return 1
+          if (ta && !tb) return -1
+          if (ta && tb && tb !== ta) {
+            return sortMode === 'seenAtOldest' ? ta - tb : tb - ta
+          }
+        }
+
+        const sa = speciesById.get(a.SpeciesId)
+        const sb = speciesById.get(b.SpeciesId)
+        const diff = (sa?.sortCodeInt ?? 0) - (sb?.sortCodeInt ?? 0)
+        if (diff !== 0) return diff
+        return String(a?.SpeciesId || '').localeCompare(String(b?.SpeciesId || ''))
+      })
+    }
 
     const q = query.trim().toLowerCase()
+    const effectiveSeenFilter = sortMode === 'suggestions' ? 'unseen' : seenFilter
+
     const withSeen =
-      seenFilter === 'seen'
+      effectiveSeenFilter === 'seen'
         ? base.filter((e) => Boolean(e.Seen))
-        : seenFilter === 'unseen'
+        : effectiveSeenFilter === 'unseen'
           ? base.filter((e) => !e.Seen)
           : base
 
@@ -165,7 +260,7 @@ export default function ListDetailPage() {
       const s = speciesById.get(e.SpeciesId)
       return String(s?.danishName || '').toLowerCase().includes(q)
     })
-  }, [entries, speciesById, seenFilter, statusFilter, query, sortMode])
+  }, [entries, speciesById, seenFilter, statusFilter, query, sortMode, suggestionObsCountBySpeciesId])
 
   async function onToggle(entry) {
     const updated = await toggleEntrySeen(entry, !entry.Seen)
@@ -243,7 +338,11 @@ export default function ListDetailPage() {
             aria-label="Liste"
             style={{ maxWidth: 320 }}
             value={probableListId}
-            onChange={(e) => setProbableListId(e.target.value)}
+            onChange={(e) => {
+              const next = e.target.value
+              setProbableListId(next)
+              navigate(`/lists/${encodeURIComponent(next)}`)
+            }}
           >
             {availableLists.map((l) => (
               <option key={l.ListId} value={l.ListId}>
@@ -384,11 +483,11 @@ export default function ListDetailPage() {
 
                       <button
                         type="button"
-                        onClick={() =>
-                          navigate(
-                            `/probable-list?listId=${encodeURIComponent(probableListId)}&week=${encodeURIComponent(String(selectedWeek))}`,
-                          )
-                        }
+                        onClick={() => {
+                          setSortMode('suggestions')
+                          setSeenFilter('unseen')
+                          setSpeciesViewMode('gallery')
+                        }}
                         aria-label="Vis alle forslag som liste"
                       >
                         Andre forslag
@@ -440,6 +539,7 @@ export default function ListDetailPage() {
             Sorter{' '}
             <select value={sortMode} onChange={(e) => setSortMode(e.target.value)}>
               <option value="sortId">Art</option>
+              <option value="suggestions">Forslag</option>
               <option value="seenAt">Set dato (nyeste først)</option>
               <option value="seenAtOldest">Set dato (ældste først)</option>
             </select>
@@ -453,8 +553,12 @@ export default function ListDetailPage() {
             </select>
           </label>
         </div>
-        {sorted.length === 0 ? (
-          <div className="small">Ingen arter.</div>
+        {sortMode === 'suggestions' && suggestionsLoading ? (
+          <div className="small">Indlæser forslag…</div>
+        ) : sortMode === 'suggestions' && suggestionsError ? (
+          <div className="small">{suggestionsError}</div>
+        ) : sorted.length === 0 ? (
+          <div className="small">{sortMode === 'suggestions' ? `Ingen forslag i uge ${selectedWeek}.` : 'Ingen arter.'}</div>
         ) : speciesViewMode === 'gallery' ? (
           <div className="galleryGrid" aria-label="Galleri">
             {sorted.map((entry) => {
@@ -462,21 +566,23 @@ export default function ListDetailPage() {
               return (
                 <div key={entry.EntryId} className="galleryCell">
                   <div className="galleryTile">
-                    <div className="galleryTile__name">{species?.danishName || entry.SpeciesId}</div>
-                    <button
-                      type="button"
-                      className={`seenToggleButton galleryTile__seenButton ${entry.Seen ? 'seenToggleButton--seen' : 'seenToggleButton--unseen'}`}
-                      onClick={() => onToggle(entry)}
-                      aria-label={entry.Seen ? 'Set' : 'Ikke set'}
-                    >
-                      {entry.Seen ? 'Set' : '\u00A0'}
-                    </button>
-                    <SpeciesThumbnail
-                      speciesId={entry.SpeciesId}
-                      speciesClass={species?.speciesClass || ''}
-                      alt={species?.danishName || ''}
-                      className="galleryThumb"
-                    />
+                    <div className="galleryTile__nameAbove">{species?.danishName || entry.SpeciesId}</div>
+                    <div className="galleryTile__media">
+                      <button
+                        type="button"
+                        className={`seenToggleButton galleryTile__seenButton ${entry.Seen ? 'seenToggleButton--seen' : 'seenToggleButton--unseen'}`}
+                        onClick={() => onToggle(entry)}
+                        aria-label={entry.Seen ? 'Set' : 'Ikke set'}
+                      >
+                        {entry.Seen ? '\u00A0' : 'Set'}
+                      </button>
+                      <SpeciesThumbnail
+                        speciesId={entry.SpeciesId}
+                        speciesClass={species?.speciesClass || ''}
+                        alt={species?.danishName || ''}
+                        className="galleryThumb"
+                      />
+                    </div>
                   </div>
                 </div>
               )
@@ -531,7 +637,7 @@ export default function ListDetailPage() {
                           onClick={() => onToggle(entry)}
                           aria-label={entry.Seen ? 'Set' : 'Ikke set'}
                         >
-                          {entry.Seen ? 'Set' : '\u00A0'}
+                          {entry.Seen ? '\u00A0' : 'Set'}
                         </button>
                         <div className="small entrySeenDate">{entry.SeenAt ? formatSeenAtDa(entry.SeenAt) : ''}</div>
 
