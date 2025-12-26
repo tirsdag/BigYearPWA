@@ -174,7 +174,23 @@ export default function ProbableListPage() {
           <div className="galleryGrid" aria-label="Galleri">
             {items.map((x) => (
               <div key={x.entryId} className="galleryCell">
-                <SpeciesThumbnail speciesId={x.speciesId} speciesClass={x.speciesClass} alt={x.danishName || ''} />
+                <div className="galleryTile">
+                  <div className="galleryTile__name">{x.danishName || x.speciesId}</div>
+                  <button
+                    type="button"
+                    className="seenToggleButton seenToggleButton--unseen galleryTile__seenButton"
+                    onClick={() => markSeen(x.entryId)}
+                    aria-label="Marker som set"
+                  >
+                    Set
+                  </button>
+                  <SpeciesThumbnail
+                    speciesId={x.speciesId}
+                    speciesClass={x.speciesClass}
+                    alt={x.danishName || ''}
+                    className="galleryThumb"
+                  />
+                </div>
               </div>
             ))}
           </div>

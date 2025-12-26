@@ -461,11 +461,23 @@ export default function ListDetailPage() {
               const species = speciesById.get(entry.SpeciesId)
               return (
                 <div key={entry.EntryId} className="galleryCell">
-                  <SpeciesThumbnail
-                    speciesId={entry.SpeciesId}
-                    speciesClass={species?.speciesClass || ''}
-                    alt={species?.danishName || ''}
-                  />
+                  <div className="galleryTile">
+                    <div className="galleryTile__name">{species?.danishName || entry.SpeciesId}</div>
+                    <button
+                      type="button"
+                      className={`seenToggleButton galleryTile__seenButton ${entry.Seen ? 'seenToggleButton--seen' : 'seenToggleButton--unseen'}`}
+                      onClick={() => onToggle(entry)}
+                      aria-label={entry.Seen ? 'Set' : 'Ikke set'}
+                    >
+                      {entry.Seen ? 'Set' : '\u00A0'}
+                    </button>
+                    <SpeciesThumbnail
+                      speciesId={entry.SpeciesId}
+                      speciesClass={species?.speciesClass || ''}
+                      alt={species?.danishName || ''}
+                      className="galleryThumb"
+                    />
+                  </div>
                 </div>
               )
             })}

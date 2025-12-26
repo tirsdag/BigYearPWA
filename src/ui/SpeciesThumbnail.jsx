@@ -48,7 +48,7 @@ function ensureSharedViewer() {
   return sharedViewer
 }
 
-export default function SpeciesThumbnail({ speciesId, speciesClass, alt = '', size = 88, className = '' }) {
+export default function SpeciesThumbnail({ speciesId, speciesClass, alt = '', size = 352, className = '' }) {
   const id = String(speciesId || '').trim()
   const classKey = useMemo(() => toClassKey(speciesClass), [speciesClass])
   const fallbackSrc = useMemo(() => getCategoryFallbackSrc(speciesClass), [speciesClass])
