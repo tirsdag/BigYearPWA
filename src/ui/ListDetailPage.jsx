@@ -117,6 +117,11 @@ export default function ListDetailPage() {
     setSpeciesById(map)
   }
 
+  async function refreshAvailableLists() {
+    const allLists = await listLists()
+    setAvailableLists(allLists)
+  }
+
   useEffect(() => {
     if (!listId) return
     setActiveListId(listId)
@@ -132,6 +137,28 @@ export default function ListDetailPage() {
     refreshListData().catch(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listId])
+
+  useEffect(() => {
+    let cancelled = false
+    if (!listId) return
+
+    // On first-run, other lists may still be created in the background.
+    // Refresh the selector options a few times until we see multiple lists.
+    if (availableLists.length >= 2) return
+
+    let ticks = 0
+    const id = setInterval(() => {
+      ticks++
+      if (cancelled) return
+      refreshAvailableLists().catch(() => {})
+      if (ticks >= 6) clearInterval(id)
+    }, 1500)
+
+    return () => {
+      cancelled = true
+      clearInterval(id)
+    }
+  }, [listId, availableLists.length])
 
   useEffect(() => {
     let cancelled = false
@@ -248,17 +275,20 @@ export default function ListDetailPage() {
     }
   }, [])
 
-  const trendWeeks = useMemo(() => {
+  const trendWeeks10 = useMemo(() => {
     const start = wrapWeek(selectedWeek + 1)
     return Array.from({ length: 10 }, (_, i) => wrapWeek(start + i))
   }, [selectedWeek])
 
-  function renderWeeklyTrend(speciesId) {
+  const trendWeeksGallery4 = useMemo(() => trendWeeks10.slice(0, 4), [trendWeeks10])
+
+  function renderWeeklyTrend(speciesId, weeks) {
     const weeklyTrend = weeklyTrendBySpeciesId.get(String(speciesId)) || ''
+    const weekList = Array.isArray(weeks) && weeks.length > 0 ? weeks : trendWeeks10
 
     return (
-      <div className="weeklyTrend" aria-label="Trend de næste 5 uger">
-        {trendWeeks.map((w) => {
+      <div className="weeklyTrend" aria-label={`Trend de næste ${weekList.length} uger`}>
+        {weekList.map((w) => {
           const ch = getTrendChar(weeklyTrend, w)
           const t = trendToken(ch)
           return (
@@ -491,7 +521,7 @@ export default function ListDetailPage() {
                       />
                     </div>
                     <div className="small">{focusedProbable.latinName || ''}</div>
-                    <div style={{ marginTop: 4 }}>{renderWeeklyTrend(focusedProbable.speciesId)}</div>
+                    <div style={{ marginTop: 4 }}>{renderWeeklyTrend(focusedProbable.speciesId, trendWeeks10)}</div>
                     {(() => {
                       const link = getSpeciesExternalLink({
                         speciesClass: focusedProbable.speciesClass,
@@ -632,7 +662,7 @@ export default function ListDetailPage() {
                 <div key={entry.EntryId} className="galleryCell">
                   <div className="galleryTile">
                     <div className="galleryTile__nameAbove">{species?.danishName || entry.SpeciesId}</div>
-                    <div className="galleryTile__trend">{renderWeeklyTrend(entry.SpeciesId)}</div>
+                    <div className="galleryTile__trend">{renderWeeklyTrend(entry.SpeciesId, trendWeeksGallery4)}</div>
                     <div className="galleryTile__media">
                       <button
                         type="button"
@@ -679,7 +709,7 @@ export default function ListDetailPage() {
                         entry.SpeciesId
                       )}
                       <div className="small">{species?.latinName || ''}</div>
-                      <div className="entryTrendLine">{renderWeeklyTrend(entry.SpeciesId)}</div>
+                      <div className="entryTrendLine">{renderWeeklyTrend(entry.SpeciesId, trendWeeks10)}</div>
                       {link || url ? (
                         <div className="small">
                           {link ? (

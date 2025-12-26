@@ -50,19 +50,51 @@ export default function App() {
         const dimensionId = (dk?.DimensionId || dims?.[0]?.DimensionId || '').toString()
         if (!dimensionId) return
 
-        const list = await createList({
-          name: 'Min liste',
+        const avesClass = 'Aves'
+        const otherClasses = SPECIES_CLASSES.filter((c) => c !== avesClass)
+
+        const nameByClass = {
+          Amphibia: 'Mine padder',
+          Aves: 'Mine fugle',
+          Insecta: 'Mine insekter',
+          Mammalia: 'Mine pattedyr',
+          Reptilia: 'Mine krybdyr',
+        }
+
+        // Prioritize creating the bird list first so we can land the user on it quickly.
+        const avesList = await createList({
+          name: nameByClass[avesClass] || avesClass,
           dimensionId,
-          speciesClasses: SPECIES_CLASSES,
+          speciesClasses: [avesClass],
         })
 
-        setActiveListId(list.ListId)
-        navigate(`/lists/${list.ListId}`, { replace: true })
+        setActiveListId(avesList.ListId)
+        navigate(`/lists/${avesList.ListId}`, { replace: true })
+
+        // Create the remaining lists in the background.
+        Promise.resolve()
+          .then(async () => {
+            for (const cls of otherClasses) {
+              await createList({
+                name: nameByClass[cls] || cls,
+                dimensionId,
+                speciesClasses: [cls],
+              })
+            }
+          })
+          .catch(() => {})
+
         return
       }
 
       const desired = activeListId && lists.some((l) => l.ListId === activeListId) ? activeListId : ''
-      const fallback = lists[0].ListId
+
+      const avesFallback =
+        lists.find((l) => Array.isArray(l?.SpeciesClasses) && l.SpeciesClasses.includes('Aves'))?.ListId ||
+        lists.find((l) => String(l?.Name || '').trim() === 'Mine fugle')?.ListId ||
+        ''
+
+      const fallback = avesFallback || lists[0].ListId
       const target = desired || fallback
 
       if (!desired && target) setActiveListId(target)
