@@ -52,3 +52,26 @@ export async function putEntry(entry) {
   const db = await getDb()
   await db.put('entries', entry)
 }
+
+export async function getAllEntries() {
+  const db = await getDb()
+  return db.getAll('entries')
+}
+
+export async function replaceAllListsAndEntries({ lists, entries }) {
+  const db = await getDb()
+  const tx = db.transaction(['entries', 'lists'], 'readwrite')
+
+  await tx.objectStore('entries').clear()
+  await tx.objectStore('lists').clear()
+
+  for (const l of lists || []) {
+    tx.objectStore('lists').put(l)
+  }
+
+  for (const e of entries || []) {
+    tx.objectStore('entries').put(e)
+  }
+
+  await tx.done
+}

@@ -9,6 +9,7 @@ import {
   putList,
 } from '../repositories/listRepository.js'
 import { getSpeciesByClass } from '../repositories/speciesRepository.js'
+import { requestBackendSync } from './backendSyncService.js'
 import { newId } from '../utils/id.js'
 
 export const SPECIES_CLASSES = ['Amphibia', 'Aves', 'Insecta', 'Mammalia', 'Reptilia']
@@ -58,6 +59,8 @@ export async function createList({ name, dimensionId, speciesClasses }) {
   await putList(list)
   await putEntriesForList(ListId, entries)
 
+  requestBackendSync()
+
   return list
 }
 
@@ -69,6 +72,8 @@ export async function toggleEntrySeen(entry, seen) {
   }
 
   await putEntry(next)
+
+  requestBackendSync()
   return next
 }
 
@@ -81,4 +86,6 @@ export async function toggleEntrySeenById(entryId, seen) {
 
 export async function removeList(listId) {
   await deleteList(listId)
+
+  requestBackendSync()
 }

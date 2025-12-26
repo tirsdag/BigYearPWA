@@ -5,6 +5,7 @@ import ListDetailPage from './ui/ListDetailPage.jsx'
 import AllSpeciesPage from './ui/AllSpeciesPage.jsx'
 import ProbableSpeciesPage from './ui/ProbableSpeciesPage.jsx'
 import { bootstrapReferenceData } from './services/bootstrapService.js'
+import { trySyncUserDataOnce } from './services/backendSyncService.js'
 import { AppStateContext } from './ui/appState.js'
 import { createList, listLists, SPECIES_CLASSES } from './services/listService.js'
 import { listDimensions } from './services/dimensionService.js'
@@ -73,6 +74,11 @@ export default function App() {
     }
 
     ;(async () => {
+      // Best-effort backend persistence (optional).
+      // If VITE_API_BASE_URL is not set, this is a no-op.
+      // Run before local first-run list creation to avoid duplicates.
+      await trySyncUserDataOnce().catch(() => {})
+
       const lists = await listLists()
 
       if (lists.length === 0) {
