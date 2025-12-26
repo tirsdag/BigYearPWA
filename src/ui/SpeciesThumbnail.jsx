@@ -4,10 +4,18 @@ function toClassKey(speciesClass) {
   return String(speciesClass || '').trim().toLowerCase()
 }
 
-function getCategoryFallbackSrc(speciesClass) {
+function getCategoryFallbackCandidates(speciesClass) {
   const key = toClassKey(speciesClass)
-  if (!key) return './images/default.jpeg'
-  return `./images/${key}/default.jpeg`
+  if (!key) {
+    return ['./images/default.webp', './images/default.png', './images/default.jpg', './images/default.jpeg']
+  }
+
+  return [
+    `./images/${key}/default.webp`,
+    `./images/${key}/default.png`,
+    `./images/${key}/default.jpg`,
+    `./images/${key}/default.jpeg`,
+  ]
 }
 
 let sharedViewer = null
@@ -51,25 +59,26 @@ function ensureSharedViewer() {
 export default function SpeciesThumbnail({ speciesId, speciesClass, alt = '', size = 352, className = '' }) {
   const id = String(speciesId || '').trim()
   const classKey = useMemo(() => toClassKey(speciesClass), [speciesClass])
-  const fallbackSrc = useMemo(() => getCategoryFallbackSrc(speciesClass), [speciesClass])
+  const categoryFallbacks = useMemo(() => getCategoryFallbackCandidates(speciesClass), [speciesClass])
 
   const candidates = useMemo(() => {
     const items = []
 
     if (id) {
       items.push(
+        classKey ? `./images/${classKey}/${id}.webp` : null,
         classKey ? `./images/${classKey}/${id}.png` : null,
         classKey ? `./images/${classKey}/${id}.jpg` : null,
         classKey ? `./images/${classKey}/${id}.jpeg` : null
       )
     }
 
-    items.push(fallbackSrc)
-    items.push('./images/default.jpeg')
+    items.push(...categoryFallbacks)
+    items.push('./images/default.webp', './images/default.png', './images/default.jpg', './images/default.jpeg')
 
     // De-dupe while preserving order.
     return items.filter(Boolean).filter((x, idx, arr) => arr.indexOf(x) === idx)
-  }, [id, classKey, fallbackSrc])
+  }, [id, classKey, categoryFallbacks])
 
   const [candidateIndex, setCandidateIndex] = useState(0)
   const src = candidates[candidateIndex] || './images/default.jpeg'

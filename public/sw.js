@@ -3,7 +3,19 @@
    - Network-first for app shell, cache-first for /Data/
 */
 
-const CACHE_NAME = 'bigyear-cache-v4'
+const CACHE_NAME = 'bigyear-cache-v5'
+
+async function addAllBestEffort(cache, urls) {
+  await Promise.all(
+    urls.map(async (url) => {
+      try {
+        await cache.add(url)
+      } catch {
+        // Ignore missing optional assets (e.g., when switching image formats).
+      }
+    }),
+  )
+}
 
 self.addEventListener('message', (event) => {
   if (event?.data?.type === 'SKIP_WAITING') {
@@ -16,14 +28,38 @@ self.addEventListener('install', (event) => {
     (async () => {
       const cache = await caches.open(CACHE_NAME)
       // Use relative URLs so this works under GitHub Pages subpaths (/repo/).
-      await cache.addAll([
+      await addAllBestEffort(cache, [
         './',
         './manifest.webmanifest',
+
+        './images/default.webp',
+        './images/default.png',
+        './images/default.jpg',
         './images/default.jpeg',
+
+        './images/aves/default.webp',
+        './images/aves/default.png',
+        './images/aves/default.jpg',
         './images/aves/default.jpeg',
+
+        './images/mammalia/default.webp',
+        './images/mammalia/default.png',
+        './images/mammalia/default.jpg',
         './images/mammalia/default.jpeg',
+
+        './images/amphibia/default.webp',
+        './images/amphibia/default.png',
+        './images/amphibia/default.jpg',
         './images/amphibia/default.jpeg',
+
+        './images/reptilia/default.webp',
+        './images/reptilia/default.png',
+        './images/reptilia/default.jpg',
         './images/reptilia/default.jpeg',
+
+        './images/insecta/default.webp',
+        './images/insecta/default.png',
+        './images/insecta/default.jpg',
         './images/insecta/default.jpeg',
       ])
     })(),
