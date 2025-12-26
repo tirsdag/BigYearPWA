@@ -358,6 +358,55 @@ button:disabled {
   text-overflow: ellipsis;
 }
 
+.weeklyTrend {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.weeklyTrend__cell {
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 700;
+  border-radius: 999px;
+  color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.weeklyTrend__up {
+  background: #1b5e20;
+}
+
+.weeklyTrend__down {
+  background: #b00020;
+}
+
+.weeklyTrend__same {
+  background: #777;
+}
+
+.weeklyTrend__none {
+  background: #999;
+}
+
+.galleryTile__trend {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.entryTrendLine {
+  margin-top: 2px;
+}
+
 .galleryTile__media {
   position: relative;
   width: 100%;

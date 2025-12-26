@@ -4,7 +4,7 @@ import { useAppState } from './appState.js'
 import { getList, getListEntries, listLists, toggleEntrySeen, toggleEntrySeenById } from '../services/listService.js'
 import { getSpeciesById } from '../repositories/speciesRepository.js'
 import { getTopProbableUnseenEntriesThisWeek } from '../services/probableSpeciesService.js'
-import { fetchWeekStat } from '../repositories/assetsRepository.js'
+import { fetchSpeciesWeeklyTrend, fetchWeekStat } from '../repositories/assetsRepository.js'
 import { getISOWeek, getISOWeekStartDate } from '../utils/isoWeek.js'
 import { getDofKnownLocationsUrl } from '../utils/dofLinks.js'
 import SpeciesName, { getSpeciesExternalLink } from './SpeciesName.jsx'
@@ -36,6 +36,36 @@ function formatSeenAtDa(seenAt) {
   const d = new Date(seenAt)
   if (Number.isNaN(d.getTime())) return String(seenAt)
   return d.toLocaleDateString('da-DK')
+}
+
+function wrapWeek(w) {
+  const n = Number(w)
+  if (!Number.isFinite(n)) return 1
+  const int = Math.trunc(n)
+  const zeroBased = ((int - 1) % MAX_WEEK + MAX_WEEK) % MAX_WEEK
+  return zeroBased + 1
+}
+
+function getTrendChar(weeklyTrend, weekNumber) {
+  if (!weeklyTrend) return '-'
+  const idx = Number(weekNumber) - 1
+  if (idx < 0) return '-'
+  const ch = weeklyTrend[idx]
+  return ch ? ch : '-'
+}
+
+function trendToken(ch) {
+  switch (ch) {
+    case 'U':
+      return { text: '↑', cls: 'weeklyTrend__up', label: 'Op' }
+    case 'D':
+      return { text: '↓', cls: 'weeklyTrend__down', label: 'Ned' }
+    case '=':
+      return { text: '=', cls: 'weeklyTrend__same', label: 'Samme' }
+    case '-':
+    default:
+      return { text: 'X', cls: 'weeklyTrend__none', label: 'Ingen data' }
+  }
 }
 
 export default function ListDetailPage() {
@@ -72,6 +102,8 @@ export default function ListDetailPage() {
   const [suggestionObsCountBySpeciesId, setSuggestionObsCountBySpeciesId] = useState(() => new Map())
   const [suggestionsLoading, setSuggestionsLoading] = useState(false)
   const [suggestionsError, setSuggestionsError] = useState('')
+
+  const [weeklyTrendBySpeciesId, setWeeklyTrendBySpeciesId] = useState(() => new Map())
 
   async function refreshListData() {
     const [l, e, allLists] = await Promise.all([getList(listId), getListEntries(listId), listLists()])
@@ -194,6 +226,50 @@ export default function ListDetailPage() {
       cancelled = true
     }
   }, [sortMode, selectedWeek, entries, speciesById])
+
+  useEffect(() => {
+    let cancelled = false
+
+    ;(async () => {
+      const rows = await fetchSpeciesWeeklyTrend()
+      const map = new Map()
+      for (const r of rows) {
+        map.set(String(r.speciesId), String(r.weeklyTrend || ''))
+      }
+      if (cancelled) return
+      setWeeklyTrendBySpeciesId(map)
+    })().catch(() => {
+      if (cancelled) return
+      setWeeklyTrendBySpeciesId(new Map())
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const trendWeeks = useMemo(() => {
+    const start = wrapWeek(selectedWeek + 1)
+    return Array.from({ length: 10 }, (_, i) => wrapWeek(start + i))
+  }, [selectedWeek])
+
+  function renderWeeklyTrend(speciesId) {
+    const weeklyTrend = weeklyTrendBySpeciesId.get(String(speciesId)) || ''
+
+    return (
+      <div className="weeklyTrend" aria-label="Trend de næste 5 uger">
+        {trendWeeks.map((w) => {
+          const ch = getTrendChar(weeklyTrend, w)
+          const t = trendToken(ch)
+          return (
+            <span key={w} className={`weeklyTrend__cell ${t.cls}`} title={`Uge ${w}: ${t.label}`}>
+              {t.text}
+            </span>
+          )
+        })}
+      </div>
+    )
+  }
 
   const sorted = useMemo(() => {
     let base = entries.slice()
@@ -415,6 +491,7 @@ export default function ListDetailPage() {
                       />
                     </div>
                     <div className="small">{focusedProbable.latinName || ''}</div>
+                    <div style={{ marginTop: 4 }}>{renderWeeklyTrend(focusedProbable.speciesId)}</div>
                     {(() => {
                       const link = getSpeciesExternalLink({
                         speciesClass: focusedProbable.speciesClass,
@@ -555,6 +632,7 @@ export default function ListDetailPage() {
                 <div key={entry.EntryId} className="galleryCell">
                   <div className="galleryTile">
                     <div className="galleryTile__nameAbove">{species?.danishName || entry.SpeciesId}</div>
+                    <div className="galleryTile__trend">{renderWeeklyTrend(entry.SpeciesId)}</div>
                     <div className="galleryTile__media">
                       <button
                         type="button"
@@ -601,6 +679,7 @@ export default function ListDetailPage() {
                         entry.SpeciesId
                       )}
                       <div className="small">{species?.latinName || ''}</div>
+                      <div className="entryTrendLine">{renderWeeklyTrend(entry.SpeciesId)}</div>
                       {link || url ? (
                         <div className="small">
                           {link ? (

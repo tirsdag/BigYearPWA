@@ -68,3 +68,18 @@ export async function fetchWeekStat(speciesClass, weekNumber) {
     throw err
   }
 }
+
+export function fetchSpeciesWeeklyTrend() {
+  return fetchJson('Data/WeekStat/species_weekly_trend.json').then((data) => {
+    if (!Array.isArray(data)) {
+      throw new Error('Uventet weekly trend-format (forventer array)')
+    }
+
+    return data
+      .map((row) => ({
+        speciesId: String(row?.speciesId || ''),
+        weeklyTrend: String(row?.weeklyTrend || ''),
+      }))
+      .filter((x) => x.speciesId)
+  })
+}
