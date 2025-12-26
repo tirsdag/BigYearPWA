@@ -66,8 +66,8 @@ export default function ListDetailPage() {
   const [seenFilter, setSeenFilter] = useState('all')
   const [statusFilter, setStatusFilter] = useState('common')
   const [query, setQuery] = useState('')
-  const [sortMode, setSortMode] = useState('sortId')
-  const [speciesViewMode, setSpeciesViewMode] = useState('list')
+  const [sortMode, setSortMode] = useState('suggestions')
+  const [speciesViewMode, setSpeciesViewMode] = useState('gallery')
 
   const [suggestionObsCountBySpeciesId, setSuggestionObsCountBySpeciesId] = useState(() => new Map())
   const [suggestionsLoading, setSuggestionsLoading] = useState(false)
@@ -91,6 +91,12 @@ export default function ListDetailPage() {
 
     setProbableListId(listId)
     setSelectedWeek(clampWeek(getISOWeek(new Date()).week))
+
+    // Default the species list view when switching lists.
+    setSortMode('suggestions')
+    setSpeciesViewMode('gallery')
+    setSeenFilter('all')
+    setStatusFilter('common')
     refreshListData().catch(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listId])
@@ -124,11 +130,6 @@ export default function ListDetailPage() {
       cancelled = true
     }
   }, [probableListId, selectedWeek])
-
-  useEffect(() => {
-    if (sortMode !== 'suggestions') return
-    if (seenFilter !== 'unseen') setSeenFilter('unseen')
-  }, [sortMode, seenFilter])
 
   useEffect(() => {
     let cancelled = false
@@ -232,12 +233,11 @@ export default function ListDetailPage() {
     }
 
     const q = query.trim().toLowerCase()
-    const effectiveSeenFilter = sortMode === 'suggestions' ? 'unseen' : seenFilter
 
     const withSeen =
-      effectiveSeenFilter === 'seen'
+      seenFilter === 'seen'
         ? base.filter((e) => Boolean(e.Seen))
-        : effectiveSeenFilter === 'unseen'
+        : seenFilter === 'unseen'
           ? base.filter((e) => !e.Seen)
           : base
 
@@ -480,18 +480,6 @@ export default function ListDetailPage() {
                       >
                         Næste
                       </button>
-
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSortMode('suggestions')
-                          setSeenFilter('unseen')
-                          setSpeciesViewMode('gallery')
-                        }}
-                        aria-label="Vis alle forslag som liste"
-                      >
-                        Andre forslag
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -528,7 +516,7 @@ export default function ListDetailPage() {
           <label style={{ maxWidth: 260 }}>
             Status{' '}
             <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-              <option value="all">All</option>
+              <option value="all">Alle</option>
               <option value="rare">sjældne (rød/grøn)</option>
               <option value="exotic">[eksotiske]</option>
               <option value="common">Almindelige</option>

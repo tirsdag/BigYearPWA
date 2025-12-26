@@ -250,13 +250,13 @@ button:disabled {
 }
 
 .seenToggleButton--seen {
-  background: #78c478;
+  background: transparent;
   border-color: #5faa5f;
   color: #0b2a0b;
 }
 
 .seenToggleButton--seen:active {
-  background: #6ab86a;
+  background: rgba(95, 170, 95, 0.15);
 }
 
 .list {

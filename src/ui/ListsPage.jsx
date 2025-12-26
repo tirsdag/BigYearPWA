@@ -14,6 +14,14 @@ const SPECIES_CLASS_LABELS = {
   Reptilia: 'Krybdyr',
 }
 
+function getDayOfYear(date) {
+  const d = new Date(date)
+  if (Number.isNaN(d.getTime())) return 0
+  const start = new Date(d.getFullYear(), 0, 1)
+  const diffMs = d.getTime() - start.getTime()
+  return Math.floor(diffMs / 86400000) + 1
+}
+
 export default function ListsPage() {
   const navigate = useNavigate()
   const { activeListId, setActiveListId } = useAppState()
@@ -27,6 +35,7 @@ export default function ListsPage() {
 
   const [previewSpeciesIdByClass, setPreviewSpeciesIdByClass] = useState(() => new Map())
   const [classesByListId, setClassesByListId] = useState(() => new Map())
+  const [countsByListId, setCountsByListId] = useState(() => new Map())
 
   const classArray = useMemo(() => Array.from(selectedClasses), [selectedClasses])
 
@@ -131,6 +140,41 @@ export default function ListsPage() {
     }
   }, [lists])
 
+  useEffect(() => {
+    let cancelled = false
+
+    ;(async () => {
+      const missing = lists.filter((l) => !countsByListId.has(String(l?.ListId || '')))
+      if (missing.length === 0) return
+
+      const results = await Promise.all(
+        missing.map(async (l) => {
+          const listId = String(l?.ListId || '')
+          if (!listId) return null
+          const entries = await getListEntries(listId)
+          const total = entries.length
+          let seen = 0
+          for (const e of entries) if (e?.Seen) seen++
+          return { listId, seen, total }
+        }),
+      )
+
+      if (cancelled) return
+      setCountsByListId((prev) => {
+        const next = new Map(prev)
+        for (const r of results) {
+          if (!r) continue
+          next.set(r.listId, { seen: r.seen, total: r.total })
+        }
+        return next
+      })
+    })().catch(() => {})
+
+    return () => {
+      cancelled = true
+    }
+  }, [lists, countsByListId])
+
   async function onCreate() {
     const list = await createList({ name, dimensionId, speciesClasses: classArray })
     setName('')
@@ -211,7 +255,10 @@ export default function ListsPage() {
       </div>
 
       <div className="card">
-        <div style={{ fontWeight: 600, marginBottom: 8 }}>Lister</div>
+        <div className="row" style={{ justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
+          <div style={{ fontWeight: 600 }}>Lister</div>
+          <div className="small">Dag {getDayOfYear(new Date())}</div>
+        </div>
         {lists.length === 0 ? (
           <div className="small">Ingen lister endnu.</div>
         ) : (
@@ -225,6 +272,11 @@ export default function ListsPage() {
                         <Link to={`/lists/${l.ListId}`} onClick={() => setActiveListId(l.ListId)}>
                           {l.Name}
                         </Link>
+                        {(() => {
+                          const c = countsByListId.get(String(l.ListId))
+                          if (!c) return null
+                          return <span className="small">({c.seen}/{c.total})</span>
+                        })()}
                         {activeListId === l.ListId ? <span className="small">(aktiv)</span> : null}
                       </div>
                       {(() => {
