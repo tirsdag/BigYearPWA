@@ -37,6 +37,8 @@ export default function ListsPage() {
   const [classesByListId, setClassesByListId] = useState(() => new Map())
   const [countsByListId, setCountsByListId] = useState(() => new Map())
 
+  const [updateBusy, setUpdateBusy] = useState(false)
+
   const classArray = useMemo(() => Array.from(selectedClasses), [selectedClasses])
 
   async function refresh() {
@@ -199,6 +201,29 @@ export default function ListsPage() {
     })
   }
 
+  async function onUpdateClick() {
+    if (updateBusy) return
+    setUpdateBusy(true)
+
+    try {
+      if ('serviceWorker' in navigator) {
+        const reg = await navigator.serviceWorker.getRegistration().catch(() => null)
+        if (reg) {
+          await reg.update().catch(() => {})
+
+          if (reg.waiting && navigator.serviceWorker.controller) {
+            reg.waiting.postMessage({ type: 'SKIP_WAITING' })
+            return
+          }
+        }
+      }
+
+      window.location.reload()
+    } finally {
+      setUpdateBusy(false)
+    }
+  }
+
   return (
     <div style={{ display: 'grid', gap: 12 }}>
       <div className="card">
@@ -302,6 +327,16 @@ export default function ListsPage() {
             ))}
           </ul>
         )}
+      </div>
+
+      <div className="card">
+        <div className="row" style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
+          <div style={{ fontWeight: 600 }}>App</div>
+          <button type="button" onClick={onUpdateClick} disabled={updateBusy} aria-label="Opdater app">
+            {updateBusy ? 'Opdaterer…' : 'Opdater'}
+          </button>
+        </div>
+        <div className="small">Tjek for ny version eller genindlæs appen.</div>
       </div>
     </div>
   )

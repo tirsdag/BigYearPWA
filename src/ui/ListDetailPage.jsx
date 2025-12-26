@@ -105,6 +105,31 @@ export default function ListDetailPage() {
 
   const [weeklyTrendBySpeciesId, setWeeklyTrendBySpeciesId] = useState(() => new Map())
 
+  const [updateBusy, setUpdateBusy] = useState(false)
+
+  async function onUpdateClick() {
+    if (updateBusy) return
+    setUpdateBusy(true)
+
+    try {
+      if ('serviceWorker' in navigator) {
+        const reg = await navigator.serviceWorker.getRegistration().catch(() => null)
+        if (reg) {
+          await reg.update().catch(() => {})
+
+          if (reg.waiting && navigator.serviceWorker.controller) {
+            reg.waiting.postMessage({ type: 'SKIP_WAITING' })
+            return
+          }
+        }
+      }
+
+      window.location.reload()
+    } finally {
+      setUpdateBusy(false)
+    }
+  }
+
   async function refreshListData() {
     const [l, e, allLists] = await Promise.all([getList(listId), getListEntries(listId), listLists()])
     setList(l)
@@ -751,6 +776,16 @@ export default function ListDetailPage() {
             })}
           </ul>
         )}
+      </div>
+
+      <div className="card">
+        <div className="row" style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
+          <div style={{ fontWeight: 600 }}>App</div>
+          <button type="button" onClick={onUpdateClick} disabled={updateBusy} aria-label="Opdater app">
+            {updateBusy ? 'Opdaterer…' : 'Opdater'}
+          </button>
+        </div>
+        <div className="small">Tjek for ny version eller genindlæs appen.</div>
       </div>
     </div>
   )
