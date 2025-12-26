@@ -11,6 +11,17 @@ This avoids building login UI initially. If you want real multi-device accounts 
 
 ## Run locally
 
+From the repo root (recommended):
+
+```bash
+npm run dev:api
+```
+
+This uses the repo venv at `.venv` and starts:
+- `uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload`
+
+Or run directly inside `backend/`:
+
 ```bash
 cd backend
 python -m venv .venv
