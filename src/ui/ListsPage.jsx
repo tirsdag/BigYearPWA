@@ -4,6 +4,14 @@ import { useAppState } from './appState.js'
 import { createList, listLists, removeList, SPECIES_CLASSES } from '../services/listService.js'
 import { listDimensions } from '../services/dimensionService.js'
 
+const SPECIES_CLASS_LABELS = {
+  Amphibia: 'Padder',
+  Aves: 'Fugle',
+  Insecta: 'Insekter',
+  Mammalia: 'Pattedyr',
+  Reptilia: 'Krybdyr',
+}
+
 export default function ListsPage() {
   const navigate = useNavigate()
   const { activeListId, setActiveListId } = useAppState()
@@ -64,7 +72,7 @@ export default function ListsPage() {
           </label>
 
           <label>
-            Dimension{' '}
+            Listetype{' '}
             <select value={dimensionId} onChange={(e) => setDimensionId(e.target.value)}>
               <option value="">Vælg…</option>
               {dimensions.map((d) => (
@@ -88,7 +96,7 @@ export default function ListsPage() {
                   checked={selectedClasses.has(cls)}
                   onChange={() => toggleClass(cls)}
                 />{' '}
-                {cls}
+                {SPECIES_CLASS_LABELS[cls] || cls}
               </label>
             ))}
           </div>
@@ -107,15 +115,22 @@ export default function ListsPage() {
           <ul className="list">
             {lists.map((l) => (
               <li key={l.ListId} style={{ marginBottom: 8 }}>
-                <div className="row">
-                  <Link to={`/lists/${l.ListId}`} onClick={() => setActiveListId(l.ListId)}>
-                    {l.Name}
-                  </Link>
-                  {activeListId === l.ListId ? <span className="small">(aktiv)</span> : null}
-                  <button onClick={() => setActiveListId(l.ListId)}>Sæt aktiv</button>
-                  <button onClick={() => onDelete(l.ListId)}>Slet</button>
+                <div className="listRow">
+                  <div className="listRowMain">
+                    <Link to={`/lists/${l.ListId}`} onClick={() => setActiveListId(l.ListId)}>
+                      {l.Name}
+                    </Link>
+                    {activeListId === l.ListId ? <span className="small">(aktiv)</span> : null}
+                  </div>
+                  <div className="listRowActions">
+                    <button type="button" onClick={() => setActiveListId(l.ListId)}>
+                      Sæt aktiv
+                    </button>
+                    <button type="button" onClick={() => onDelete(l.ListId)}>
+                      Slet
+                    </button>
+                  </div>
                 </div>
-                <div className="small">{l.ListId}</div>
               </li>
             ))}
           </ul>

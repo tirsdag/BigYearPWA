@@ -144,6 +144,31 @@ a {
   flex-wrap: wrap;
 }
 
+.listRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.listRowMain {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.listRowActions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.listRowActions button {
+  min-width: 92px;
+}
+
 input, select, button {
   font: inherit;
 }
