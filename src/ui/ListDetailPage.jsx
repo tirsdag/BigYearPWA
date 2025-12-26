@@ -306,57 +306,60 @@ export default function ListDetailPage() {
             >
               {focusedProbable ? (
                 <div className="probableDeckCard">
-                  <div className="row" style={{ alignItems: 'flex-start' }}>
-                    <button
-                      type="button"
-                      className="seenToggleButton seenToggleButton--unseen"
-                      onClick={() => markProbableSeen(focusedProbable)}
-                      aria-label="Marker som set"
-                    >
-                      Set
-                    </button>
-                    <SpeciesThumbnail
-                      speciesId={focusedProbable.speciesId}
-                      speciesClass={focusedProbable.speciesClass}
-                      alt={focusedProbable.danishName || ''}
-                    />
-                    <div style={{ minWidth: 0 }}>
-                      <div>
-                        <SpeciesName
-                          danishName={focusedProbable.danishName}
-                          speciesId={focusedProbable.speciesId}
-                          speciesStatus={focusedProbable.speciesStatus}
-                          speciesClass={focusedProbable.speciesClass}
-                        />
-                      </div>
-                      <div className="small">{focusedProbable.latinName || ''}</div>
-                      {(() => {
-                        const link = getSpeciesExternalLink({
-                          speciesClass: focusedProbable.speciesClass,
-                          speciesId: focusedProbable.speciesId,
-                        })
-                        const url = getDofKnownLocationsUrl({
-                          speciesId: focusedProbable.speciesId,
-                          weekNumber: selectedWeek,
-                          year: currentYear,
-                        })
-                        if (!link && !url) return null
-                        return (
-                          <div className="small">
-                            {link ? (
-                              <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
-                                {link.label}
-                              </a>
-                            ) : null}
-                            {link && url ? ' · ' : null}
-                            {url ? (
-                              <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
-                                Set her
-                              </a>
-                            ) : null}
-                          </div>
-                        )
-                      })()}
+                  <div style={{ minWidth: 0 }}>
+                    <div>
+                      <SpeciesName
+                        danishName={focusedProbable.danishName}
+                        speciesId={focusedProbable.speciesId}
+                        speciesStatus={focusedProbable.speciesStatus}
+                        speciesClass={focusedProbable.speciesClass}
+                      />
+                    </div>
+                    <div className="small">{focusedProbable.latinName || ''}</div>
+                    {(() => {
+                      const link = getSpeciesExternalLink({
+                        speciesClass: focusedProbable.speciesClass,
+                        speciesId: focusedProbable.speciesId,
+                      })
+                      const url = getDofKnownLocationsUrl({
+                        speciesId: focusedProbable.speciesId,
+                        weekNumber: selectedWeek,
+                        year: currentYear,
+                      })
+                      if (!link && !url) return null
+                      return (
+                        <div className="small">
+                          {link ? (
+                            <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
+                              {link.label}
+                            </a>
+                          ) : null}
+                          {link && url ? ' · ' : null}
+                          {url ? (
+                            <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
+                              Set her
+                            </a>
+                          ) : null}
+                        </div>
+                      )
+                    })()}
+                  </div>
+
+                  <div className="row" style={{ alignItems: 'flex-start', marginTop: 10 }}>
+                    <div className="entryThumbCol">
+                      <button
+                        type="button"
+                        className="seenToggleButton seenToggleButton--unseen"
+                        onClick={() => markProbableSeen(focusedProbable)}
+                        aria-label="Marker som set"
+                      >
+                        Set
+                      </button>
+                      <SpeciesThumbnail
+                        speciesId={focusedProbable.speciesId}
+                        speciesClass={focusedProbable.speciesClass}
+                        alt={focusedProbable.danishName || ''}
+                      />
                     </div>
                   </div>
                   <div style={{ marginTop: 10 }}>
@@ -491,10 +494,26 @@ export default function ListDetailPage() {
                       ) : (
                         entry.SpeciesId
                       )}
+                      <div className="small">{species?.latinName || ''}</div>
+                      {link || url ? (
+                        <div className="small">
+                          {link ? (
+                            <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
+                              {link.label}
+                            </a>
+                          ) : null}
+                          {link && url ? ' · ' : null}
+                          {url ? (
+                            <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
+                              Set her
+                            </a>
+                          ) : null}
+                        </div>
+                      ) : null}
                     </div>
 
                     <div className="entryRow">
-                      <div className="entryLeft">
+                      <div className="entryThumbCol">
                         <button
                           className={`seenToggleButton ${entry.Seen ? 'seenToggleButton--seen' : 'seenToggleButton--unseen'}`}
                           onClick={() => onToggle(entry)}
@@ -503,31 +522,12 @@ export default function ListDetailPage() {
                           {entry.Seen ? 'Set' : '\u00A0'}
                         </button>
                         <div className="small entrySeenDate">{entry.SeenAt ? formatSeenAtDa(entry.SeenAt) : ''}</div>
-                      </div>
 
-                      <SpeciesThumbnail
-                        speciesId={entry.SpeciesId}
-                        speciesClass={species?.speciesClass || ''}
-                        alt={species?.danishName || ''}
-                      />
-
-                      <div className="entryBody">
-                        <div className="small">{species?.latinName || ''}</div>
-                        {link || url ? (
-                          <div className="small">
-                            {link ? (
-                              <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
-                                {link.label}
-                              </a>
-                            ) : null}
-                            {link && url ? ' · ' : null}
-                            {url ? (
-                              <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
-                                Set her
-                              </a>
-                            ) : null}
-                          </div>
-                        ) : null}
+                        <SpeciesThumbnail
+                          speciesId={entry.SpeciesId}
+                          speciesClass={species?.speciesClass || ''}
+                          alt={species?.danishName || ''}
+                        />
                       </div>
                     </div>
                   </div>

@@ -193,10 +193,26 @@ export default function ProbableListPage() {
                         speciesStatus={x.speciesStatus}
                         speciesClass={x.speciesClass}
                       />
+                      <div className="small">{x.latinName || ''}</div>
+                      {link || url ? (
+                        <div className="small">
+                          {link ? (
+                            <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
+                              {link.label}
+                            </a>
+                          ) : null}
+                          {link && url ? ' · ' : null}
+                          {url ? (
+                            <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
+                              Set her
+                            </a>
+                          ) : null}
+                        </div>
+                      ) : null}
                     </div>
 
                     <div className="entryRow">
-                      <div className="entryLeft">
+                      <div className="entryThumbCol">
                         <button
                           type="button"
                           className="seenToggleButton seenToggleButton--unseen"
@@ -205,32 +221,11 @@ export default function ProbableListPage() {
                         >
                           Set
                         </button>
-                      </div>
-                      <SpeciesThumbnail
-                        speciesId={x.speciesId}
-                        speciesClass={x.speciesClass}
-                        alt={x.danishName || ''}
-                      />
-                      <div className="entryBody">
-                        <div className="small">{x.latinName || ''}</div>
-                        <div className="small">
-                          Score: {x.rScore} · Observationer: {x.obsCount}
-                        </div>
-                        {link || url ? (
-                          <div className="small">
-                            {link ? (
-                              <a className="speciesExternalLink" href={link.url} target="_blank" rel="noreferrer">
-                                {link.label}
-                              </a>
-                            ) : null}
-                            {link && url ? ' · ' : null}
-                            {url ? (
-                              <a className="speciesExternalLink" href={url} target="_blank" rel="noreferrer">
-                                Set her
-                              </a>
-                            ) : null}
-                          </div>
-                        ) : null}
+                        <SpeciesThumbnail
+                          speciesId={x.speciesId}
+                          speciesClass={x.speciesClass}
+                          alt={x.danishName || ''}
+                        />
                       </div>
                     </div>
                   </div>
