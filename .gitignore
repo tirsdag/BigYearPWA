@@ -27,3 +27,6 @@ BigYearPWA_local_edits_backup/
 
 # Generated copy of assets (use `npm run copy-data`)
 public/Data/
+
+# Local/generated scripts
+Data/generateSpeciesExtStat.ps1
