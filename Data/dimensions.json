@@ -18,13 +18,13 @@
     "Region": "EUROPA"
   },
   {
-    "DimensionId": "world",
+    "DimensionId": "verden",
     "Year": null,
     "Month": null,
     "WeekNumber": null,
     "LocationId": null,
     "Municipality": null,
-    "Region": "world"
+    "Region": "VERDEN"
   },
   {
     "DimensionId": "dk-2026",
