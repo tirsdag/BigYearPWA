@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Allow access to environment-scoped Actions variables (if configured there).
+    environment: github-pages
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,6 +39,14 @@ jobs:
           # Name: VITE_API_BASE_URL
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
         run: npm run build
+
+      - name: Build env (debug)
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}/
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+        run: |
+          echo "BASE_PATH=$BASE_PATH"
+          echo "VITE_API_BASE_URL=$VITE_API_BASE_URL"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
