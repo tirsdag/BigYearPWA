@@ -104,7 +104,7 @@ az provider register --namespace Microsoft.OperationalInsights
 
 # 2) Names (pick your own)
 $RG = "bigyearpwa-rg"
-$LOC = "westeurope"
+$LOC = "northeurope"
 $ENV = "bigyearpwa-env"
 $APP = "bigyearpwa-api"   # must be lowercase, <= 32 chars
 $ACR = "bigyearpwaacr"    # must be globally unique, lowercase
@@ -116,7 +116,9 @@ $STORAGEMOUNT = "sqlitefiles"   # name of the env storage link
 $BLOB_CONTAINER = "bigyearpwa"
 
 # IMPORTANT: set this to your frontend origin(s)
-$CORS = "https://<your-frontend-host>,http://localhost:5173"
+# CORS origins are scheme+host only (no path). For GitHub Pages,
+# use https://<username>.github.io (NOT https://<username>.github.io/<repo>).
+$CORS = "https://tirsdag.github.io,http://localhost:5173"
 
 # 3) Resource group + Container Apps environment
 az group create --name $RG --location $LOC
