@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAppState } from './appState.js'
 import { createList, getListEntries, listLists, removeList, SPECIES_CLASSES } from '../services/listService.js'
 import { listDimensions } from '../services/dimensionService.js'
-import { getOrCreateDeviceId } from '../services/deviceIdService.js'
 import { getSpeciesByClass, getSpeciesById } from '../repositories/speciesRepository.js'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
@@ -26,8 +25,6 @@ function getDayOfYear(date) {
 export default function ListsPage() {
   const navigate = useNavigate()
   const { activeListId, setActiveListId } = useAppState()
-
-  const deviceId = useMemo(() => getOrCreateDeviceId(), [])
 
   const [lists, setLists] = useState([])
   const [dimensions, setDimensions] = useState([])
@@ -342,9 +339,6 @@ export default function ListsPage() {
         <div className="small">Tjek for ny version eller genindlæs appen.</div>
       </div>
 
-      <div className="deviceIdFooter" aria-label="Device id">
-        <div className="small">Device ID: {deviceId}</div>
-      </div>
     </div>
   )
 }

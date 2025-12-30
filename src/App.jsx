@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 import ListsPage from './ui/ListsPage.jsx'
 import ListDetailPage from './ui/ListDetailPage.jsx'
 import AllSpeciesPage from './ui/AllSpeciesPage.jsx'
@@ -9,9 +9,16 @@ import { trySyncUserDataOnce } from './services/backendSyncService.js'
 import { AppStateContext } from './ui/appState.js'
 import { createList, listLists, SPECIES_CLASSES } from './services/listService.js'
 import { listDimensions } from './services/dimensionService.js'
+import { getOrCreateDeviceId } from './services/deviceIdService.js'
 
 export default function App() {
   const navigate = useNavigate()
+
+  const deviceId = useMemo(() => getOrCreateDeviceId(), [])
+  const apiBaseUrl = useMemo(() => {
+    const raw = import.meta.env.VITE_API_BASE_URL
+    return raw ? String(raw).replace(/\/$/, '') : ''
+  }, [])
 
   const [isBootstrapped, setIsBootstrapped] = useState(false)
   const [bootstrapError, setBootstrapError] = useState(null)
@@ -182,9 +189,22 @@ export default function App() {
     return (
       <AppStateContext.Provider value={ctx}>
         <div className="app">
+          <header className="appHeader">
+            <Link to="/" className="appHeader__titleLink" aria-label="Home">
+              BigYearPWA
+            </Link>
+          </header>
+
           <main className="main">
             <div className="card">Indlæser…</div>
           </main>
+
+          <footer className="deviceIdFooter" aria-label="Device id">
+            <div className="small">Device ID: {deviceId}</div>
+            <div className="small" style={{ opacity: 0.75, overflowWrap: 'anywhere' }}>
+              API: {apiBaseUrl || '(disabled)'}
+            </div>
+          </footer>
         </div>
       </AppStateContext.Provider>
     )
@@ -193,7 +213,11 @@ export default function App() {
   return (
     <AppStateContext.Provider value={ctx}>
       <div className="app">
-        <main className="main">
+        <header className="appHeader">
+          <Link to="/" className="appHeader__titleLink" aria-label="Home">
+            BigYearPWA
+          </Link>
+
           {updateRegistration && !updateDismissed ? (
             <div className="updateBanner" role="status" aria-live="polite">
               <div>
@@ -226,6 +250,9 @@ export default function App() {
             </div>
           ) : null}
 
+        </header>
+
+        <main className="main">
           <Routes>
             <Route path="/" element={<ListsPage />} />
             <Route path="/lists/:listId" element={<ListDetailPage />} />
@@ -233,6 +260,13 @@ export default function App() {
             <Route path="/probable" element={<ProbableSpeciesPage />} />
           </Routes>
         </main>
+
+        <footer className="deviceIdFooter" aria-label="Device id">
+          <div className="small">Device ID: {deviceId}</div>
+          <div className="small" style={{ opacity: 0.75, overflowWrap: 'anywhere' }}>
+            API: {apiBaseUrl || '(disabled)'}
+          </div>
+        </footer>
       </div>
     </AppStateContext.Provider>
   )

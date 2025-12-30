@@ -23,7 +23,25 @@ a {
 .app {
   min-height: 100vh;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: auto 1fr;
+}
+
+.appHeader {
+  padding: 16px;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.appHeader__titleLink {
+  display: inline-block;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-decoration: none;
+}
+
+.appHeader__titleLink:active {
+  opacity: 0.75;
 }
 
 .main {
