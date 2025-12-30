@@ -1,4 +1,4 @@
-import { getOrCreateDeviceId } from './deviceIdService.js'
+import { getFirebaseIdToken } from './firebaseAuthService.js'
 import { getAllEntries, getAllLists, replaceAllListsAndEntries } from '../repositories/listRepository.js'
 
 function getApiBaseUrl() {
@@ -7,9 +7,11 @@ function getApiBaseUrl() {
 }
 
 async function fetchJson(url, { method = 'GET', body = null } = {}) {
-  const deviceId = getOrCreateDeviceId()
+  const token = await getFirebaseIdToken()
+  if (!token) return null
+
   const headers = {
-    'X-Device-Id': deviceId,
+    Authorization: `Bearer ${token}`,
   }
 
   if (body != null) {
@@ -40,6 +42,10 @@ export async function trySyncUserDataOnce() {
   if (typeof navigator !== 'undefined' && navigator && navigator.onLine === false) return
 
   const url = `${apiBase}/api/v1/sync/full`
+
+  // If user is not authenticated, do not attempt sync.
+  const token = await getFirebaseIdToken()
+  if (!token) return
 
   // Load both sides.
   const [remote, localLists, localEntries] = await Promise.all([

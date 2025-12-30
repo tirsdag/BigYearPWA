@@ -3,15 +3,17 @@
 This backend persists user-owned BigYear lists and entries.
 
 ## Design (MVP)
-- Each iPhone device is treated as a "user".
-- The frontend sends `X-Device-Id` (a UUID stored in `localStorage`).
-- The backend stores data per `device_id`.
+- Users authenticate via Firebase Auth.
+- The frontend sends a Firebase ID token as `Authorization: Bearer <token>`.
+- The backend verifies the token and stores data per Firebase `uid`.
 
 Persistence model (Blob-only):
-- The full sync payload is stored as one JSON document per device at `device/{deviceId}/sync/full.json`.
-- Uploaded files are stored under `device/{deviceId}/...`.
+- The full sync payload is stored as one JSON document per user at `user/{uid}/sync/full.json`.
+- Uploaded files are stored under `user/{uid}/...`.
 
 This avoids building login UI initially. If you want real multi-device accounts later, we can add auth (email+password/JWT or Apple Sign-In) and map devices to users.
+
+Firebase Auth already provides multi-device accounts; the backend treats the Firebase `uid` as the user key.
 
 ## Run locally
 
@@ -136,6 +138,19 @@ az containerapp show --name $APP --resource-group $RG --query properties.configu
   - Optional container name.
   - Default: `bigyearpwa`
 
+### Firebase Auth
+
+The backend needs Firebase Admin credentials to verify ID tokens. Configure one of:
+
+- `FIREBASE_SERVICE_ACCOUNT_JSON`
+  - Service account JSON as a raw string.
+- `GOOGLE_APPLICATION_CREDENTIALS`
+  - Path to a service account JSON file.
+- `FIREBASE_CREDENTIALS_PATH`
+  - Alias for `GOOGLE_APPLICATION_CREDENTIALS`.
+
+If none are set, Firebase Admin will try Application Default Credentials.
+
 ## Frontend configuration
 
 The frontend only uses the backend if `VITE_API_BASE_URL` is set at build time.
@@ -149,11 +164,11 @@ Examples:
 ## API
 - `GET /api/v1/healthz`
 - `GET /api/v1/sync/full` (returns `{ lists, entries }`)
-- `POST /api/v1/sync/full` (replaces all lists+entries for device)
-- `GET /api/v1/files` (lists uploaded files for device)
+- `POST /api/v1/sync/full` (replaces all lists+entries for user)
+- `GET /api/v1/files` (lists uploaded files for user)
 - `POST /api/v1/files` (multipart upload; returns `blobName`)
 - `GET /api/v1/files/{blob_name}` (download)
 - `DELETE /api/v1/files/{blob_name}` (delete)
 
 Request header required:
-- `X-Device-Id: <uuid>`
+- `Authorization: Bearer <firebase-id-token>`

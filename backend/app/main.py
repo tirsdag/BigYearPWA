@@ -7,22 +7,14 @@ from fastapi import Depends, FastAPI, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 
+from .auth import get_user_id
 from .blob_storage import ensure_container_exists, get_blob_config, get_container_client, make_blob_name
 from .schemas import FileListResponse, FullSyncPayload, HealthResponse
 
 
-def _sync_blob_name(device_id: str) -> str:
-    # Store the entire replace-all payload as a single JSON document per device.
-    return f"device/{device_id}/sync/full.json"
-
-
-def get_device_id(x_device_id: str | None = Header(default=None)) -> str:
-    device_id = (x_device_id or "").strip()
-    if not device_id:
-        raise HTTPException(status_code=400, detail="Missing X-Device-Id")
-    if len(device_id) > 200:
-        raise HTTPException(status_code=400, detail="Invalid X-Device-Id")
-    return device_id
+def _sync_blob_name(user_id: str) -> str:
+    # Store the entire replace-all payload as a single JSON document per user.
+    return f"user/{user_id}/sync/full.json"
 
 
 app = FastAPI(title="BigYearPWA API", version="0.1.0")
@@ -54,11 +46,11 @@ def healthz():
 
 @app.get("/api/v1/sync/full", response_model=FullSyncPayload)
 def sync_full_get(
-    device_id: str = Depends(get_device_id),
+    user_id: str = Depends(get_user_id),
 ):
     cfg = _require_blob_config()
     container = get_container_client(cfg)
-    blob = container.get_blob_client(_sync_blob_name(device_id))
+    blob = container.get_blob_client(_sync_blob_name(user_id))
 
     try:
         downloaded = blob.download_blob()
@@ -82,13 +74,13 @@ def sync_full_get(
 @app.post("/api/v1/sync/full")
 def sync_full_post(
     payload: FullSyncPayload,
-    device_id: str = Depends(get_device_id),
+    user_id: str = Depends(get_user_id),
 ):
     # Replace-all strategy (MVP).
-    # Persist the entire payload as a single JSON document per device in Blob Storage.
+    # Persist the entire payload as a single JSON document per user in Blob Storage.
     cfg = _require_blob_config()
     container = get_container_client(cfg)
-    blob = container.get_blob_client(_sync_blob_name(device_id))
+    blob = container.get_blob_client(_sync_blob_name(user_id))
 
     body = json.dumps(payload.model_dump(), ensure_ascii=False, separators=(",", ":")).encode("utf-8")
     blob.upload_blob(
@@ -112,11 +104,11 @@ def _require_blob_config():
 
 @app.get("/api/v1/files", response_model=FileListResponse)
 def list_files(
-    device_id: str = Depends(get_device_id),
+    user_id: str = Depends(get_user_id),
 ):
     cfg = _require_blob_config()
     container = get_container_client(cfg)
-    prefix = f"device/{device_id}/"
+    prefix = f"user/{user_id}/"
 
     out = []
     for b in container.list_blobs(name_starts_with=prefix):
@@ -144,12 +136,12 @@ def list_files(
 @app.post("/api/v1/files")
 async def upload_file(
     file: UploadFile,
-    device_id: str = Depends(get_device_id),
+    user_id: str = Depends(get_user_id),
 ):
     cfg = _require_blob_config()
     container = get_container_client(cfg)
 
-    blob_name = make_blob_name(device_id, file.filename or "file.bin")
+    blob_name = make_blob_name(user_id, file.filename or "file.bin")
     blob = container.get_blob_client(blob_name)
 
     data = await file.read()
@@ -165,10 +157,10 @@ async def upload_file(
 @app.get("/api/v1/files/{blob_name:path}")
 def download_file(
     blob_name: str,
-    device_id: str = Depends(get_device_id),
+    user_id: str = Depends(get_user_id),
 ):
     cfg = _require_blob_config()
-    if not blob_name.startswith(f"device/{device_id}/"):
+    if not blob_name.startswith(f"user/{user_id}/"):
         raise HTTPException(status_code=404, detail="Not found")
 
     container = get_container_client(cfg)
@@ -192,10 +184,10 @@ def download_file(
 @app.delete("/api/v1/files/{blob_name:path}")
 def delete_file(
     blob_name: str,
-    device_id: str = Depends(get_device_id),
+    user_id: str = Depends(get_user_id),
 ):
     cfg = _require_blob_config()
-    if not blob_name.startswith(f"device/{device_id}/"):
+    if not blob_name.startswith(f"user/{user_id}/"):
         raise HTTPException(status_code=404, detail="Not found")
 
     container = get_container_client(cfg)

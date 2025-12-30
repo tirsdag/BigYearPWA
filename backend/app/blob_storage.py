@@ -32,10 +32,10 @@ def _safe_filename(name: str) -> str:
     return base[:120]
 
 
-def make_blob_name(device_id: str, filename: str) -> str:
+def make_blob_name(user_id: str, filename: str) -> str:
     safe = _safe_filename(filename)
     file_id = uuid4().hex
-    return f"device/{device_id}/{file_id}-{safe}"
+    return f"user/{user_id}/{file_id}-{safe}"
 
 
 def get_container_client(config: BlobConfig):

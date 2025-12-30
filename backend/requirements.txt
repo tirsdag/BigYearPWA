@@ -3,3 +3,4 @@ uvicorn[standard]==0.32.1
 python-dotenv==1.0.1
 azure-storage-blob==12.24.0
 python-multipart==0.0.20
+firebase-admin==7.1.0

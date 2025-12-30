@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAppState } from './appState.js'
 import { createList, getListEntries, listLists, removeList, SPECIES_CLASSES } from '../services/listService.js'
 import { listDimensions } from '../services/dimensionService.js'
+import { isFirebaseAuthEnabled, onAuthUserChanged, signInWithProviderRedirect, signOutUser } from '../services/firebaseAuthService.js'
 import { getSpeciesByClass, getSpeciesById } from '../repositories/speciesRepository.js'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
@@ -25,6 +26,10 @@ function getDayOfYear(date) {
 export default function ListsPage() {
   const navigate = useNavigate()
   const { activeListId, setActiveListId } = useAppState()
+
+  const apiEnabled = useMemo(() => Boolean(import.meta.env.VITE_API_BASE_URL), [])
+  const authEnabled = useMemo(() => isFirebaseAuthEnabled(), [])
+  const [authUser, setAuthUser] = useState(null)
 
   const [lists, setLists] = useState([])
   const [dimensions, setDimensions] = useState([])
@@ -52,6 +57,11 @@ export default function ListsPage() {
     refresh().catch(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (!apiEnabled || !authEnabled) return
+    return onAuthUserChanged((u) => setAuthUser(u || null))
+  }, [apiEnabled, authEnabled])
 
   useEffect(() => {
     let cancelled = false
@@ -340,6 +350,31 @@ export default function ListsPage() {
           </button>
         </div>
         <div className="small">Tjek for ny version eller genindlæs appen.</div>
+
+        {apiEnabled && authEnabled ? (
+          <div style={{ marginTop: 10, display: 'grid', gap: 8 }}>
+            <div className="small" style={{ opacity: 0.85 }}>
+              Backup: {authUser ? 'Logget ind' : 'Ikke logget ind'}
+            </div>
+            {authUser ? (
+              <button type="button" onClick={() => signOutUser().catch(() => {})} aria-label="Log ud">
+                Log ud
+              </button>
+            ) : (
+              <div className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
+                <button type="button" onClick={() => signInWithProviderRedirect('google')} aria-label="Log ind med Google">
+                  Google
+                </button>
+                <button type="button" onClick={() => signInWithProviderRedirect('apple')} aria-label="Log ind med Apple">
+                  Apple
+                </button>
+                <button type="button" onClick={() => signInWithProviderRedirect('facebook')} aria-label="Log ind med Facebook">
+                  Facebook
+                </button>
+              </div>
+            )}
+          </div>
+        ) : null}
       </div>
 
     </div>
