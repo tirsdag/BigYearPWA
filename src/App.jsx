@@ -216,7 +216,7 @@ export default function App() {
             role="status"
             aria-live="polite"
           >
-            Netværk: {isOnline ? 'Online' : 'Offline'}
+            Netværk: {isOnline ? 'Forbundet' : 'Offline'}
           </div>
 
           {bootstrapError ? (
