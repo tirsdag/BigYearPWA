@@ -3,7 +3,7 @@
    - Network-first for app shell, cache-first for /Data/
 */
 
-const CACHE_NAME = 'bigyear-cache-v5'
+const CACHE_NAME = 'bigyear-cache-v6'
 
 async function addAllBestEffort(cache, urls) {
   await Promise.all(
@@ -113,7 +113,28 @@ self.addEventListener('fetch', (event) => {
 
   // GitHub Pages hosts under /<repo>/, so /Data/ becomes /<repo>/Data/.
   if (url.pathname.includes('/Data/')) {
-    event.respondWith(cacheFirst(request))
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open(CACHE_NAME)
+        const cached = await cache.match(request)
+
+        const networkPromise = fetch(request)
+          .then((response) => {
+            if (response && response.ok) cache.put(request, response.clone())
+            return response
+          })
+          .catch(() => null)
+
+        if (cached) {
+          event.waitUntil(networkPromise)
+          return cached
+        }
+
+        const network = await networkPromise
+        if (network) return network
+        throw new Error('Network unavailable and no cache match')
+      })(),
+    )
     return
   }
 
