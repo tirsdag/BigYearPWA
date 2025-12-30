@@ -187,10 +187,8 @@ az containerapp create \
 # 8) Mount the Azure Files volume to /data (for SQLite)
 az containerapp show --name $APP --resource-group $RG --output yaml > app.yaml
 
-# Edit app.yaml and add:
-# - template.containers[0].volumeMounts
-# - template.volumes
-# using the snippet in the README below, then:
+  # Merge the mount snippet from azure/containerapp.mount.yaml into app.yaml under `template:`
+  # (replace <your-container-name> with the container name from app.yaml), then:
 
 az containerapp update --name $APP --resource-group $RG --yaml app.yaml
 
@@ -200,20 +198,7 @@ az containerapp show --name $APP --resource-group $RG --query properties.configu
 
 ### YAML snippet for the Azure Files mount
 
-In the exported `app.yaml`, under `template`, add the following (adjust the container index/name if needed):
-
-```yaml
-template:
-  containers:
-  - name: <your-container-name>
-    volumeMounts:
-    - volumeName: sqlite-data
-      mountPath: /data
-  volumes:
-  - name: sqlite-data
-    storageType: AzureFile
-    storageName: sqlitefiles
-```
+Use the snippet in `azure/containerapp.mount.yaml`.
 
 Notes:
 - `storageName` must match the `--storage-name` you used with `az containerapp env storage set`.

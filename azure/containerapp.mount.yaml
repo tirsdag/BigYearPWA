@@ -1,0 +1,25 @@
+# Azure Container Apps - Azure Files volume mount snippet
+#
+# Purpose: persist SQLite DB to an Azure Files mount.
+#
+# How to use (MVP):
+# 1) Export your running Container App YAML:
+#      az containerapp show --name <APP> --resource-group <RG> --output yaml > app.yaml
+# 2) In app.yaml, under `template:`, merge the `containers:` and `volumes:` blocks below.
+# 3) Apply it:
+#      az containerapp update --name <APP> --resource-group <RG> --yaml app.yaml
+#
+# Notes:
+# - Replace <your-container-name> with the container name from your exported app.yaml.
+# - storageName must match the `--storage-name` used in `az containerapp env storage set`.
+
+template:
+  containers:
+  - name: <your-container-name>
+    volumeMounts:
+    - volumeName: sqlite-data
+      mountPath: /data
+  volumes:
+  - name: sqlite-data
+    storageType: AzureFile
+    storageName: sqlitefiles
