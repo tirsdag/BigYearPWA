@@ -17,6 +17,12 @@ export default function App() {
   const [bootstrapError, setBootstrapError] = useState(null)
   const [activeListId, setActiveListId] = useState(localStorage.getItem('activeListId') || '')
 
+  const [isOnline, setIsOnline] = useState(() => {
+    if (typeof navigator === 'undefined') return true
+    if (typeof navigator.onLine !== 'boolean') return true
+    return navigator.onLine
+  })
+
   const [updateRegistration, setUpdateRegistration] = useState(null)
   const [updateDismissed, setUpdateDismissed] = useState(false)
 
@@ -44,6 +50,31 @@ export default function App() {
     window.addEventListener('pwa:updateAvailable', onUpdateAvailable)
     return () => {
       window.removeEventListener('pwa:updateAvailable', onUpdateAvailable)
+    }
+  }, [])
+
+  useEffect(() => {
+    function handleOnline() {
+      setIsOnline(true)
+    }
+
+    function handleOffline() {
+      setIsOnline(false)
+    }
+
+    // Ensure initial value is correct after mount.
+    try {
+      if (typeof navigator?.onLine === 'boolean') setIsOnline(navigator.onLine)
+    } catch {
+      // Ignore
+    }
+
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+
+    return () => {
+      window.removeEventListener('online', handleOnline)
+      window.removeEventListener('offline', handleOffline)
     }
   }, [])
 
@@ -179,6 +210,14 @@ export default function App() {
               </div>
             </div>
           ) : null}
+
+          <div
+            className={`netStatus ${isOnline ? 'netStatus--online' : 'netStatus--offline'}`}
+            role="status"
+            aria-live="polite"
+          >
+            Netværk: {isOnline ? 'Online' : 'Offline'}
+          </div>
 
           {bootstrapError ? (
             <div className="card">

@@ -73,6 +73,27 @@ a {
   border-radius: 10px;
 }
 
+.netStatus {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.netStatus--online {
+  opacity: 0.75;
+}
+
+.netStatus--offline {
+  background: #f2f2f2;
+  font-weight: 600;
+}
+
 .nav a {
   text-align: center;
   padding: 10px 8px;
