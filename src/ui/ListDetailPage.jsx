@@ -482,11 +482,11 @@ export default function ListDetailPage() {
             ))}
           </select>
 
-          <button type="button" onClick={() => navigate('/')} aria-label="Opret ny liste">
+          <button type="button" onClick={() => navigate('/lists')} aria-label="Opret ny liste">
             Opret ny liste
           </button>
 
-          <button type="button" onClick={() => navigate('/')} aria-label="Lister">
+          <button type="button" onClick={() => navigate('/lists')} aria-label="Lister">
             Lister
           </button>
         </div>

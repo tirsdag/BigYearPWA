@@ -294,7 +294,11 @@ export default function ListsPage() {
                   <div className="listRowMain">
                     <div style={{ display: 'grid', gap: 2, minWidth: 0 }}>
                       <div className="row" style={{ gap: 8, flexWrap: 'nowrap' }}>
-                        <Link to={`/lists/${l.ListId}`} onClick={() => setActiveListId(l.ListId)}>
+                        <Link
+                          to={`/lists/${l.ListId}`}
+                          onClick={() => setActiveListId(l.ListId)}
+                          style={activeListId === l.ListId ? { fontWeight: 700 } : undefined}
+                        >
                           {l.Name}
                         </Link>
                         {(() => {
@@ -302,7 +306,6 @@ export default function ListsPage() {
                           if (!c) return null
                           return <span className="small">({c.seen}/{c.total})</span>
                         })()}
-                        {activeListId === l.ListId ? <span className="small">(aktiv)</span> : null}
                       </div>
                       {(() => {
                         const cls = classesByListId.get(String(l.ListId)) || []

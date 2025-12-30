@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Link, Route, Routes, useNavigate } from 'react-router-dom'
+import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import ListsPage from './ui/ListsPage.jsx'
 import ListDetailPage from './ui/ListDetailPage.jsx'
 import AllSpeciesPage from './ui/AllSpeciesPage.jsx'
 import ProbableSpeciesPage from './ui/ProbableSpeciesPage.jsx'
+import LandingPage from './ui/LandingPage.jsx'
 import { bootstrapReferenceData } from './services/bootstrapService.js'
 import { trySyncUserDataOnce } from './services/backendSyncService.js'
 import { AppStateContext } from './ui/appState.js'
@@ -13,11 +14,59 @@ import { getOrCreateDeviceId } from './services/deviceIdService.js'
 
 export default function App() {
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const installLandingDismissed = useMemo(() => {
+    try {
+      return localStorage.getItem('installLandingDismissed') === '1'
+    } catch {
+      return false
+    }
+  }, [])
 
   const deviceId = useMemo(() => getOrCreateDeviceId(), [])
   const apiBaseUrl = useMemo(() => {
     const raw = import.meta.env.VITE_API_BASE_URL
     return raw ? String(raw).replace(/\/$/, '') : ''
+  }, [])
+
+  const apiEnabled = Boolean(apiBaseUrl)
+
+  const shouldShowInstallLanding = useMemo(() => {
+    try {
+      if (installLandingDismissed) return false
+
+      const ua = String(navigator?.userAgent || '')
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(ua)
+
+      // iPadOS 13+ may identify as Mac; detect touch-capable Macs.
+      const isIpadOS =
+        !/iPhone|iPad|iPod/i.test(ua) &&
+        /Macintosh/i.test(ua) &&
+        typeof navigator?.maxTouchPoints === 'number' &&
+        navigator.maxTouchPoints > 1
+
+      const isStandalone =
+        navigator?.standalone === true ||
+        (typeof window?.matchMedia === 'function' && Boolean(window.matchMedia('(display-mode: standalone)')?.matches))
+
+      return (isMobile || isIpadOS) && !isStandalone
+    } catch {
+      return false
+    }
+  }, [installLandingDismissed])
+
+  useEffect(() => {
+    function onAppInstalled() {
+      try {
+        localStorage.setItem('installLandingDismissed', '1')
+      } catch {
+        // Ignore
+      }
+    }
+
+    window.addEventListener('appinstalled', onAppInstalled)
+    return () => window.removeEventListener('appinstalled', onAppInstalled)
   }, [])
 
   const [isBootstrapped, setIsBootstrapped] = useState(false)
@@ -125,6 +174,11 @@ export default function App() {
         const dimensionId = (dk?.DimensionId || dims?.[0]?.DimensionId || '').toString()
         if (!dimensionId) return
 
+        const selectedDim = dims.find((d) => String(d?.DimensionId || '') === dimensionId) || null
+        const dimensionYear =
+          selectedDim && typeof selectedDim.Year === 'number' && Number.isFinite(selectedDim.Year) ? selectedDim.Year : null
+        const withDimensionYear = (baseName) => (dimensionYear ? `${baseName} (${dimensionYear})` : baseName)
+
         const avesClass = 'Aves'
         const otherClasses = SPECIES_CLASSES.filter((c) => c !== avesClass)
 
@@ -138,20 +192,22 @@ export default function App() {
 
         // Prioritize creating the bird list first so we can land the user on it quickly.
         const avesList = await createList({
-          name: nameByClass[avesClass] || avesClass,
+          name: withDimensionYear(nameByClass[avesClass] || avesClass),
           dimensionId,
           speciesClasses: [avesClass],
         })
 
         setActiveListId(avesList.ListId)
-        navigate(`/lists/${avesList.ListId}`, { replace: true })
+        if (!shouldShowInstallLanding && location.pathname === '/') {
+          navigate(`/lists/${avesList.ListId}`, { replace: true })
+        }
 
         // Create the remaining lists in the background.
         Promise.resolve()
           .then(async () => {
             for (const cls of otherClasses) {
               await createList({
-                name: nameByClass[cls] || cls,
+                name: withDimensionYear(nameByClass[cls] || cls),
                 dimensionId,
                 speciesClasses: [cls],
               })
@@ -166,16 +222,18 @@ export default function App() {
 
       const avesFallback =
         lists.find((l) => Array.isArray(l?.SpeciesClasses) && l.SpeciesClasses.includes('Aves'))?.ListId ||
-        lists.find((l) => String(l?.Name || '').trim() === 'Mine fugle')?.ListId ||
+        lists.find((l) => String(l?.Name || '').trim().startsWith('Mine fugle'))?.ListId ||
         ''
 
       const fallback = avesFallback || lists[0].ListId
       const target = desired || fallback
 
       if (!desired && target) setActiveListId(target)
-      if (target) navigate(`/lists/${target}`, { replace: true })
+      if (!shouldShowInstallLanding && location.pathname === '/' && target) {
+        navigate(`/lists/${target}`, { replace: true })
+      }
     })().catch(() => {})
-  }, [isBootstrapped, bootstrapError, activeListId, navigate])
+  }, [isBootstrapped, bootstrapError, activeListId, navigate, location.pathname, shouldShowInstallLanding])
 
   const ctx = useMemo(
     () => ({
@@ -190,7 +248,7 @@ export default function App() {
       <AppStateContext.Provider value={ctx}>
         <div className="app">
           <header className="appHeader">
-            <Link to="/" className="appHeader__titleLink" aria-label="Home">
+            <Link to="/lists" className="appHeader__titleLink" aria-label="Home">
               BigYearPWA
             </Link>
           </header>
@@ -202,7 +260,7 @@ export default function App() {
           <footer className="deviceIdFooter" aria-label="Device id">
             <div className="small">Device ID: {deviceId}</div>
             <div className="small" style={{ opacity: 0.75, overflowWrap: 'anywhere' }}>
-              API: {apiBaseUrl || '(disabled)'}
+              API: {apiEnabled ? 'enabled' : 'disabled'}
             </div>
           </footer>
         </div>
@@ -214,7 +272,7 @@ export default function App() {
     <AppStateContext.Provider value={ctx}>
       <div className="app">
         <header className="appHeader">
-          <Link to="/" className="appHeader__titleLink" aria-label="Home">
+          <Link to="/lists" className="appHeader__titleLink" aria-label="Home">
             BigYearPWA
           </Link>
 
@@ -254,7 +312,8 @@ export default function App() {
 
         <main className="main">
           <Routes>
-            <Route path="/" element={<ListsPage />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/lists" element={<ListsPage />} />
             <Route path="/lists/:listId" element={<ListDetailPage />} />
             <Route path="/species" element={<AllSpeciesPage />} />
             <Route path="/probable" element={<ProbableSpeciesPage />} />
@@ -264,7 +323,7 @@ export default function App() {
         <footer className="deviceIdFooter" aria-label="Device id">
           <div className="small">Device ID: {deviceId}</div>
           <div className="small" style={{ opacity: 0.75, overflowWrap: 'anywhere' }}>
-            API: {apiBaseUrl || '(disabled)'}
+            API: {apiEnabled ? 'enabled' : 'disabled'}
           </div>
         </footer>
       </div>
