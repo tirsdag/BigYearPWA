@@ -35,27 +35,15 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
 
-## Deploy on FastAPI Cloud (high level)
-
-1. Create a new FastAPI Cloud app and point it at this repository.
-2. Set the app root / working directory to `backend/` (so it can see `requirements.txt`).
-3. Set the start command to:
-  - `uvicorn app.main:app --host 0.0.0.0 --port 8000`
-4. Configure environment variables:
-  - `DATABASE_URL` (Postgres recommended for production)
-  - `CORS_ORIGINS` (include your GitHub Pages / custom domain)
-
-Then copy your FastAPI Cloud public URL into the frontend as `VITE_API_BASE_URL`.
-
 ## Deploy as a container (Docker)
 
-This backend is container-ready and can be hosted anywhere that runs OCI/Docker images (not just FastAPI Cloud):
+This backend is container-ready and can be hosted on any platform that runs OCI/Docker images:
+- Azure Container Apps (recommended — see below)
 - Google Cloud Run
 - Fly.io
 - Render
 - Railway
 - DigitalOcean App Platform
-- Azure Container Apps
 - AWS ECS/Fargate
 
 Build locally:
@@ -207,7 +195,7 @@ Notes:
 ## Environment variables
 - `DATABASE_URL`
   - Default: `sqlite:///./app.db`
-  - For Postgres (FastAPI Cloud): e.g. `postgresql+psycopg://USER:PASS@HOST:5432/DBNAME`
+  - For production with Postgres: e.g. `postgresql+psycopg://USER:PASS@HOST:5432/DBNAME`
 - `CORS_ORIGINS`
   - Comma-separated list of allowed origins.
   - Example: `https://<your-gh-pages-site>,http://localhost:5173`
@@ -224,8 +212,8 @@ The frontend only uses the backend if `VITE_API_BASE_URL` is set at build time.
 Examples:
 - Local dev:
   - `VITE_API_BASE_URL=http://localhost:8000`
-- Production:
-  - `VITE_API_BASE_URL=https://<your-fastapi-cloud-app>`
+- Production (Azure Container Apps):
+  - `VITE_API_BASE_URL=https://<your-container-app-fqdn>`
 
 ## API
 - `GET /api/v1/healthz`
