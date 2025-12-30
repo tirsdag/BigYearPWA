@@ -47,6 +47,37 @@ uvicorn app.main:app --reload --port 8000
 
 Then copy your FastAPI Cloud public URL into the frontend as `VITE_API_BASE_URL`.
 
+## Deploy as a container (Docker)
+
+This backend is container-ready and can be hosted anywhere that runs OCI/Docker images (not just FastAPI Cloud):
+- Google Cloud Run
+- Fly.io
+- Render
+- Railway
+- DigitalOcean App Platform
+- Azure Container Apps
+- AWS ECS/Fargate
+
+Build locally:
+
+```bash
+cd backend
+docker build -t bigyearpwa-backend:local .
+```
+
+Run locally:
+
+```bash
+docker run --rm -p 8000:8000 \
+  -e DATABASE_URL="sqlite:///./app.db" \
+  -e CORS_ORIGINS="http://localhost:5173" \
+  bigyearpwa-backend:local
+```
+
+Notes:
+- For production, use Postgres and set `DATABASE_URL` accordingly.
+- Some hosts (e.g. Cloud Run) inject a `PORT` env var; the container respects `PORT`.
+
 ## Environment variables
 - `DATABASE_URL`
   - Default: `sqlite:///./app.db`
