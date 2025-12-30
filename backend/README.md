@@ -35,45 +35,14 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
 
-## Deploy as a container (Docker)
+## Deploy to Azure Container Apps (MVP)
 
-This backend is container-ready and can be hosted on any platform that runs OCI/Docker images:
-- Azure Container Apps (recommended — see below)
-- Google Cloud Run
-- Fly.io
-- Render
-- Railway
-- DigitalOcean App Platform
-- AWS ECS/Fargate
+The MVP deployment uses:
+- **Azure Container Apps** to host the FastAPI backend
+- **Azure Blob Storage** for user-uploaded files (private per device)
+- **Azure Files** (mounted to `/data`) to persist the SQLite database
 
-Build locally:
-
-```bash
-cd backend
-docker build -t bigyearpwa-backend:local .
-```
-
-Run locally:
-
-```bash
-docker run --rm -p 8000:8000 \
-  -e DATABASE_URL="sqlite:///./app.db" \
-  -e CORS_ORIGINS="http://localhost:5173" \
-  bigyearpwa-backend:local
-```
-
-Notes:
-- For production, use Postgres and set `DATABASE_URL` accordingly.
-- Some hosts (e.g. Cloud Run) inject a `PORT` env var; the container respects `PORT`.
-
-## Azure Container Apps (MVP)
-
-This is a good MVP host for this backend on Azure.
-
-Two storage concerns:
-- **Lists/entries DB**: for an MVP with a few users, you can run **SQLite** on an **Azure Files** mount and keep the app pinned to **1 replica**.
-  - If you ever want multiple replicas / scale-out, switch to Postgres.
-- **User files**: store in **Azure Blob Storage** (enabled by `AZURE_STORAGE_CONNECTION_STRING`).
+This setup is offline-first friendly: the PWA works fully offline with IndexedDB, and optionally syncs to the backend when online.
 
 ### Prereqs
 - Install Azure CLI.
