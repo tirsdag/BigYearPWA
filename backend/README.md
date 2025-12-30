@@ -15,6 +15,8 @@ This avoids building login UI initially. If you want real multi-device accounts 
 
 Firebase Auth already provides multi-device accounts; the backend treats the Firebase `uid` as the user key.
 
+Note: this repo’s GitHub Actions workflow deploys the frontend (GitHub Pages) only. The backend deployment is currently manual (Azure CLI) unless you add a separate CI/CD workflow.
+
 ## Run locally
 
 From the repo root (recommended):
@@ -44,7 +46,7 @@ uvicorn app.main:app --reload --port 8000
 
 The MVP deployment uses:
 - **Azure Container Apps** to host the FastAPI backend
-- **Azure Blob Storage** for user-uploaded files and sync payloads (private per device)
+- **Azure Blob Storage** for user-uploaded files and sync payloads (private per user)
 
 This setup is offline-first friendly: the PWA works fully offline with IndexedDB, and optionally syncs to the backend when online.
 
@@ -105,6 +107,14 @@ $ACR_USER = az acr credential show -n $ACR --query username -o tsv
 $ACR_PASS = az acr credential show -n $ACR --query "passwords[0].value" -o tsv
 
 # 6) Create the Container App (1 replica) with secrets + env vars
+#
+# Firebase Admin credentials:
+# - The backend needs a Firebase service account to verify ID tokens.
+# - Recommended: store the service-account JSON as a Container Apps secret and reference it.
+#
+# Create a minified one-line JSON string (safe to pass as a CLI arg).
+$FIREBASE_SA_JSON = (Get-Content .\firebase-admin-key.json -Raw | ConvertFrom-Json | ConvertTo-Json -Compress)
+
 az containerapp create \
   --name $APP \
   --resource-group $RG \
@@ -117,12 +127,13 @@ az containerapp create \
   --registry-server "$ACR.azurecr.io" \
   --registry-username $ACR_USER \
   --registry-password $ACR_PASS \
-  --secrets azureblobconn="$AZ_CONN" \
+  --secrets azureblobconn="$AZ_CONN" firebase-sa="$FIREBASE_SA_JSON" \
   --env-vars \
     PORT=8000 \
     CORS_ORIGINS="$CORS" \
     AZURE_STORAGE_CONNECTION_STRING=secretref:azureblobconn \
-    AZURE_BLOB_CONTAINER="$BLOB_CONTAINER"
+    AZURE_BLOB_CONTAINER="$BLOB_CONTAINER" \
+    FIREBASE_SERVICE_ACCOUNT_JSON=secretref:firebase-sa
 
 # 7) Show the public URL
 az containerapp show --name $APP --resource-group $RG --query properties.configuration.ingress.fqdn -o tsv

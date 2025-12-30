@@ -30,6 +30,8 @@ export default function ListsPage() {
   const apiEnabled = useMemo(() => Boolean(import.meta.env.VITE_API_BASE_URL), [])
   const authEnabled = useMemo(() => isFirebaseAuthEnabled(), [])
   const [authUser, setAuthUser] = useState(null)
+  const [authBusy, setAuthBusy] = useState(false)
+  const [authError, setAuthError] = useState('')
 
   const [lists, setLists] = useState([])
   const [dimensions, setDimensions] = useState([])
@@ -234,6 +236,32 @@ export default function ListsPage() {
     }
   }
 
+  function formatAuthError(err) {
+    try {
+      const code = String(err?.code || '').trim()
+      const msg = String(err?.message || err || '').trim()
+      if (code && msg && !msg.includes(code)) return `${code}: ${msg}`
+      return code || msg || 'Ukendt fejl'
+    } catch {
+      return 'Ukendt fejl'
+    }
+  }
+
+  async function onLoginClick(providerKey) {
+    if (authBusy) return
+    setAuthError('')
+    setAuthBusy(true)
+
+    try {
+      await signInWithProviderRedirect(providerKey)
+      // On success, Firebase redirects away from the app.
+    } catch (err) {
+      console.error('Firebase sign-in failed', err)
+      setAuthError(formatAuthError(err))
+      setAuthBusy(false)
+    }
+  }
+
   return (
     <div style={{ display: 'grid', gap: 12 }}>
       <div className="card">
@@ -356,19 +384,51 @@ export default function ListsPage() {
             <div className="small" style={{ opacity: 0.85 }}>
               Backup: {authUser ? 'Logget ind' : 'Ikke logget ind'}
             </div>
+
+            {authError ? (
+              <div className="small" role="alert" style={{ color: 'crimson' }}>
+                Login fejlede: {authError}
+              </div>
+            ) : null}
+
             {authUser ? (
-              <button type="button" onClick={() => signOutUser().catch(() => {})} aria-label="Log ud">
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthError('')
+                  signOutUser().catch((err) => {
+                    console.error('Firebase sign-out failed', err)
+                    setAuthError(formatAuthError(err))
+                  })
+                }}
+                aria-label="Log ud"
+              >
                 Log ud
               </button>
             ) : (
               <div className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
-                <button type="button" onClick={() => signInWithProviderRedirect('google')} aria-label="Log ind med Google">
+                <button
+                  type="button"
+                  onClick={() => onLoginClick('google')}
+                  disabled={authBusy}
+                  aria-label="Log ind med Google"
+                >
                   Google
                 </button>
-                <button type="button" onClick={() => signInWithProviderRedirect('apple')} aria-label="Log ind med Apple">
+                <button
+                  type="button"
+                  onClick={() => onLoginClick('apple')}
+                  disabled={authBusy}
+                  aria-label="Log ind med Apple"
+                >
                   Apple
                 </button>
-                <button type="button" onClick={() => signInWithProviderRedirect('facebook')} aria-label="Log ind med Facebook">
+                <button
+                  type="button"
+                  onClick={() => onLoginClick('facebook')}
+                  disabled={authBusy}
+                  aria-label="Log ind med Facebook"
+                >
                   Facebook
                 </button>
               </div>
