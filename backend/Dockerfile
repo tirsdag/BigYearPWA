@@ -13,8 +13,7 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 COPY app /app/app
 
 # Optional: set defaults (override at runtime)
-ENV DATABASE_URL=sqlite:///./app.db \
-    CORS_ORIGINS=http://localhost:5173 \
+ENV CORS_ORIGINS=http://localhost:5173 \
     PORT=8000
 
 EXPOSE 8000

@@ -36,7 +36,6 @@ az containerapp create `
   --env-vars `
     PORT=8000 `
     CORS_ORIGINS="$CORS" `
-    DATABASE_URL="sqlite:////data/app.db" `
     AZURE_STORAGE_CONNECTION_STRING=secretref:azureblobconn `
     AZURE_BLOB_CONTAINER="$BLOB_CONTAINER"
 
@@ -45,6 +44,3 @@ Write-Host "===== Container App Created! =====" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Your API URL:" -ForegroundColor Yellow
 az containerapp show --name $APP --resource-group $RG --query properties.configuration.ingress.fqdn -o tsv
-Write-Host ""
-Write-Host "NEXT STEP: Mount the Azure Files volume" -ForegroundColor Yellow
-Write-Host "Run: .\azure\mount-files.ps1" -ForegroundColor White

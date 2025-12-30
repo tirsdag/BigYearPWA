@@ -1,23 +1,19 @@
 import json
 import os
-from typing import List
 
+from azure.core.exceptions import ResourceNotFoundError
+from azure.storage.blob import ContentSettings
 from fastapi import Depends, FastAPI, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
-from sqlmodel import Session, delete, select
-
-from azure.storage.blob._models import ContentSettings
 
 from .blob_storage import ensure_container_exists, get_blob_config, get_container_client, make_blob_name
-from .db import engine, init_db
-from .models import EntryRecord, ListRecord
 from .schemas import FileListResponse, FullSyncPayload, HealthResponse
 
 
-def get_session():
-    with Session(engine) as session:
-        yield session
+def _sync_blob_name(device_id: str) -> str:
+    # Store the entire replace-all payload as a single JSON document per device.
+    return f"device/{device_id}/sync/full.json"
 
 
 def get_device_id(x_device_id: str | None = Header(default=None)) -> str:
@@ -37,15 +33,13 @@ if cors_origins:
         CORSMiddleware,
         allow_origins=cors_origins,
         allow_credentials=False,
-        allow_methods=["*"] ,
-        allow_headers=["*"] ,
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
 
 
 @app.on_event("startup")
 def _startup():
-    init_db()
-
     # Optional: if Blob Storage is configured, ensure the container exists.
     # If it's not configured, file endpoints will respond with 503.
     cfg = get_blob_config()
@@ -61,86 +55,48 @@ def healthz():
 @app.get("/api/v1/sync/full", response_model=FullSyncPayload)
 def sync_full_get(
     device_id: str = Depends(get_device_id),
-    session: Session = Depends(get_session),
 ):
-    lists = session.exec(select(ListRecord).where(ListRecord.device_id == device_id)).all()
-    entries = session.exec(select(EntryRecord).where(EntryRecord.device_id == device_id)).all()
+    cfg = _require_blob_config()
+    container = get_container_client(cfg)
+    blob = container.get_blob_client(_sync_blob_name(device_id))
 
-    out_lists = []
-    for l in lists:
-        try:
-            classes = json.loads(l.species_classes_json) if l.species_classes_json else []
-            if not isinstance(classes, list):
-                classes = []
-        except Exception:
-            classes = []
+    try:
+        downloaded = blob.download_blob()
+        data = downloaded.readall()
+    except ResourceNotFoundError:
+        return {"lists": [], "entries": []}
 
-        out_lists.append(
-            {
-                "ListId": l.list_id,
-                "Name": l.name,
-                "CreatedAt": l.created_at,
-                "DimensionId": l.dimension_id,
-                "SpeciesClasses": [str(x) for x in classes],
-            }
-        )
+    try:
+        raw = json.loads(data.decode("utf-8"))
+    except Exception:
+        return {"lists": [], "entries": []}
 
-    out_entries = []
-    for e in entries:
-        out_entries.append(
-            {
-                "EntryId": e.entry_id,
-                "ListId": e.list_id,
-                "SpeciesId": e.species_id,
-                "Seen": bool(e.seen),
-                "SeenAt": e.seen_at,
-                "ReferenceLink": e.reference_link,
-                "Comment": e.comment,
-            }
-        )
-
-    return {"lists": out_lists, "entries": out_entries}
+    lists = raw.get("lists") if isinstance(raw, dict) else None
+    entries = raw.get("entries") if isinstance(raw, dict) else None
+    return {
+        "lists": lists if isinstance(lists, list) else [],
+        "entries": entries if isinstance(entries, list) else [],
+    }
 
 
 @app.post("/api/v1/sync/full")
 def sync_full_post(
     payload: FullSyncPayload,
     device_id: str = Depends(get_device_id),
-    session: Session = Depends(get_session),
 ):
     # Replace-all strategy (MVP).
-    # This keeps the client simple and works well for a single-device user.
+    # Persist the entire payload as a single JSON document per device in Blob Storage.
+    cfg = _require_blob_config()
+    container = get_container_client(cfg)
+    blob = container.get_blob_client(_sync_blob_name(device_id))
 
-    session.exec(delete(EntryRecord).where(EntryRecord.device_id == device_id))
-    session.exec(delete(ListRecord).where(ListRecord.device_id == device_id))
+    body = json.dumps(payload.model_dump(), ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    blob.upload_blob(
+        body,
+        overwrite=True,
+        content_settings=ContentSettings(content_type="application/json; charset=utf-8"),
+    )
 
-    for l in payload.lists:
-        session.add(
-            ListRecord(
-                device_id=device_id,
-                list_id=str(l.ListId),
-                name=str(l.Name),
-                created_at=str(l.CreatedAt),
-                dimension_id=str(l.DimensionId),
-                species_classes_json=json.dumps([str(x) for x in (l.SpeciesClasses or [])]),
-            )
-        )
-
-    for e in payload.entries:
-        session.add(
-            EntryRecord(
-                device_id=device_id,
-                entry_id=str(e.EntryId),
-                list_id=str(e.ListId),
-                species_id=str(e.SpeciesId),
-                seen=bool(e.Seen),
-                seen_at=e.SeenAt,
-                reference_link=e.ReferenceLink,
-                comment=e.Comment,
-            )
-        )
-
-    session.commit()
     return {"ok": True}
 
 

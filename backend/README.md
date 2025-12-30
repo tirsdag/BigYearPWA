@@ -7,6 +7,10 @@ This backend persists user-owned BigYear lists and entries.
 - The frontend sends `X-Device-Id` (a UUID stored in `localStorage`).
 - The backend stores data per `device_id`.
 
+Persistence model (Blob-only):
+- The full sync payload is stored as one JSON document per device at `device/{deviceId}/sync/full.json`.
+- Uploaded files are stored under `device/{deviceId}/...`.
+
 This avoids building login UI initially. If you want real multi-device accounts later, we can add auth (email+password/JWT or Apple Sign-In) and map devices to users.
 
 ## Run locally
@@ -29,7 +33,6 @@ python -m venv .venv
 pip install -r requirements.txt
 
 # Optional:
-# set DATABASE_URL=sqlite:///./app.db
 # set CORS_ORIGINS=http://localhost:5173
 
 uvicorn app.main:app --reload --port 8000
@@ -39,8 +42,7 @@ uvicorn app.main:app --reload --port 8000
 
 The MVP deployment uses:
 - **Azure Container Apps** to host the FastAPI backend
-- **Azure Blob Storage** for user-uploaded files (private per device)
-- **Azure Files** (mounted to `/data`) to persist the SQLite database
+- **Azure Blob Storage** for user-uploaded files and sync payloads (private per device)
 
 This setup is offline-first friendly: the PWA works fully offline with IndexedDB, and optionally syncs to the backend when online.
 
@@ -67,9 +69,6 @@ $APP = "bigyearpwa-api"   # must be lowercase, <= 32 chars
 $ACR = "bigyearpwaacr"    # must be globally unique, lowercase
 
 $STORAGE = "bigyearpwastorage"  # must be globally unique, lowercase
-$FILESHARE = "bigyearpwa-sqlite"
-$STORAGEMOUNT = "sqlitefiles"   # name of the env storage link
-
 $BLOB_CONTAINER = "bigyearpwa"
 
 # IMPORTANT: set this to your frontend origin(s)
@@ -81,7 +80,7 @@ $CORS = "https://tirsdag.github.io,http://localhost:5173"
 az group create --name $RG --location $LOC
 az containerapp env create --name $ENV --resource-group $RG --location $LOC
 
-# 4) Storage account (used for BOTH Azure Files (SQLite) + Blob (user files))
+# 4) Storage account (Blob only)
 az storage account create \
   --resource-group $RG \
   --name $STORAGE \
@@ -90,37 +89,20 @@ az storage account create \
   --sku Standard_LRS \
   --enable-large-file-share
 
-az storage share-rm create \
-  --resource-group $RG \
-  --storage-account $STORAGE \
-  --name $FILESHARE \
-  --quota 1024 \
-  --enabled-protocols SMB
-
 $STORAGE_KEY = az storage account keys list -n $STORAGE --query "[0].value" -o tsv
 $AZ_CONN = az storage account show-connection-string -g $RG -n $STORAGE --query connectionString -o tsv
 
 # Create the blob container for uploaded files
 az storage container create --name $BLOB_CONTAINER --account-name $STORAGE --account-key $STORAGE_KEY
 
-# 5) Link Azure Files share into the Container Apps environment
-az containerapp env storage set \
-  --access-mode ReadWrite \
-  --azure-file-account-name $STORAGE \
-  --azure-file-account-key $STORAGE_KEY \
-  --azure-file-share-name $FILESHARE \
-  --storage-name $STORAGEMOUNT \
-  --name $ENV \
-  --resource-group $RG
-
-# 6) Container registry + build image
+# 5) Container registry + build image
 az acr create --name $ACR --resource-group $RG --sku Basic
 az acr build --registry $ACR --image bigyearpwa-backend:latest .\backend
 
 $ACR_USER = az acr credential show -n $ACR --query username -o tsv
 $ACR_PASS = az acr credential show -n $ACR --query "passwords[0].value" -o tsv
 
-# 7) Create the Container App (1 replica) with secrets + env vars
+# 6) Create the Container App (1 replica) with secrets + env vars
 az containerapp create \
   --name $APP \
   --resource-group $RG \
@@ -137,39 +119,19 @@ az containerapp create \
   --env-vars \
     PORT=8000 \
     CORS_ORIGINS="$CORS" \
-    DATABASE_URL="sqlite:////data/app.db" \
     AZURE_STORAGE_CONNECTION_STRING=secretref:azureblobconn \
     AZURE_BLOB_CONTAINER="$BLOB_CONTAINER"
 
-# 8) Mount the Azure Files volume to /data (for SQLite)
-az containerapp show --name $APP --resource-group $RG --output yaml > app.yaml
-
-  # Merge the mount snippet from azure/containerapp.mount.yaml into app.yaml under `template:`
-  # (replace <your-container-name> with the container name from app.yaml), then:
-
-az containerapp update --name $APP --resource-group $RG --yaml app.yaml
-
-# 9) Show the public URL
+# 7) Show the public URL
 az containerapp show --name $APP --resource-group $RG --query properties.configuration.ingress.fqdn -o tsv
 ```
 
-### YAML snippet for the Azure Files mount
-
-Use the snippet in `azure/containerapp.mount.yaml`.
-
-Notes:
-- `storageName` must match the `--storage-name` you used with `az containerapp env storage set`.
-- Keeping `minReplicas=maxReplicas=1` avoids SQLite multi-writer issues.
-
 ## Environment variables
-- `DATABASE_URL`
-  - Default: `sqlite:///./app.db`
-  - For production with Postgres: e.g. `postgresql+psycopg://USER:PASS@HOST:5432/DBNAME`
 - `CORS_ORIGINS`
   - Comma-separated list of allowed origins.
   - Example: `https://<your-gh-pages-site>,http://localhost:5173`
 - `AZURE_STORAGE_CONNECTION_STRING`
-  - If set, enables file storage endpoints backed by Azure Blob Storage.
+  - Enables storage endpoints backed by Azure Blob Storage.
 - `AZURE_BLOB_CONTAINER`
   - Optional container name.
   - Default: `bigyearpwa`

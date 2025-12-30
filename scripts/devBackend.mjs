@@ -24,14 +24,12 @@ if (!fs.existsSync(pythonExe)) {
 const env = {
   ...process.env,
   PYTHONPATH: backendDir,
-  DATABASE_URL: process.env.DATABASE_URL || 'sqlite:///./bigyear.db',
 }
 
 const args = ['-m', 'uvicorn', 'app.main:app', '--host', '127.0.0.1', '--port', '8000', '--reload']
 
 console.log('Starting backend:', pythonExe)
 console.log('cwd:', backendDir)
-console.log('DATABASE_URL:', env.DATABASE_URL)
 
 const child = spawn(pythonExe, args, {
   cwd: backendDir,
