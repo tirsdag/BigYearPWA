@@ -3,7 +3,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAppState } from './appState.js'
 import { createList, getListEntries, listLists, removeList, SPECIES_CLASSES } from '../services/listService.js'
 import { listDimensions } from '../services/dimensionService.js'
-import { isFirebaseAuthEnabled, onAuthUserChanged, signInWithProviderRedirect, signOutUser } from '../services/firebaseAuthService.js'
+import {
+  createUserWithEmailPassword,
+  isFirebaseAuthEnabled,
+  onAuthUserChanged,
+  signInWithEmailPassword,
+  signInWithProviderRedirect,
+  signOutUser,
+} from '../services/firebaseAuthService.js'
 import { getSpeciesByClass, getSpeciesById } from '../repositories/speciesRepository.js'
 import SpeciesThumbnail from './SpeciesThumbnail.jsx'
 
@@ -32,6 +39,8 @@ export default function ListsPage() {
   const [authUser, setAuthUser] = useState(null)
   const [authBusy, setAuthBusy] = useState(false)
   const [authError, setAuthError] = useState('')
+  const [authEmail, setAuthEmail] = useState('')
+  const [authPassword, setAuthPassword] = useState('')
 
   const [lists, setLists] = useState([])
   const [dimensions, setDimensions] = useState([])
@@ -262,6 +271,38 @@ export default function ListsPage() {
     }
   }
 
+  async function onEmailLogin() {
+    if (authBusy) return
+    setAuthError('')
+    setAuthBusy(true)
+
+    try {
+      await signInWithEmailPassword(authEmail, authPassword)
+      // Auth state change will update the UI.
+    } catch (err) {
+      console.error('Firebase email sign-in failed', err)
+      setAuthError(formatAuthError(err))
+    } finally {
+      setAuthBusy(false)
+    }
+  }
+
+  async function onEmailRegister() {
+    if (authBusy) return
+    setAuthError('')
+    setAuthBusy(true)
+
+    try {
+      await createUserWithEmailPassword(authEmail, authPassword)
+      // Auth state change will update the UI.
+    } catch (err) {
+      console.error('Firebase email sign-up failed', err)
+      setAuthError(formatAuthError(err))
+    } finally {
+      setAuthBusy(false)
+    }
+  }
+
   return (
     <div style={{ display: 'grid', gap: 12 }}>
       <div className="card">
@@ -386,7 +427,7 @@ export default function ListsPage() {
             </div>
 
             {authError ? (
-              <div className="small" role="alert" style={{ color: 'crimson' }}>
+              <div className="small" role="alert" style={{ fontWeight: 600 }}>
                 Login fejlede: {authError}
               </div>
             ) : null}
@@ -406,31 +447,69 @@ export default function ListsPage() {
                 Log ud
               </button>
             ) : (
-              <div className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
-                <button
-                  type="button"
-                  onClick={() => onLoginClick('google')}
-                  disabled={authBusy}
-                  aria-label="Log ind med Google"
-                >
-                  Google
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onLoginClick('apple')}
-                  disabled={authBusy}
-                  aria-label="Log ind med Apple"
-                >
-                  Apple
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onLoginClick('facebook')}
-                  disabled={authBusy}
-                  aria-label="Log ind med Facebook"
-                >
-                  Facebook
-                </button>
+              <div style={{ display: 'grid', gap: 10 }}>
+                <div style={{ display: 'grid', gap: 8 }}>
+                  <div className="small" style={{ opacity: 0.85 }}>
+                    Email
+                  </div>
+                  <div className="row" style={{ gap: 8, flexWrap: 'wrap', alignItems: 'baseline' }}>
+                    <label style={{ display: 'grid', gap: 4 }}>
+                      <span className="small">Email</span>
+                      <input
+                        value={authEmail}
+                        onChange={(e) => setAuthEmail(e.target.value)}
+                        inputMode="email"
+                        autoComplete="email"
+                        placeholder="email@domæne.dk"
+                      />
+                    </label>
+                    <label style={{ display: 'grid', gap: 4 }}>
+                      <span className="small">Adgangskode</span>
+                      <input
+                        value={authPassword}
+                        onChange={(e) => setAuthPassword(e.target.value)}
+                        type="password"
+                        autoComplete="current-password"
+                        placeholder="••••••••"
+                      />
+                    </label>
+                  </div>
+                  <div className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
+                    <button type="button" onClick={onEmailLogin} disabled={authBusy} aria-label="Log ind med email">
+                      Log ind
+                    </button>
+                    <button type="button" onClick={onEmailRegister} disabled={authBusy} aria-label="Opret bruger med email">
+                      Opret bruger
+                    </button>
+                  </div>
+                </div>
+
+                <div className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
+                  <button
+                    type="button"
+                    onClick={() => onLoginClick('google')}
+                    disabled={authBusy}
+                    aria-label="Log ind med Google"
+                  >
+                    Google
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onLoginClick('apple')}
+                    disabled={authBusy}
+                    aria-label="Log ind med Apple"
+                  >
+                    Apple
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onLoginClick('facebook')}
+                    disabled={authBusy}
+                    aria-label="Log ind med Facebook"
+                  >
+                    Facebook
+                  </button>
+                </div>
               </div>
             )}
           </div>

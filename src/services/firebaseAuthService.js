@@ -3,10 +3,12 @@ import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
+  createUserWithEmailAndPassword,
   getAuth,
   getRedirectResult,
   getIdToken,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithRedirect,
   signOut,
 } from 'firebase/auth'
@@ -96,4 +98,28 @@ export async function signOutUser() {
   const auth = getFirebaseAuth()
   if (!auth) return
   await signOut(auth)
+}
+
+export async function signInWithEmailPassword(email, password) {
+  const auth = getFirebaseAuth()
+  if (!auth) throw new Error('Firebase auth is not configured')
+
+  const e = String(email || '').trim()
+  const p = String(password || '')
+  if (!e || !p) throw new Error('Email og adgangskode kræves')
+
+  const res = await signInWithEmailAndPassword(auth, e, p)
+  return res?.user || null
+}
+
+export async function createUserWithEmailPassword(email, password) {
+  const auth = getFirebaseAuth()
+  if (!auth) throw new Error('Firebase auth is not configured')
+
+  const e = String(email || '').trim()
+  const p = String(password || '')
+  if (!e || !p) throw new Error('Email og adgangskode kræves')
+
+  const res = await createUserWithEmailAndPassword(auth, e, p)
+  return res?.user || null
 }
