@@ -2,13 +2,17 @@ import json
 import os
 from typing import List
 
-from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from sqlmodel import Session, delete, select
 
+from azure.storage.blob._models import ContentSettings
+
+from .blob_storage import ensure_container_exists, get_blob_config, get_container_client, make_blob_name
 from .db import engine, init_db
 from .models import EntryRecord, ListRecord
-from .schemas import FullSyncPayload, HealthResponse
+from .schemas import FileListResponse, FullSyncPayload, HealthResponse
 
 
 def get_session():
@@ -41,6 +45,12 @@ if cors_origins:
 @app.on_event("startup")
 def _startup():
     init_db()
+
+    # Optional: if Blob Storage is configured, ensure the container exists.
+    # If it's not configured, file endpoints will respond with 503.
+    cfg = get_blob_config()
+    if cfg:
+        ensure_container_exists(cfg)
 
 
 @app.get("/api/v1/healthz", response_model=HealthResponse)
@@ -131,4 +141,108 @@ def sync_full_post(
         )
 
     session.commit()
+    return {"ok": True}
+
+
+def _require_blob_config():
+    cfg = get_blob_config()
+    if not cfg:
+        raise HTTPException(
+            status_code=503,
+            detail="Blob storage is not configured. Set AZURE_STORAGE_CONNECTION_STRING.",
+        )
+    return cfg
+
+
+@app.get("/api/v1/files", response_model=FileListResponse)
+def list_files(
+    device_id: str = Depends(get_device_id),
+):
+    cfg = _require_blob_config()
+    container = get_container_client(cfg)
+    prefix = f"device/{device_id}/"
+
+    out = []
+    for b in container.list_blobs(name_starts_with=prefix):
+        name = str(getattr(b, "name", ""))
+        file_name = name.split("/")[-1]
+        size = int(getattr(b, "size", 0) or 0)
+        content_settings = getattr(b, "content_settings", None)
+        content_type = getattr(content_settings, "content_type", None) if content_settings else None
+        last_modified = getattr(b, "last_modified", None)
+        out.append(
+            {
+                "blobName": name,
+                "fileName": file_name,
+                "size": size,
+                "contentType": str(content_type) if content_type else None,
+                "etag": str(getattr(b, "etag", None) or "") or None,
+                "lastModified": last_modified.isoformat() if last_modified else None,
+            }
+        )
+
+    out.sort(key=lambda x: (x.get("lastModified") or "", x.get("fileName") or ""), reverse=True)
+    return {"files": out}
+
+
+@app.post("/api/v1/files")
+async def upload_file(
+    file: UploadFile,
+    device_id: str = Depends(get_device_id),
+):
+    cfg = _require_blob_config()
+    container = get_container_client(cfg)
+
+    blob_name = make_blob_name(device_id, file.filename or "file.bin")
+    blob = container.get_blob_client(blob_name)
+
+    data = await file.read()
+    blob.upload_blob(
+        data,
+        overwrite=True,
+        content_settings=ContentSettings(content_type=file.content_type or "application/octet-stream"),
+    )
+
+    return {"ok": True, "blobName": blob_name}
+
+
+@app.get("/api/v1/files/{blob_name:path}")
+def download_file(
+    blob_name: str,
+    device_id: str = Depends(get_device_id),
+):
+    cfg = _require_blob_config()
+    if not blob_name.startswith(f"device/{device_id}/"):
+        raise HTTPException(status_code=404, detail="Not found")
+
+    container = get_container_client(cfg)
+    blob = container.get_blob_client(blob_name)
+    downloader = blob.download_blob()
+    props = blob.get_blob_properties()
+
+    ct = None
+    try:
+        ct = props.content_settings.content_type
+    except Exception:
+        ct = None
+
+    return StreamingResponse(
+        downloader.chunks(),
+        media_type=ct or "application/octet-stream",
+        headers={"Content-Disposition": f"attachment; filename=\"{blob_name.split('/')[-1]}\""},
+    )
+
+
+@app.delete("/api/v1/files/{blob_name:path}")
+def delete_file(
+    blob_name: str,
+    device_id: str = Depends(get_device_id),
+):
+    cfg = _require_blob_config()
+    if not blob_name.startswith(f"device/{device_id}/"):
+        raise HTTPException(status_code=404, detail="Not found")
+
+    container = get_container_client(cfg)
+    blob = container.get_blob_client(blob_name)
+    blob.delete_blob(delete_snapshots="include")
     return {"ok": True}

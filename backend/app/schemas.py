@@ -32,3 +32,16 @@ class FullSyncPayload(BaseModel):
 
 class HealthResponse(BaseModel):
     ok: bool
+
+
+class FileItemDto(BaseModel):
+    blobName: str
+    fileName: str
+    size: int
+    contentType: Optional[str] = None
+    etag: Optional[str] = None
+    lastModified: Optional[str] = None
+
+
+class FileListResponse(BaseModel):
+    files: List[FileItemDto] = Field(default_factory=list)

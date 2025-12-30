@@ -15,6 +15,11 @@ Thumbs.db
 # Vite cache
 .vite/
 
+# Backend local artifacts
+backend/*.db
+backend/uvicorn*.log
+backend/app/__pycache__/
+
 # Env files
 .env
 .env.*

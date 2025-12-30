@@ -85,6 +85,11 @@ Notes:
 - `CORS_ORIGINS`
   - Comma-separated list of allowed origins.
   - Example: `https://<your-gh-pages-site>,http://localhost:5173`
+- `AZURE_STORAGE_CONNECTION_STRING`
+  - If set, enables file storage endpoints backed by Azure Blob Storage.
+- `AZURE_BLOB_CONTAINER`
+  - Optional container name.
+  - Default: `bigyearpwa`
 
 ## Frontend configuration
 
@@ -100,6 +105,10 @@ Examples:
 - `GET /api/v1/healthz`
 - `GET /api/v1/sync/full` (returns `{ lists, entries }`)
 - `POST /api/v1/sync/full` (replaces all lists+entries for device)
+- `GET /api/v1/files` (lists uploaded files for device)
+- `POST /api/v1/files` (multipart upload; returns `blobName`)
+- `GET /api/v1/files/{blob_name}` (download)
+- `DELETE /api/v1/files/{blob_name}` (delete)
 
 Request header required:
 - `X-Device-Id: <uuid>`
